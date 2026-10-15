@@ -1192,3 +1192,9 @@ button { font-family: inherit; cursor: pointer; }
   .cases-grid::-webkit-scrollbar { display: none; }
   .cases-grid .case-card { flex: 0 0 86%; scroll-snap-align: start; }
 }
+
+/* ============ CASES: 4 CARDS NO DESKTOP (2 x 2) ============ */
+@media (min-width: 900px) {
+  .cases-grid { grid-template-columns: repeat(2, 1fr); }
+  .cases-grid .case-carousel { aspect-ratio: 3 / 2; }
+}
