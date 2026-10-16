@@ -1320,3 +1320,47 @@ h1, h2, h3, h4, .stat__value, .method__hook, .hub__core, .market-take__mark, .ca
 /* ============ SOBRE (sem foto) / REDES CENTRALIZADAS ============ */
 @media (min-width: 900px) { .about__media { flex: 1 1 auto; } }
 #redes .redes-grid { margin: 0 auto; }
+
+/* ============ MATERIAIS: cards "em breve" ============ */
+#materiais .card { text-decoration: none; }
+.card--soon { cursor: default; background: #1a1a1a; }
+.card--soon:hover { transform: none; }
+.card--soon .card__title { opacity: 0.75; }
+.card--soon .card__type { color: var(--off-white-dim); border-color: rgba(245, 243, 239, 0.3); }
+.card--soon::before { background: none; }
+
+/* ============ MATERIAIS: prévia dentro do card ============ */
+.card--mat { padding: 14px 14px 20px; gap: 14px; justify-content: flex-start; }
+.card--mat .card__body { margin-top: 0; padding: 0 6px; }
+.mat-prev {
+  position: relative; z-index: 1; flex: 1 1 auto; min-height: 0;
+  border-radius: 12px; overflow: hidden;
+  background: #232323; border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex; align-items: center; justify-content: center;
+}
+.mat-prev .card__type { position: absolute; top: 10px; left: 10px; z-index: 2; background: rgba(10, 10, 10, 0.8); }
+.mat-prev--shot { background: var(--off-white); align-items: flex-start; }
+.mat-prev--shot img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; }
+
+.mock { width: 74%; display: flex; gap: 8px; margin-top: 18px; }
+.mock i, .mock b { display: block; background: rgba(245, 243, 239, 0.16); border-radius: 4px; }
+.mock--funnel { flex-direction: column; align-items: center; }
+.mock--funnel i { height: 18px; }
+.mock--funnel i:nth-child(1) { width: 100%; background: rgba(255, 107, 0, 0.7); }
+.mock--funnel i:nth-child(2) { width: 78%; }
+.mock--funnel i:nth-child(3) { width: 56%; }
+.mock--funnel i:nth-child(4) { width: 34%; }
+.mock--bars { align-items: flex-end; height: 52%; }
+.mock--bars i { flex: 1; }
+.mock--bars i:nth-child(1) { height: 40%; } .mock--bars i:nth-child(2) { height: 62%; }
+.mock--bars i:nth-child(3) { height: 48%; } .mock--bars i:nth-child(4) { height: 86%; background: rgba(255, 107, 0, 0.7); }
+.mock--bars i:nth-child(5) { height: 70%; } .mock--bars i:nth-child(6) { height: 100%; }
+.mock--search { flex-direction: column; }
+.mock--search b { height: 26px; border-radius: 999px; border: 1px solid rgba(245, 243, 239, 0.3); background: transparent; margin-bottom: 6px; }
+.mock--search i { height: 10px; }
+.mock--search i:nth-child(2) { width: 90%; background: rgba(255, 107, 0, 0.7); }
+.mock--search i:nth-child(3) { width: 70%; } .mock--search i:nth-child(4) { width: 82%; }
+.mock--table { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.mock--table i { height: 16px; }
+.mock--table i:nth-child(1), .mock--table i:nth-child(2) { background: rgba(255, 107, 0, 0.7); }
+.card--soon .mat-prev { opacity: 0.85; }

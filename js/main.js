@@ -349,3 +349,11 @@ window.addEventListener(
   });
   start();
 })();
+
+/* ============ MATERIAIS: setas do carrossel ============ */
+(function initMateriais() {
+  const track = document.getElementById("matCarousel");
+  if (!track) return;
+  document.getElementById("matPrev").addEventListener("click", () => track.scrollBy({ left: -340, behavior: "smooth" }));
+  document.getElementById("matNext").addEventListener("click", () => track.scrollBy({ left: 340, behavior: "smooth" }));
+})();
