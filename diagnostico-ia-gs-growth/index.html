@@ -14,7 +14,7 @@ img { max-width: 100%; }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap">
 <style>
 /* Layout: coluna única alinhada à esquerda; tela de pergunta com número fantasma ao fundo; resultado em blocos de leitura rápida */
 :root {
@@ -370,12 +370,22 @@ body { position: relative; }
 .top .nw { white-space: nowrap; }
 .top a.tag { flex: none; white-space: nowrap; }
 @media (max-width: 480px) { .top .chip { font-size: 0.8125rem; } .top a.tag { padding: 8px 14px; font-size: 0.8125rem; } }
+
+/* v12: badge do autor igual ao header do Growth Hub */
+.author-chip { display: flex; width: fit-content; min-width: 0; align-items: center; gap: 12px; padding: 4px 14px 4px 4px;
+  border: 1px solid rgba(10, 10, 10, 0.14); border-radius: 999px; color: var(--fg); text-decoration: none;
+  font-family: var(--body); text-transform: none; letter-spacing: 0; transition: border-color 0.18s ease, transform 0.18s ease; }
+.author-chip:hover { border-color: var(--accent-text); transform: translateY(-2px); }
+.author-chip__photo { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; flex: none; border: 2px solid var(--accent); }
+.author-chip__text { display: flex; flex-direction: column; line-height: 1.2; min-width: 0; }
+.author-chip__text strong { font-size: 13px; font-weight: 700; white-space: nowrap; }
+.author-chip__text small { font-family: "JetBrains Mono", monospace; font-size: 10px; color: var(--muted); white-space: nowrap; }
 </style>
 </head>
 <body>
 <div class="bg" aria-hidden="true"></div>
 <div class="wrap">
-  <div class="top"><div class="id"><span class="chip"><span class="nw">Guilherme Sanges -</span> <span class="nw">Especialista em Growth</span></span></div><a class="tag" href="https://guilhermesangesgrowth-maker.github.io/hub/?utm_source=diagnostico-ia&amp;utm_medium=ferramenta&amp;utm_campaign=diagnostico-maturidade-ia&amp;utm_content=topo-otimizar-growth" target="_blank" rel="noopener">Otimizar growth</a></div>
+  <div class="top"><a href="https://guilhermesangesgrowth-maker.github.io/hub/#sobre" class="author-chip" target="_blank" rel="noopener" aria-label="Conheça Guilherme Sanges, especialista em growth"><img class="author-chip__photo" src="https://guilhermesangesgrowth-maker.github.io/hub/assets/guilherme-avatar.jpg" alt="Guilherme Sanges" width="36" height="36" decoding="async" fetchpriority="high"><span class="author-chip__text"><strong>Guilherme Sanges</strong><small>Especialista em Growth</small></span></a><a class="tag" href="https://guilhermesangesgrowth-maker.github.io/hub/?utm_source=diagnostico-ia&amp;utm_medium=ferramenta&amp;utm_campaign=diagnostico-maturidade-ia&amp;utm_content=topo-otimizar-growth" target="_blank" rel="noopener">Otimizar growth</a></div>
   <main id="app" aria-live="polite"></main>
   <div class="foot"><div class="social">
 <a href="https://instagram.com/guilherme.sanges.growth" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6"/></svg></a>
