@@ -1339,8 +1339,8 @@ h1, h2, h3, h4, .stat__value, .method__hook, .hub__core, .market-take__mark, .ca
   display: flex; align-items: center; justify-content: center;
 }
 .mat-prev .card__type { position: absolute; top: 10px; left: 10px; z-index: 2; background: rgba(10, 10, 10, 0.8); }
-.mat-prev--shot { background: var(--off-white); align-items: flex-start; }
-.mat-prev--shot img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; }
+.mat-prev--shot { background: #fff; align-items: center; }
+.mat-prev--shot img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
 
 .mock { width: 74%; display: flex; gap: 8px; margin-top: 18px; }
 .mock i, .mock b { display: block; background: rgba(245, 243, 239, 0.16); border-radius: 4px; }
