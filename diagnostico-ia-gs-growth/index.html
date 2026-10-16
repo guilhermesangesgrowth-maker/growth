@@ -14,7 +14,8 @@ img { max-width: 100%; }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://guilhermesangesgrowth-maker.github.io/hub/css/fonts.css">
 <style>
 /* Layout: coluna única alinhada à esquerda; tela de pergunta com número fantasma ao fundo; resultado em blocos de leitura rápida */
 :root {
@@ -380,6 +381,75 @@ body { position: relative; }
 .author-chip__text { display: flex; flex-direction: column; line-height: 1.2; min-width: 0; }
 .author-chip__text strong { font-size: 13px; font-weight: 700; white-space: nowrap; }
 .author-chip__text small { font-family: "JetBrains Mono", monospace; font-size: 10px; color: var(--muted); white-space: nowrap; }
+
+/* v13: tipografia e layout do Growth Hub (Advercase nos títulos, Archivo no texto, JetBrains Mono nos rótulos) */
+:root {
+  --bg: #F5F3EF;
+  --fg: #0A0A0A;
+  --muted: #5C5A54;
+  --line: rgba(10, 10, 10, 0.12);
+  --accent-text: #C94F00;
+  --focus: #C94F00;
+  --grid: rgba(10, 10, 10, 0.1);
+  --display: "Advercase", "Archivo", Arial, sans-serif;
+  --body: "Archivo", Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+  --radius: 14px;
+}
+body { -webkit-font-smoothing: antialiased; padding-top: 0; }
+
+/* Header fixo com vidro, como a nav do hub */
+.top { position: sticky; top: 0; z-index: 20; margin: 0 0 36px; padding: 12px 0; border-bottom: 1px solid var(--line);
+  background: rgba(245, 243, 239, 0.82); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  box-shadow: 0 0 0 100vmax rgba(245, 243, 239, 0.82); clip-path: inset(0 -100vmax); }
+.top a.tag { font-family: var(--body); font-weight: 700; font-size: 14px; letter-spacing: 0; text-transform: none; padding: 10px 20px; }
+
+/* Títulos: Advercase em caixa normal */
+h1, h2, h3 { font-family: var(--display); font-weight: 700; text-transform: none; letter-spacing: 0; line-height: 1.1; }
+h1 { font-size: clamp(2rem, 6.4vw, 2.9rem); letter-spacing: -0.01em; }
+h2 { font-size: clamp(1.55rem, 4.4vw, 2rem); }
+h3 { font-size: 1.2rem; }
+.score .lvl h2 { font-size: clamp(1.8rem, 5.5vw, 2.4rem); }
+.areas b, .dim .nm, .bhead b, .plan b, .exscore span, .who b { font-family: var(--display); text-transform: none; letter-spacing: 0; }
+.dim .nm, .bhead b, .plan b { font-size: 1.15rem; }
+.score .num, .metrics b, .exscore b, .bgnum, .stack span, .mdown, .pn, .steps li i { font-family: var(--display); }
+
+/* Rótulos: JetBrains Mono em caixa alta, com o traço laranja do hub */
+.eyebrow, .sec .label, .cta .label, .count, .facts, .mtag, .svc .tg, .ptitle, .scale div, .bhead em, .dim .pt,
+.fld > label:not(.consent), .opp article h3 span {
+  font-family: var(--mono); font-weight: 500; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; }
+.eyebrow, .sec .label, .cta .label { display: inline-flex; align-items: center; gap: 8px; }
+.eyebrow::before, .sec .label::before, .cta .label::before { content: ""; width: 18px; height: 1px; background: var(--accent); flex: none; }
+.cta .label { color: var(--accent); }
+.scale div { font-size: 11px; letter-spacing: 0.04em; }
+@media (max-width: 480px) { .scale div { font-size: 10px; letter-spacing: 0; } }
+.scale small { font-family: var(--body); letter-spacing: 0; text-transform: none; }
+.bgnum { top: 18px; }
+.facts { font-size: 12px; }
+
+/* Texto corrido */
+.lead, .summary { font-size: 1rem; line-height: 1.6; color: var(--muted); }
+.summary { color: var(--fg); }
+.next, .opp article p, .svc p, .cta p, .brow p, .plan li p, .bnote, .mfoot p { line-height: 1.6; }
+
+/* Botões: Archivo bold, sem caixa alta */
+.btn { font-family: var(--body); font-weight: 700; font-size: 15px; letter-spacing: 0; text-transform: none; border-radius: 999px; }
+.start .btn { font-size: 16px; }
+.btn.ghost { box-shadow: inset 0 0 0 1px rgba(10, 10, 10, 0.25); }
+.btn.ghost:hover { box-shadow: inset 0 0 0 1px var(--accent-text); color: var(--accent-text); }
+.cta .btn.ghost { box-shadow: inset 0 0 0 1px rgba(245, 243, 239, 0.25); }
+.cta .btn.ghost:hover { color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+
+/* Cards com o raio do hub */
+.svc, .ex, .mrow, .compare > div, .cta, .opt { border-radius: var(--radius); }
+.opt { border-radius: 12px; }
+.svc { border-color: var(--accent); }
+.svc .tg { display: inline-block; padding: 5px 12px; border: 1px solid var(--accent); border-radius: 999px; font-size: 11px; }
+.svc h3 { font-size: 1.6rem; margin-top: 12px; }
+.mtag { border-radius: 999px; padding: 5px 12px; font-size: 11px; }
+.cta { overflow: hidden; }
+.sec { margin-top: 56px; }
+.fld input[type="text"], .fld input[type="email"], .fld input[type="tel"], .fld select { border-radius: 10px; font-family: var(--body); }
 </style>
 </head>
 <body>
