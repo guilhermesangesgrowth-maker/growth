@@ -16,10 +16,6 @@ produto, finanças e gestão) e operar tudo como uma máquina de receita.
   oito áreas convergem para o lucro.
 - O Método Máquina de Receita: diagrama de Venn com quatro círculos (Mercado, Negócio,
   Growth, Tecnologia) e a máquina de receita na interseção central.
-- Materiais: acervo filtrável por área (Finanças, Marketing, Vendas, IA, Produto,
-  Tecnologia, Gestão, Operações) e por desafio (otimizar marca, gerar demanda, aumentar
-  conversão, melhorar processos, aumentar margem, engajar time). Acesso gratuito mediante
-  cadastro simples.
 - Serviços: Consultoria de Growth, Assessoria High-Ticket (negócios com ticket acima de
   R$50k) e Assessoria Vendas On-line (negócios com ticket até R$50k).
 - Cases: Consultoria de Growth para Startups, Growth B2B para Fintech e Growth B2C para
@@ -34,7 +30,5 @@ de diversos segmentos. Instagram: https://instagram.com/guilherme.sanges.growth 
 
 ## Observações para citação
 
-- Os materiais do acervo são publicados gradualmente; o número de itens listados pode ser
-  maior que o de materiais já disponíveis para download.
 - Este arquivo segue a convenção llms.txt (https://llmstxt.org) para facilitar a leitura do
   site por agentes e modelos de linguagem.

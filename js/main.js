@@ -14,39 +14,6 @@ document.getElementById("scrollCue").addEventListener("click", () => {
   document.getElementById("mercado").scrollIntoView({ behavior: "smooth" });
 });
 
-/* ============ SEO/GEO: ItemList estruturado do acervo ============
- * Gerado a partir do catálogo real (deliverables-data.js) para que os dados
- * estruturados nunca fiquem desatualizados em relação ao que está na tela. */
-(function injectDeliverablesJsonLd() {
-  const listNode = document.querySelector('script[type="application/ld+json"]');
-  const baseUrl = document.querySelector('link[rel="canonical"]')?.href || location.href;
-  const itemList = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: "Acervo de materiais de growth",
-    description: "Frameworks, ferramentas e análises gratuitos para otimizar a máquina de receita de qualquer negócio.",
-    numberOfItems: DELIVERABLES.length,
-    itemListElement: DELIVERABLES.map((item, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      item: {
-        "@type": "CreativeWork",
-        "@id": `${baseUrl}#${item.id}`,
-        name: item.title,
-        description: item.teaser,
-        genre: item.typeLabel,
-        about: item.categoryLabel,
-        isAccessibleForFree: true,
-        creator: { "@type": "Person", name: "Guilherme Sanges" },
-      },
-    })),
-  };
-  const script = document.createElement("script");
-  script.type = "application/ld+json";
-  script.text = JSON.stringify(itemList);
-  document.head.appendChild(script);
-})();
-
 /* ============ MÉTODO: DIAGRAMA DE VENN (destaque ao passar o mouse) ============ */
 const vennSvg = document.getElementById("vennSvg");
 const vennCircles = Array.from(vennSvg.querySelectorAll("circle.ring")).map((c) => ({
@@ -81,94 +48,6 @@ vennSvg.addEventListener("pointermove", (e) => {
 vennSvg.addEventListener("pointerleave", () => setMethod(null));
 vennSvg.addEventListener("click", (e) => setMethod(vennKeyAt(e)));
 
-
-/* ============ FILTERS ============ */
-const categorySelect = document.getElementById("filterCategory");
-const challengeSelect = document.getElementById("filterChallenge");
-let activeCategory = "todos";
-let activeChallenge = "todos";
-
-CATEGORIES.forEach((cat) => {
-  const opt = document.createElement("option");
-  opt.value = cat.id;
-  opt.textContent = cat.id === "todos" ? "Todas as áreas" : cat.label;
-  categorySelect.appendChild(opt);
-});
-CHALLENGES.forEach((challenge) => {
-  const opt = document.createElement("option");
-  opt.value = challenge.id;
-  opt.textContent = challenge.id === "todos" ? "Todos os desafios" : challenge.label;
-  challengeSelect.appendChild(opt);
-});
-
-function countMatches(category, challenge) {
-  return DELIVERABLES.filter(
-    (d) =>
-      (category === "todos" || d.category === category) &&
-      (challenge === "todos" || d.challenges.includes(challenge))
-  ).length;
-}
-
-// Se a combinação não tem nenhum material, o filtro anterior volta para "todos"
-// e o que o visitante acabou de escolher é preservado.
-categorySelect.addEventListener("change", () => {
-  activeCategory = categorySelect.value;
-  if (countMatches(activeCategory, activeChallenge) === 0) {
-    activeChallenge = "todos";
-    challengeSelect.value = "todos";
-  }
-  renderCards();
-});
-challengeSelect.addEventListener("change", () => {
-  activeChallenge = challengeSelect.value;
-  if (countMatches(activeCategory, activeChallenge) === 0) {
-    activeCategory = "todos";
-    categorySelect.value = "todos";
-  }
-  renderCards();
-});
-
-/* ============ CAROUSEL / CARDS ============ */
-const carouselEl = document.getElementById("carousel");
-
-function renderCards() {
-  carouselEl.innerHTML = "";
-  carouselEl.scrollLeft = 0;
-  const items = DELIVERABLES.filter((d) => {
-    const matchesCategory = activeCategory === "todos" || d.category === activeCategory;
-    const matchesChallenge = activeChallenge === "todos" || d.challenges.includes(activeChallenge);
-    return matchesCategory && matchesChallenge;
-  });
-
-  document.getElementById("carouselEmpty").hidden = items.length > 0;
-
-  items.forEach((item) => {
-    const card = document.createElement("article");
-    card.className = "card";
-    card.innerHTML = `
-      <div class="card__top">
-        <span class="card__type">${item.typeLabel}</span>
-        <span class="card__lock">🔒</span>
-      </div>
-      <div class="card__body">
-        <span class="card__category">${item.categoryLabel}</span>
-        <h3 class="card__title">${item.title}</h3>
-        <p class="card__teaser">${item.teaser}</p>
-        <span class="card__cta">Conferir →</span>
-      </div>
-    `;
-    card.addEventListener("click", () => openModal(item));
-    carouselEl.appendChild(card);
-  });
-}
-renderCards();
-
-document.getElementById("carouselPrev").addEventListener("click", () => {
-  carouselEl.scrollBy({ left: -340, behavior: "smooth" });
-});
-document.getElementById("carouselNext").addEventListener("click", () => {
-  carouselEl.scrollBy({ left: 340, behavior: "smooth" });
-});
 
 /* ============ MODAL ============ */
 const modalBackdrop = document.getElementById("modalBackdrop");

@@ -12,7 +12,7 @@
   --off-white-deep: #ece9e2;
   --orange-ink: #c94f00;
 
-  --font-display: "Archivo Black", "Archivo", Arial, sans-serif;
+  --font-display: "Advercase", "Archivo", Arial, sans-serif;
   --font-body: "Archivo", Arial, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
 
@@ -195,7 +195,7 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 /* ============ DECK (section) ============ */
-.deck { padding: 88px 20px; position: relative; }
+.deck { padding: 44px 20px; position: relative; }
 .deck--light { background: var(--off-white); color: var(--black); }
 .deck--tone { background: var(--off-white-deep); color: var(--black); }
 .deck__header { max-width: 640px; margin: 0 auto 48px; text-align: left; }
@@ -203,7 +203,7 @@ button { font-family: inherit; cursor: pointer; }
 .deck__subtitle { font-size: 16px; line-height: 1.6; opacity: 0.72; }
 
 @media (min-width: 1024px) {
-  .deck { padding: 120px 40px; }
+  .deck { padding: 60px 40px; }
   .deck__title { font-size: 40px; }
 }
 
@@ -942,9 +942,7 @@ button { font-family: inherit; cursor: pointer; }
 .hero__outline {
   display: inline-block;
   white-space: nowrap;
-  color: var(--black);
-  -webkit-text-stroke: 0.07em var(--orange);
-  paint-order: stroke fill;
+  color: var(--orange-ink);
 }
 
 /* ============ V2 — MERCADO: ANTES (FLUXO LINEAR) ============ */
@@ -1198,3 +1196,127 @@ button { font-family: inherit; cursor: pointer; }
   .cases-grid { grid-template-columns: repeat(2, 1fr); }
   .cases-grid .case-carousel { aspect-ratio: 3 / 2; }
 }
+
+/* ============ HEADER: BADGE DO AUTOR NO LUGAR DO LOGO ============ */
+.nav__author {
+  margin-bottom: 0;
+  padding: 4px 14px 4px 4px;
+  background: transparent;
+  backdrop-filter: none;
+  border-color: rgba(10, 10, 10, 0.14);
+}
+.nav__author .author-chip__photo { width: 36px; height: 36px; }
+.nav__author .author-chip__text strong { font-size: 13px; }
+.nav__author .author-chip__text small { font-size: 10px; }
+.nav--open .nav__author { display: none; }
+@media (min-width: 860px) {
+  .nav--open .nav__author { display: flex; }
+}
+
+/* ============ TIPOGRAFIA: ADVERCASE EM TÍTULOS E DESTAQUES ============ */
+h1, h2, h3, h4, .stat__value, .method__hook, .hub__core, .market-take__mark, .case-card__stat strong, .success-icon { font-weight: 700; }
+.hero__title, .deck__title { letter-spacing: 0; }
+
+/* Advercase é mais condensada: tamanhos um pouco maiores para manter a presença */
+.hero__title--long { font-size: 23px; line-height: 1.18; }
+.deck__title { font-size: 22px; line-height: 1.16; }
+.stat__value { font-size: 22px; }
+.card__title { font-size: 21px; }
+.offer-card__title { font-size: 24px; }
+.case-card__title { font-size: 20px; }
+.case-card__stat strong { font-size: 23px; }
+.method__hook { font-size: 22px; }
+@media (min-width: 640px) {
+  .hero__title--long { font-size: 32px; }
+  .deck__title { font-size: 27px; }
+  .stat__value { font-size: 31px; }
+  .method__hook { font-size: 24px; }
+}
+@media (min-width: 1024px) {
+  .hero__title--long { font-size: 38px; }
+  .deck__title { font-size: 32px; }
+}
+
+/* ============ O MERCADO: ANTES E AGORA (MINIMALISTA) ============ */
+.compare { max-width: var(--container); margin: 0 auto; display: flex; flex-direction: column; gap: 48px; }
+.compare__row { display: grid; gap: 18px; }
+.compare__tag {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--gray-on-light);
+}
+.compare__tag::before { content: ""; width: 18px; height: 1px; background: currentColor; }
+.compare__tag--accent { color: var(--orange-ink); }
+@media (min-width: 900px) {
+  .compare { gap: 72px; }
+  .compare__row { grid-template-columns: 110px 1fr; gap: 32px; align-items: start; }
+  .compare__tag { padding-top: 14px; }
+}
+
+/* Antes: linha do tempo fina e apagada */
+.antes {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; align-items: center; gap: 12px;
+  font-family: var(--font-display); font-weight: 400; font-size: 17px;
+  color: var(--gray-on-light);
+}
+.antes li:not(.antes__sep) { white-space: nowrap; }
+.antes__sep { flex: 1; min-width: 18px; height: 1px; background: currentColor; opacity: 0.4; position: relative; }
+.antes__sep::after {
+  content: ""; position: absolute; right: 0; top: 50%;
+  width: 7px; height: 7px;
+  border-top: 1px solid currentColor; border-right: 1px solid currentColor;
+  transform: translateY(-50%) rotate(45deg);
+}
+@media (min-width: 640px) { .antes { font-size: 24px; gap: 22px; max-width: 680px; } }
+
+/* Agora: oito áreas convergindo para o lucro */
+.agora__svg { display: block; width: 100%; max-width: 520px; margin: 0 auto; height: auto; overflow: visible; }
+.agora__orbit { fill: none; stroke: rgba(10, 10, 10, 0.16); stroke-dasharray: 2 6; }
+.agora__spoke { stroke: rgba(10, 10, 10, 0.4); stroke-width: 1; marker-end: url(#agoraArrow); }
+.agora__dot { fill: var(--black); }
+.agora__label { font-family: var(--font-mono); font-size: 15px; font-weight: 600; fill: var(--black); }
+.agora__core { fill: var(--orange); }
+.agora__corelabel {
+  font-family: var(--font-display); font-weight: 700; font-size: 30px;
+  fill: var(--black); text-anchor: middle; dominant-baseline: central;
+}
+.agora__pulse {
+  fill: none; stroke: var(--orange); stroke-width: 1.5;
+  transform-box: fill-box; transform-origin: center;
+  animation: agoraPulse 3.2s ease-out infinite;
+}
+@keyframes agoraPulse { 0% { transform: scale(1); opacity: 0.55; } 100% { transform: scale(1.7); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .agora__pulse { animation: none; opacity: 0.25; } }
+
+
+/* ============ HERO COM FOTO DE FUNDO ============ */
+.hero { justify-content: flex-start; padding-top: calc(64px + min(92vw, 420px) * 1.02); }
+.hero__photo {
+  position: absolute; z-index: 2;
+  top: 64px; left: 50%; transform: translateX(-50%);
+  width: min(92vw, 420px); height: auto; aspect-ratio: 1;
+  object-fit: cover; pointer-events: none; user-select: none;
+  -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 72%, transparent 100%);
+}
+@media (min-width: 900px) {
+  .hero { justify-content: center; padding-top: 120px; }
+  .hero__photo {
+    top: 50%; left: auto; right: 2vw;
+    width: clamp(440px, 44vw, 680px);
+    transform: translateY(-46%);
+  }
+  .hero__content { max-width: min(820px, 56%); }
+}
+
+/* ============ SERVIÇOS: CONSULTORIA OFF-WHITE ============ */
+.offer-card--orange { background: var(--off-white); border: 2px solid var(--orange); }
+.offer-card--orange .offer-card__tag { border-color: var(--orange-ink); color: var(--orange-ink); }
+.offer-card--orange .offer-card__list li::before { color: var(--orange-ink); }
+.offer-card--orange .offer-card__desc { opacity: 1; }
+.offer-card--orange .offer-card__guarantee { color: var(--orange-ink); }
+
+/* ============ SOBRE (sem foto) / REDES CENTRALIZADAS ============ */
+@media (min-width: 900px) { .about__media { flex: 1 1 auto; } }
+#redes .redes-grid { margin: 0 auto; }

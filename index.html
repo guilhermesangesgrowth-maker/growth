@@ -30,7 +30,8 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%230A0A0A%22/><text x=%2250%22 y=%2266%22 font-size=%2260%22 fill=%22%23FF6B00%22 text-anchor=%22middle%22 font-family=%22Arial%22>G</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Archivo+Black&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/fonts.css" />
   <link rel="stylesheet" href="css/styles.css" />
 
   <!-- GEO / dados estruturados: identifica autor, site e organização para buscadores e motores de IA -->
@@ -58,25 +59,23 @@
           "https://instagram.com/guilherme.sanges.growth",
           "https://www.linkedin.com/in/guilhermesanges/"
         ]
-      },
-      {
-        "@type": "ItemList",
-        "@id": "https://guilhermesangesgrowth-maker.github.io/hub/#acervo",
-        "name": "Acervo de materiais de growth",
-        "description": "Frameworks, ferramentas e análises gratuitos para otimizar a máquina de receita de qualquer negócio."
       }
     ]
   }
   </script>
-</head>
 <!-- NAV -->
 <header class="nav" id="nav">
   <div class="nav__inner">
-    <a href="#top" class="nav__logo">GROWTH<span>/</span>HUB</a>
+    <a href="#sobre" class="author-chip nav__author" aria-label="Conheça Guilherme Sanges, especialista em growth">
+      <img class="author-chip__photo" src="assets/guilherme-avatar.jpg" alt="Guilherme Sanges" width="44" height="44" decoding="async" fetchpriority="high" />
+      <span class="author-chip__text">
+        <strong>Guilherme Sanges</strong>
+        <small>Especialista em Growth</small>
+      </span>
+    </a>
     <nav class="nav__links">
       <a href="#mercado">Mercado</a>
       <a href="#metodo">Método</a>
-      <a href="#acervo">Materiais</a>
       <a href="#servicos">Serviços</a>
       <a href="#cases">Cases</a>
       <a href="#sobre">Sobre</a>
@@ -85,7 +84,6 @@
     <a href="#servicos" class="btn btn--ghost nav__cta">Ver serviços</a>
     <nav class="nav__mobile" id="navMobile" aria-label="Menu principal">
       <a href="#metodo">Método</a>
-      <a href="#acervo">Materiais</a>
       <a href="#servicos">Soluções</a>
       <a href="#cases">Cases</a>
     </nav>
@@ -100,18 +98,11 @@
   <!-- HERO -->
   <section class="hero" id="hero">
     <div class="hero__bg" aria-hidden="true">
+      <img class="hero__photo" src="assets/guilherme-foto.jpg" alt="" width="720" height="720" decoding="async" fetchpriority="high" />
       <div class="hero__grid"></div>
       <div class="hero__glow"></div>
     </div>
     <div class="hero__content">
-      <a href="#sobre" class="author-chip" aria-label="Conheça Guilherme Sanges, especialista em growth">
-        <img class="author-chip__photo" src="assets/guilherme-avatar.jpg" alt="Guilherme Sanges" width="44" height="44" decoding="async" fetchpriority="high" />
-        <span class="author-chip__text">
-          <strong>Guilherme Sanges</strong>
-          <small>Especialista em Growth</small>
-        </span>
-        <span class="author-chip__arrow" aria-hidden="true">↓</span>
-      </a>
       <p class="eyebrow">método máquina de receita</p>
       <h1 class="hero__title hero__title--long">
         Posts e leads não pagam a sua conta.
@@ -124,7 +115,7 @@
       </p>
       <div class="hero__actions">
         <a href="https://api.whatsapp.com/send/?phone=5519998878022&amp;text=Ol%C3%A1,%20vim%20do%20hub%20de%20growth%20e%20quero%20saber%20sobre%20o%20m%C3%A9todo%20M%C3%A1quina%20de%20Receita!" class="btn btn--primary" target="_blank" rel="noopener">Crescer agora!</a>
-        <a href="#acervo" class="btn btn--text">Ver materiais <span aria-hidden="true">↓</span></a>
+        <a href="#cases" class="btn btn--text">Ver cases <span aria-hidden="true">↓</span></a>
       </div>
       <div class="hero__stats" id="heroStats">
         <div class="stat">
@@ -160,34 +151,55 @@
       </p>
     </div>
 
-    <div class="shift" role="group" aria-label="Diagrama: antes, o caminho era postar, engajar e vender; agora, oito áreas convergem em lucro">
-      <figure class="shift__panel shift__panel--before">
-        <figcaption><span class="shift__tag">Antes</span></figcaption>
-        <div class="flow" role="list">
-          <span class="flow__box" role="listitem">Postar</span>
-          <span class="flow__arrow" aria-hidden="true">→</span>
-          <span class="flow__box" role="listitem">Engajar</span>
-          <span class="flow__arrow" aria-hidden="true">→</span>
-          <span class="flow__box" role="listitem">Vender</span>
-        </div>
-      </figure>
+    <div class="compare">
+      <div class="compare__row">
+        <span class="compare__tag">Antes</span>
+        <ol class="antes" aria-label="Antes: postar, engajar e vender">
+          <li>Postar</li>
+          <li class="antes__sep" aria-hidden="true"></li>
+          <li>Engajar</li>
+          <li class="antes__sep" aria-hidden="true"></li>
+          <li>Vender</li>
+        </ol>
+      </div>
 
-      <div class="shift__arrow" aria-hidden="true"></div>
-
-      <figure class="shift__panel shift__panel--after">
-        <figcaption><span class="shift__tag">Agora</span></figcaption>
-        <div class="hub" role="list">
-          <div class="hub__node" role="listitem"><span>Inteligência de Mercado</span><i class="hub__arrow" aria-hidden="true">↘</i></div>
-          <div class="hub__node" role="listitem"><span>Marketing</span><i class="hub__arrow" aria-hidden="true">↓</i></div>
-          <div class="hub__node" role="listitem"><span>Growth</span><i class="hub__arrow" aria-hidden="true">↙</i></div>
-          <div class="hub__node" role="listitem"><span>Vendas</span><i class="hub__arrow" aria-hidden="true">→</i></div>
-          <div class="hub__core" role="listitem">Lucro</div>
-          <div class="hub__node" role="listitem"><span>IA</span><i class="hub__arrow" aria-hidden="true">←</i></div>
-          <div class="hub__node" role="listitem"><span>Produto</span><i class="hub__arrow" aria-hidden="true">↗</i></div>
-          <div class="hub__node" role="listitem"><span>Finanças</span><i class="hub__arrow" aria-hidden="true">↑</i></div>
-          <div class="hub__node" role="listitem"><span>Gestão</span><i class="hub__arrow" aria-hidden="true">↖</i></div>
+      <div class="compare__row">
+        <span class="compare__tag compare__tag--accent">Agora</span>
+        <div class="agora">
+          <svg class="agora__svg" viewBox="0 0 480 440" role="img" aria-label="Oito áreas convergem para o lucro: inteligência de mercado, marketing, growth, vendas, IA, produto, finanças e gestão">
+          <defs><marker id="agoraArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1.5 1.5 L8.5 5 L1.5 8.5" fill="none" stroke="rgba(10,10,10,0.55)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+          <ellipse class="agora__orbit" cx="240" cy="220" rx="150" ry="165"/>
+          <line class="agora__spoke" x1="240.0" y1="69.0" x2="240.0" y2="156.0"/>
+          <circle class="agora__dot" cx="240.0" cy="55.0" r="4.5"/>
+          <text class="agora__label" x="240.0" y="39.0" text-anchor="middle">Inteligência de Mercado</text>
+          <line class="agora__spoke" x1="336.6" y1="113.7" x2="283.1" y2="172.6"/>
+          <circle class="agora__dot" cx="346.1" cy="103.3" r="4.5"/>
+          <text class="agora__label" x="362.1" y="108.3" text-anchor="start">Marketing</text>
+          <line class="agora__spoke" x1="376.0" y1="220.0" x2="304.0" y2="220.0"/>
+          <circle class="agora__dot" cx="390.0" cy="220.0" r="4.5"/>
+          <text class="agora__label" x="406.0" y="225.0" text-anchor="start">Growth</text>
+          <line class="agora__spoke" x1="336.6" y1="326.3" x2="283.1" y2="267.4"/>
+          <circle class="agora__dot" cx="346.1" cy="336.7" r="4.5"/>
+          <text class="agora__label" x="362.1" y="341.7" text-anchor="start">Vendas</text>
+          <line class="agora__spoke" x1="240.0" y1="371.0" x2="240.0" y2="284.0"/>
+          <circle class="agora__dot" cx="240.0" cy="385.0" r="4.5"/>
+          <text class="agora__label" x="240.0" y="411.0" text-anchor="middle">IA</text>
+          <line class="agora__spoke" x1="143.4" y1="326.3" x2="196.9" y2="267.4"/>
+          <circle class="agora__dot" cx="133.9" cy="336.7" r="4.5"/>
+          <text class="agora__label" x="117.9" y="341.7" text-anchor="end">Produto</text>
+          <line class="agora__spoke" x1="104.0" y1="220.0" x2="176.0" y2="220.0"/>
+          <circle class="agora__dot" cx="90.0" cy="220.0" r="4.5"/>
+          <text class="agora__label" x="74.0" y="225.0" text-anchor="end">Finanças</text>
+          <line class="agora__spoke" x1="143.4" y1="113.7" x2="196.9" y2="172.6"/>
+          <circle class="agora__dot" cx="133.9" cy="103.3" r="4.5"/>
+          <text class="agora__label" x="117.9" y="108.3" text-anchor="end">Gestão</text>
+          <circle class="agora__pulse" cx="240" cy="220" r="46"/>
+          <circle class="agora__core" cx="240" cy="220" r="46"/>
+          <text class="agora__corelabel" x="240" y="220">Lucro</text>
+          </svg>
+          
         </div>
-      </figure>
+      </div>
     </div>
   </section>
 
@@ -220,38 +232,6 @@
 </svg>
 
     </div>
-  </section>
-
-  <!-- MATERIAIS -->
-  <section class="deck deck--tone" id="acervo">
-    <div class="deck__header">
-      <p class="eyebrow eyebrow--dark">O maior hub de growth do BR!</p>
-      <h2 class="deck__title">Sua máquina de receita tem um problema, a solução está aqui</h2>
-      <p class="deck__subtitle">
-        Cada material nasce de uma solução validada após um problema real de quem opera
-        receita: especialistas, times comerciais, gestores e fundadores de negócios de
-        todos os portes e segmentos.
-      </p>
-    </div>
-
-    <div class="filters-row">
-      <label class="filter-select">
-        <span>Filtre por área</span>
-        <select id="filterCategory" aria-label="Filtrar por área"></select>
-      </label>
-      <label class="filter-select">
-        <span>Filtre por desafio</span>
-        <select id="filterChallenge" aria-label="Filtrar por desafio"></select>
-      </label>
-    </div>
-
-    <div class="carousel-wrap">
-      <button class="carousel-nav carousel-nav--prev" id="carouselPrev" aria-label="Anterior">‹</button>
-      <div class="carousel" id="carousel" tabindex="0"></div>
-      <button class="carousel-nav carousel-nav--next" id="carouselNext" aria-label="Próximo">›</button>
-    </div>
-    <p class="carousel-hint">Arraste para o lado para ver mais →</p>
-    <p class="carousel-empty" id="carouselEmpty" hidden>Nenhum material com essa combinação de área e desafio ainda. Tente outro filtro.</p>
   </section>
 
   <!-- DOBRA 5 — SERVIÇOS -->
@@ -411,9 +391,6 @@
       <div class="about__media">
         <p class="eyebrow eyebrow--dark">sobre mim</p>
         <h2 class="deck__title about__name">Guilherme Sanges</h2>
-        <div class="about__frame">
-          <img class="about__photo" src="assets/guilherme-foto.jpg" alt="Guilherme Sanges, especialista em growth" width="720" height="720" loading="lazy" decoding="async" />
-        </div>
       </div>
       <div class="about__content">
         <p class="about__lead">
@@ -447,7 +424,7 @@
   <section class="deck deck--tone" id="redes">
     <div class="deck__header">
       <p class="eyebrow">Redes</p>
-      <h2 class="deck__title">Acompanhe e converse comigo</h2>
+      <h2 class="deck__title">Acompanhe e construa comigo</h2>
       <p class="deck__subtitle">
         Conteúdo sobre growth toda semana e um canal direto para conversar sobre a sua
         máquina de receita.
@@ -487,17 +464,12 @@
 <!-- FOOTER -->
 <footer class="footer">
   <div class="footer__inner">
-    <div class="footer__brand">
-      <span class="nav__logo nav__logo--footer">GROWTH<span>/</span>HUB</span>
-      <p>O maior hub de growth do BR.</p>
-    </div>
     <div class="footer__links">
       <div class="footer__col">
         <strong>Navegue</strong>
         <a href="#mercado">Mercado</a>
         <a href="#metodo">Método</a>
-        <a href="#acervo">Materiais</a>
-        <a href="#servicos">Serviços</a>
+          <a href="#servicos">Serviços</a>
         <a href="#cases">Cases</a>
         <a href="#sobre">Sobre</a>
         <a href="#redes">Redes</a>
@@ -676,5 +648,6 @@
   });
 })();
 </script>
+
 </body>
 </html>
