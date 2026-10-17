@@ -451,6 +451,23 @@ h3 { font-size: 1.2rem; }
 .cta { overflow: hidden; }
 .sec { margin-top: 56px; }
 .fld input[type="text"], .fld input[type="email"], .fld input[type="tel"], .fld select { border-radius: 10px; font-family: var(--body); }
+
+/* v14: banner do playbook GTM Engineering */
+.pbook { margin-top: 40px; display: grid; grid-template-columns: 1.15fr 1fr; gap: 24px; align-items: center; padding: 24px; overflow: hidden;
+  background: radial-gradient(80% 120% at 100% 0%, rgba(255, 107, 0, 0.18), rgba(255, 107, 0, 0) 60%), var(--surface);
+  border: 1px solid var(--accent); border-radius: var(--radius); box-shadow: 6px 6px 0 var(--accent); }
+.pbook .mtag { background: var(--accent); color: var(--accent-fg); }
+.pbook h3 { font-size: clamp(1.35rem, 4vw, 1.65rem); margin: 12px 0 8px; }
+.pbook p { margin: 0 0 18px; color: var(--muted); font-size: 0.9375rem; line-height: 1.6; max-width: 46ch; }
+.pbook__cover { align-self: stretch; display: flex; align-items: center; justify-content: center; min-width: 0; }
+.pbook__cover img { width: 100%; max-width: 300px; height: auto; display: block; border-radius: 10px; transform: rotate(3deg);
+  box-shadow: 0 18px 36px -14px rgba(10, 10, 10, 0.45), 0 0 0 1px rgba(10, 10, 10, 0.08); }
+@media (max-width: 560px) {
+  .pbook { grid-template-columns: 1fr; padding: 20px 18px; }
+  .pbook__cover { order: -1; }
+  .pbook__cover img { max-width: 260px; }
+  .pbook .btn { width: 100%; }
+}
 </style>
 </head>
 <body>
@@ -861,6 +878,11 @@ function renderResult() {
     '<p class="next"><b>Próximo passo:</b> ' + esc(lv.next) + '</p>' +
     '<section class="sec"><p class="label">Pontuação por área</p><div class="dims">' + dims + '</div></section>' +
     '<section class="sec"><p class="label">Onde agir primeiro</p><div class="opp">' + opp + '</div></section>' +
+    '<aside class="pbook"><div class="pbook__txt"><span class="mtag">Material gratuito · PDF</span>' +
+    '<h3>Playbook GTM Engineering: IA para RevOps</h3>' +
+    '<p>Um guia de uma página para sair da IA solta e chegar a uma operação de receita sistematizada. Mercado, organização, ferramentas, operação, efeito composto e os erros mais comuns, com infográficos.</p>' +
+    '<a class="btn arrow" id="pbook" href="playbook-gtm-engineering-ia-revops.pdf" download target="_blank" rel="noopener">Baixar o playbook</a></div>' +
+    '<div class="pbook__cover" aria-hidden="true"><img src="playbook-capa.jpg" alt="" width="480" height="387" loading="lazy"></div></aside>' +
     '<section class="sec"><p class="label">Serviço indicado para o seu nível</p><div class="svc"><span class="tg">' + esc(SERVICES[lv.slug].tag) + '</span><h3>' + esc(SERVICES[lv.slug].name) + '</h3><p>' + esc(SERVICES[lv.slug].text) + '</p></div></section>' +
     '<section class="cta"><p class="label">Método Máquina de Receita</p><h2>Otimize a sua máquina de receita em até 30 dias</h2>' +
     '<p>Me chame no WhatsApp. Eu recebo a sua nota e o seu nível e a conversa começa com o diagnóstico em mãos.</p>' +

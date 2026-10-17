@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Playbook GTM Engineering: IA para RevOps | Guilherme Sanges</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../css/fonts.css">
+<style>
+/* Fonte do PDF one-pager. Renderizar com Chrome headless (--print-to-pdf); a altura da página é ajustada em @page. */
+@page { size: 210mm 1106mm; margin: 0; } /* sobrescrito pelo script no fim do body */
+:root {
+  --bg: #F5F3EF;
+  --bg-deep: #ECE9E2;
+  --ink: #0A0A0A;
+  --ink-soft: #141311;
+  --fg: #0A0A0A;
+  --muted: #5C5A54;
+  --line: rgba(10, 10, 10, 0.12);
+  --orange: #FF6B00;
+  --orange-ink: #C94F00;
+  --orange-soft: rgba(255, 107, 0, 0.12);
+  --off: #F5F3EF;
+  --off-dim: #B9B5AC;
+  --display: "Advercase", "Archivo", Arial, sans-serif;
+  --body: "Archivo", Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); }
+body { width: 210mm; color: var(--fg); font-family: var(--body); font-size: 13px; line-height: 1.5;
+  -webkit-print-color-adjust: exact; print-color-adjust: exact; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, p { margin: 0; }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; line-height: 1.08; }
+a { color: inherit; text-decoration: none; }
+.pad { padding: 0 44px; }
+
+.eyebrow { font-family: var(--mono); font-size: 10px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--orange-ink);
+  display: inline-flex; align-items: center; gap: 8px; }
+.eyebrow::before { content: ""; width: 18px; height: 1px; background: var(--orange); }
+.on-ink .eyebrow { color: var(--orange); }
+
+/* ===== Capa ===== */
+.hero { position: relative; overflow: hidden; color: var(--off); padding: 34px 44px 38px;
+  background:
+    radial-gradient(60% 80% at 100% 0%, rgba(255, 107, 0, 0.42), rgba(255, 107, 0, 0) 62%),
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px) 0 0 / 34px 34px,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px) 0 0 / 34px 34px,
+    var(--ink); }
+.hero__top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 34px; }
+.chip { display: flex; align-items: center; gap: 10px; padding: 4px 14px 4px 4px; border: 1px solid rgba(245, 243, 239, 0.18); border-radius: 999px; }
+.chip img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 2px solid var(--orange); display: block; }
+.chip b { display: block; font-size: 12px; }
+.chip small { display: block; font-family: var(--mono); font-size: 9px; color: var(--off-dim); }
+.tagbox { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--off-dim); text-align: right; line-height: 1.6; }
+.tagbox b { color: var(--orange); font-weight: 600; }
+.hero h1 { font-size: 46px; letter-spacing: -0.01em; margin-top: 12px; max-width: 600px; }
+.hero h1 em { font-style: normal; color: var(--orange); }
+.hero .lead { margin-top: 14px; max-width: 560px; font-size: 14.5px; line-height: 1.6; color: var(--off-dim); }
+.hero .lead b { color: var(--off); }
+
+/* Escada de maturidade */
+.ladder { margin-top: 30px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; align-items: end; }
+.step { border: 1px solid rgba(245, 243, 239, 0.16); border-radius: 12px; padding: 12px 12px 13px; background: rgba(255, 255, 255, 0.04); }
+.step:nth-child(1) { margin-bottom: 0; }
+.step:nth-child(2) { margin-bottom: 14px; }
+.step:nth-child(3) { margin-bottom: 28px; }
+.step:nth-child(4) { margin-bottom: 42px; border-color: var(--orange); background: rgba(255, 107, 0, 0.16); }
+.step .n { font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); }
+.step h3 { font-size: 19px; margin: 4px 0 6px; color: var(--off); }
+.step p { font-size: 10.5px; line-height: 1.45; color: var(--off-dim); }
+.step .go { display: block; margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(245, 243, 239, 0.12); font-size: 10.5px; color: var(--off); }
+.step .go::before { content: "\2192  "; color: var(--orange); }
+.ladder-cap { display: flex; justify-content: space-between; margin-top: 10px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--off-dim); }
+.ladder-cap span:last-child { color: var(--orange); }
+
+/* ===== Seções ===== */
+.sec { padding: 34px 44px 0; }
+.sec__head { display: grid; grid-template-columns: 64px 1fr; gap: 14px; align-items: start; margin-bottom: 18px; }
+.num { font-family: var(--display); font-weight: 700; font-size: 54px; line-height: 0.8; color: var(--orange); }
+.sec__head h2 { font-size: 27px; margin-top: 6px; }
+.sec__head p { margin-top: 6px; color: var(--muted); font-size: 13px; max-width: 560px; line-height: 1.55; }
+.rule { height: 1px; background: var(--line); margin: 34px 44px 0; }
+
+.card { background: #fff; border: 1px solid var(--line); border-radius: 14px; }
+
+/* 01 Mercado: linha do tempo */
+.timeline { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; position: relative; }
+.era { padding: 16px 16px 16px; position: relative; }
+.era + .era { border-left: 1px dashed rgba(10, 10, 10, 0.22); }
+.era .when { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.era h3 { font-size: 20px; margin: 4px 0 6px; }
+.era p { font-size: 11.5px; color: var(--muted); line-height: 1.5; }
+.era .kpi { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px; }
+.era .kpi span { font-family: var(--mono); font-size: 9px; padding: 3px 7px; border-radius: 999px; border: 1px solid var(--line); color: var(--fg); background: var(--bg); }
+.era.now { background: var(--orange-soft); border-radius: 0 14px 14px 0; }
+.era.now .when { color: var(--orange-ink); }
+.era.now .kpi span { border-color: var(--orange); background: #fff; }
+.track { display: grid; grid-template-columns: 1fr 1fr 1fr; margin-bottom: 0; }
+.track i { height: 6px; background: var(--bg-deep); }
+.track i:nth-child(2) { background: rgba(255, 107, 0, 0.45); }
+.track i:nth-child(3) { background: var(--orange); }
+.quote { margin-top: 14px; padding: 14px 18px; border-left: 3px solid var(--orange); background: #fff; border-radius: 0 12px 12px 0; font-family: var(--display); font-size: 16px; line-height: 1.3; }
+
+/* 02 Organização */
+.org { display: grid; grid-template-columns: 1fr 34px 1.25fr; gap: 10px; align-items: center; }
+.org .lbl { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.org .now .lbl { color: var(--orange-ink); }
+.org .arrow { font-family: var(--display); font-size: 26px; color: var(--orange-ink); text-align: center; }
+.org svg { display: block; width: 100%; height: auto; }
+.roles { margin-top: 14px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.role { padding: 13px 14px; }
+.role b { display: block; font-family: var(--display); font-size: 15px; margin-bottom: 3px; }
+.role p { font-size: 11px; color: var(--muted); line-height: 1.45; }
+.role.hl { border-color: var(--orange); box-shadow: 4px 4px 0 var(--orange); }
+.role .tg { display: inline-block; font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange-ink); margin-bottom: 6px; }
+
+/* 03 Ferramentas: stack */
+.stackwrap { display: grid; grid-template-columns: 0.85fr 1.4fr; gap: 14px; align-items: stretch; }
+.mess { padding: 16px; display: flex; flex-direction: column; }
+.mess .lbl, .layers .lbl { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.cloud { display: flex; flex-wrap: wrap; gap: 6px; flex: 1; align-content: flex-start; }
+.cloud span { font-size: 10.5px; padding: 5px 9px; border: 1px dashed rgba(10, 10, 10, 0.3); border-radius: 8px; color: var(--muted); background: var(--bg); }
+.cloud span:nth-child(3n) { transform: rotate(-3deg); }
+.cloud span:nth-child(4n) { transform: rotate(2deg); }
+.mess p { margin-top: 12px; font-size: 11px; color: var(--muted); }
+.layers { display: grid; gap: 6px; }
+.layers .lbl { color: var(--orange-ink); margin-bottom: 4px; }
+.layer { display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: center; padding: 11px 14px; border-radius: 12px; color: var(--ink); }
+.layer i { font-style: normal; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-family: var(--display); font-weight: 700; font-size: 14px; background: var(--ink); color: var(--orange); }
+.layer b { font-family: var(--display); font-size: 15px; }
+.layer p { font-size: 10.5px; line-height: 1.4; color: rgba(10, 10, 10, 0.72); }
+.layer.l4 { background: rgba(255, 107, 0, 0.18); }
+.layer.l3 { background: rgba(255, 107, 0, 0.36); }
+.layer.l2 { background: rgba(255, 107, 0, 0.58); }
+.layer.l1 { background: var(--orange); }
+
+/* 04 Operação */
+.opgrid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 14px; align-items: start; }
+.cmp { overflow: hidden; }
+.cmp table { width: 100%; border-collapse: collapse; font-size: 11px; }
+.cmp th { font-family: var(--mono); font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; text-align: left; padding: 10px 12px; background: var(--bg-deep); color: var(--muted); }
+.cmp th.now { background: var(--ink); color: var(--orange); }
+.cmp td { padding: 9px 12px; border-top: 1px solid var(--line); vertical-align: top; line-height: 1.4; }
+.cmp td:first-child { font-family: var(--display); font-weight: 700; font-size: 12.5px; width: 24%; }
+.cmp td:nth-child(2) { color: var(--muted); }
+.cmp td:nth-child(3) { background: var(--orange-soft); font-weight: 500; }
+.loop { padding: 14px 12px 12px; text-align: center; }
+.loop .lbl { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange-ink); }
+.loop svg { width: 100%; height: auto; display: block; margin-top: 4px; }
+.loop p { font-size: 10.5px; color: var(--muted); margin-top: 4px; }
+
+/* 05 Efeito composto */
+.compound { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.sim { padding: 16px 16px 14px; }
+.sim .lbl { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.mult { display: grid; grid-template-columns: repeat(5, 1fr) auto; gap: 6px; align-items: end; margin-top: 14px; height: 128px; }
+.mult div { background: var(--orange); border-radius: 6px 6px 0 0; position: relative; display: flex; align-items: flex-start; justify-content: center; padding-top: 5px;
+  font-family: var(--mono); font-size: 9px; font-weight: 600; color: var(--ink); }
+.mult .res { width: 74px; background: var(--ink); color: var(--orange); font-family: var(--display); font-size: 21px; font-weight: 700; padding-top: 8px; border-radius: 8px 8px 0 0; }
+.multcap { display: grid; grid-template-columns: repeat(5, 1fr) 74px; gap: 6px; margin-top: 6px; font-size: 9.5px; color: var(--muted); text-align: center; line-height: 1.25; }
+.sim .math { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); font-size: 11.5px; line-height: 1.5; }
+.sim .math b { font-family: var(--mono); font-size: 11px; color: var(--orange-ink); }
+.curve svg { width: 100%; height: auto; display: block; margin-top: 6px; }
+.legend { display: flex; gap: 14px; margin-top: 6px; font-size: 10.5px; color: var(--muted); }
+.legend span::before { content: ""; display: inline-block; width: 16px; height: 3px; margin-right: 6px; vertical-align: middle; background: var(--orange); }
+.legend span.lin::before { background: none; border-top: 2px dashed var(--muted); height: 0; }
+.flywheel { margin-top: 14px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: #fff; }
+.flywheel div { padding: 12px 14px; font-size: 11px; line-height: 1.4; position: relative; }
+.flywheel div + div { border-left: 1px solid var(--line); }
+.flywheel b { display: block; font-family: var(--display); font-size: 14px; margin-bottom: 2px; }
+.flywheel div + div::before { content: "\2192"; position: absolute; left: -9px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; border-radius: 50%; background: var(--orange); color: var(--ink); font-size: 10px; line-height: 16px; text-align: center; font-weight: 700; }
+.note { margin-top: 8px; font-size: 9.5px; color: var(--muted); }
+
+/* 06 Erros */
+.errors { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.err { padding: 14px 14px 13px; position: relative; }
+.err .x { width: 24px; height: 24px; border-radius: 50%; border: 2px solid #B3261E; color: #B3261E; display: grid; place-items: center; font-weight: 700; font-size: 12px; margin-bottom: 8px; }
+.err b { display: block; font-family: var(--display); font-size: 15px; line-height: 1.15; margin-bottom: 5px; }
+.err p { font-size: 11px; color: var(--muted); line-height: 1.45; }
+.err p strong { color: var(--fg); font-weight: 600; }
+
+/* ===== Assinatura ===== */
+.sign { margin-top: 38px; color: var(--off); padding: 30px 44px 30px;
+  background:
+    radial-gradient(60% 120% at 0% 100%, rgba(255, 107, 0, 0.36), rgba(255, 107, 0, 0) 60%),
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px) 0 0 / 34px 34px,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px) 0 0 / 34px 34px,
+    var(--ink); }
+.sign__grid { display: grid; grid-template-columns: auto 1fr auto; gap: 22px; align-items: center; }
+.sign img { width: 92px; height: 92px; border-radius: 50%; object-fit: cover; border: 3px solid var(--orange); display: block; }
+.sign h2 { font-size: 30px; color: var(--off); }
+.sign .role { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange); margin-top: 4px; padding: 0; }
+.sign .bio { margin-top: 8px; font-size: 12px; color: var(--off-dim); max-width: 340px; line-height: 1.5; }
+.links { display: grid; gap: 7px; }
+.links a { display: flex; align-items: center; gap: 9px; font-size: 11.5px; color: var(--off); padding: 7px 14px 7px 8px; border: 1px solid rgba(245, 243, 239, 0.18); border-radius: 999px; }
+.links a i { font-style: normal; width: 22px; height: 22px; border-radius: 50%; background: var(--orange); color: var(--ink); display: grid; place-items: center; }
+.links svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.sign__cta { margin-top: 22px; padding-top: 16px; border-top: 1px solid rgba(245, 243, 239, 0.14); display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.sign__cta p { font-family: var(--display); font-size: 18px; }
+.sign__cta p em { font-style: normal; color: var(--orange); }
+.btn { display: inline-block; background: var(--orange); color: var(--ink); font-weight: 700; font-size: 13px; padding: 11px 20px; border-radius: 999px; white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<!-- CAPA -->
+<header class="hero on-ink">
+  <div class="hero__top">
+    <div class="chip"><img src="../../assets/guilherme-avatar.jpg" alt="Guilherme Sanges"><span><b>Guilherme Sanges</b><small>Especialista em Growth</small></span></div>
+    <div class="tagbox"><b>Playbook</b> · One-pager<br>GTM Engineering · IA para RevOps</div>
+  </div>
+  <span class="eyebrow">Da IA solta à receita sistematizada</span>
+  <h1>GTM Engineering: a IA que <em>move receita</em></h1>
+  <p class="lead">Um guia de uma página para sair do uso ocasional de IA e chegar a uma <b>operação de receita sistematizada</b>, com dados, processo e automação trabalhando juntos. São seis blocos: mercado, organização, ferramentas, operação, efeito composto e os erros que mais travam o caminho.</p>
+
+  <div class="ladder">
+    <div class="step"><span class="n">Nível 1</span><h3>Inicial</h3><p>IA fora da rotina. Testes individuais, sem meta.</p><span class="go">Escolha 1 processo de receita e rode um piloto de 30 dias</span></div>
+    <div class="step"><span class="n">Nível 2</span><h3>Exploratório</h3><p>Uso real, mas dependente de pessoas e testes soltos.</p><span class="go">Dê dono, meta e indicador e organize o CRM</span></div>
+    <div class="step"><span class="n">Nível 3</span><h3>Estruturado</h3><p>Rotinas e ferramentas definidas, dados ainda separados.</p><span class="go">Integre CRM, mídia e atendimento ponta a ponta</span></div>
+    <div class="step"><span class="n">Nível 4</span><h3>Sistematizado</h3><p>IA integrada à jornada inteira, com efeito medido em receita.</p><span class="go">Otimize o retorno de cada fluxo toda semana</span></div>
+  </div>
+  <div class="ladder-cap"><span>Baixa adoção</span><span>Operação de receita com IA</span></div>
+</header>
+
+<!-- 01 MERCADO -->
+<section class="sec">
+  <div class="sec__head"><span class="num">01</span><div><span class="eyebrow">O mercado</span><h2>A área de receita deixou de ser um conjunto de departamentos</h2><p>Marketing, vendas e pós-venda passaram a responder a uma mesma pergunta: quanto custa gerar cada real de receita e quanto tempo ele leva para voltar.</p></div></div>
+  <div class="card" style="overflow:hidden">
+    <div class="track"><i></i><i></i><i></i></div>
+    <div class="timeline">
+      <div class="era"><span class="when">Fase 1</span><h3>Performance</h3><p>Foco em mídia paga e volume. Cada área otimiza o próprio pedaço do funil.</p><div class="kpi"><span>CPL</span><span>CTR</span><span>Leads</span></div></div>
+      <div class="era"><span class="when">Fase 2</span><h3>Growth</h3><p>Funil inteiro e experimentos contínuos. Dados passam a orientar as prioridades.</p><div class="kpi"><span>Conversão</span><span>Retenção</span><span>Testes</span></div></div>
+      <div class="era now"><span class="when">Fase 3 · Agora</span><h3>RevOps + IA</h3><p>Uma operação única de receita, com dados conectados e IA executando partes do processo.</p><div class="kpi"><span>CAC</span><span>LTV</span><span>Payback</span><span>Ciclo de venda</span></div></div>
+    </div>
+  </div>
+  <p class="quote">Quem ganha mercado agora é quem consegue transformar dado em ação mais rápido que a concorrência.</p>
+</section>
+
+<div class="rule"></div>
+
+<!-- 02 ORGANIZAÇÃO -->
+<section class="sec">
+  <div class="sec__head"><span class="num">02</span><div><span class="eyebrow">A organização</span><h2>Times em silos dão lugar a um sistema de receita</h2><p>As empresas que avançam reorganizam pessoas em volta da jornada do cliente, com metas compartilhadas e um núcleo que cuida de dados, processo e automação.</p></div></div>
+  <div class="org">
+    <div class="card" style="padding:14px">
+      <p class="lbl">Antes · Silos</p>
+      <svg viewBox="0 0 240 150" aria-label="Três times separados, cada um com sua meta">
+        <g font-family="Archivo, Arial" font-size="11" font-weight="600" text-anchor="middle">
+          <rect x="4" y="20" width="72" height="80" rx="10" fill="#ECE9E2" stroke="rgba(10,10,10,.18)"/>
+          <rect x="84" y="20" width="72" height="80" rx="10" fill="#ECE9E2" stroke="rgba(10,10,10,.18)"/>
+          <rect x="164" y="20" width="72" height="80" rx="10" fill="#ECE9E2" stroke="rgba(10,10,10,.18)"/>
+          <text x="40" y="56">Marketing</text><text x="120" y="56">Vendas</text><text x="200" y="56">Pós-venda</text>
+          <g font-family="JetBrains Mono, monospace" font-size="8" font-weight="400" fill="#5C5A54">
+            <text x="40" y="72">meta:</text><text x="120" y="72">meta:</text><text x="200" y="72">meta:</text><text x="40" y="84">leads</text><text x="120" y="84">contratos</text><text x="200" y="84">tickets</text>
+          </g>
+          <g stroke="#B3261E" stroke-width="2"><line x1="76" y1="60" x2="84" y2="60" stroke-dasharray="3 3"/><line x1="156" y1="60" x2="164" y2="60" stroke-dasharray="3 3"/></g>
+          <g font-family="JetBrains Mono, monospace" font-size="8" font-weight="400" fill="#5C5A54"><text x="120" y="124">ferramentas e dados separados</text><text x="120" y="138">o lead "some" entre as áreas</text></g>
+        </g>
+      </svg>
+    </div>
+    <div class="arrow">→</div>
+    <div class="card now" style="padding:14px;border-color:#FF6B00">
+      <p class="lbl">Agora · Sistema de receita</p>
+      <svg viewBox="0 0 280 150" aria-label="Núcleo RevOps no centro conectando marketing, vendas e pós-venda">
+        <g font-family="Archivo, Arial" font-size="11" font-weight="600" text-anchor="middle">
+          <circle cx="140" cy="72" r="58" fill="none" stroke="#FF6B00" stroke-width="1.5" stroke-dasharray="4 4"/>
+          <line x1="140" y1="72" x2="40" y2="30" stroke="#FF6B00" stroke-width="1.5"/>
+          <line x1="140" y1="72" x2="240" y2="30" stroke="#FF6B00" stroke-width="1.5"/>
+          <line x1="140" y1="72" x2="140" y2="138" stroke="#FF6B00" stroke-width="1.5"/>
+          <rect x="4" y="16" width="74" height="28" rx="14" fill="#fff" stroke="rgba(10,10,10,.2)"/><text x="41" y="34">Marketing</text>
+          <rect x="202" y="16" width="74" height="28" rx="14" fill="#fff" stroke="rgba(10,10,10,.2)"/><text x="239" y="34">Vendas</text>
+          <rect x="100" y="124" width="80" height="26" rx="13" fill="#fff" stroke="rgba(10,10,10,.2)"/><text x="140" y="141">Pós-venda</text>
+          <circle cx="140" cy="72" r="34" fill="#0A0A0A"/>
+          <text x="140" y="70" fill="#FF6B00" font-family="Advercase, Archivo" font-size="14" font-weight="700">RevOps</text>
+          <text x="140" y="83" fill="#F5F3EF" font-family="JetBrains Mono, monospace" font-size="7" font-weight="400">dados · IA</text><text x="140" y="92" fill="#F5F3EF" font-family="JetBrains Mono, monospace" font-size="7" font-weight="400">processo</text>
+          <text x="140" y="10" fill="#C94F00" font-family="JetBrains Mono, monospace" font-size="8" font-weight="500">META ÚNICA: RECEITA</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div class="roles">
+    <div class="card role"><span class="tg">Papel</span><b>Liderança de receita</b><p>Responde por pipeline e receita. Define prioridades e casos de uso de IA ligados a meta.</p></div>
+    <div class="card role hl"><span class="tg">Papel novo</span><b>GTM Engineer</b><p>Perfil técnico de negócio. Integra dados, monta automações e agentes e mantém os fluxos rodando.</p></div>
+    <div class="card role"><span class="tg">Papel</span><b>Times de frente</b><p>Marketing, vendas e pós-venda focam no que exige julgamento humano: relação, negociação e estratégia.</p></div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- 03 FERRAMENTAS -->
+<section class="sec">
+  <div class="sec__head"><span class="num">03</span><div><span class="eyebrow">Ferramentas</span><h2>De ferramentas soltas a um stack em camadas</h2><p>O ganho aparece quando cada ferramenta tem função clara e conversa com as outras. A ordem de construção importa: dados primeiro, canais por último.</p></div></div>
+  <div class="stackwrap">
+    <div class="card mess">
+      <p class="lbl">Antes · Uso solto</p>
+      <div class="cloud"><span>Planilha de leads</span><span>Chat de IA no navegador</span><span>CRM pela metade</span><span>Gerador de textos</span><span>WhatsApp do vendedor</span><span>Relatório manual</span><span>Ferramenta de e-mail</span><span>Login compartilhado</span><span>Mais um teste grátis</span></div>
+      <p>Cada pessoa usa do seu jeito. O dado não circula e o resultado é difícil de provar.</p>
+    </div>
+    <div class="layers">
+      <p class="lbl">Agora · Stack de receita (construa de baixo para cima)</p>
+      <div class="layer l4"><i>4</i><div><b>Canais</b><p>Site, WhatsApp, e-mail, mídia paga e social recebendo mensagens personalizadas.</p></div></div>
+      <div class="layer l3"><i>3</i><div><b>Inteligência</b><p>Modelos de IA e agentes que qualificam, enriquecem, escrevem e priorizam.</p></div></div>
+      <div class="layer l2"><i>2</i><div><b>Orquestração</b><p>Automações e integrações que movem o dado entre as ferramentas sem trabalho manual.</p></div></div>
+      <div class="layer l1"><i>1</i><div><b>Dados</b><p>CRM como fonte única: etapas do funil, origem do lead e histórico de cada cliente.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- 04 OPERAÇÃO -->
+<section class="sec">
+  <div class="sec__head"><span class="num">04</span><div><span class="eyebrow">Operação</span><h2>Do growth ao GTM Engineering</h2><p>GTM Engineering é a prática de construir a operação de go-to-market como um sistema: fluxos automatizados, dados conectados e IA executando tarefas repetitivas, com pessoas cuidando das decisões.</p></div></div>
+  <div class="opgrid">
+    <div class="card cmp">
+      <table>
+        <thead><tr><th></th><th>Growth tradicional</th><th class="now">GTM Engineering</th></tr></thead>
+        <tbody>
+          <tr><td>Prospecção</td><td>Listas genéricas e abordagem padrão</td><td>Sinais de intenção, enriquecimento e mensagem personalizada por IA</td></tr>
+          <tr><td>Primeiro contato</td><td>Resposta quando o time consegue</td><td>Agente qualifica na hora e entrega o lead pronto ao vendedor</td></tr>
+          <tr><td>Follow-up</td><td>Depende da memória de cada pessoa</td><td>Cadência automática por perfil e comportamento</td></tr>
+          <tr><td>Conteúdo</td><td>Produção manual, peça por peça</td><td>Fluxo de briefing, produção, revisão e teste com IA</td></tr>
+          <tr><td>Aprendizado</td><td>Relatório no fim do mês</td><td>Painel diário e ciclo semanal de otimização</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card loop">
+      <p class="lbl">O loop de GTM Engineering</p>
+      <svg viewBox="-30 0 280 210" aria-label="Ciclo: sinal, enriquecimento, abordagem, qualificação, venda, dados">
+        <defs><marker id="ah" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#FF6B00"/></marker></defs>
+        <circle cx="110" cy="105" r="72" fill="none" stroke="rgba(10,10,10,.12)" stroke-width="14"/>
+        <path d="M110 33 A72 72 0 1 1 46 72" fill="none" stroke="#FF6B00" stroke-width="2.5" marker-end="url(#ah)"/>
+        <circle cx="110" cy="105" r="36" fill="#0A0A0A"/>
+        <text x="110" y="102" text-anchor="middle" fill="#FF6B00" font-family="Advercase, Archivo" font-size="15" font-weight="700">Receita</text>
+        <text x="110" y="116" text-anchor="middle" fill="#F5F3EF" font-family="JetBrains Mono, monospace" font-size="7.5">a cada volta</text>
+        <g font-family="Archivo, Arial" font-size="10.5" font-weight="700" fill="#0A0A0A" text-anchor="middle">
+          <g fill="#FF6B00"><circle cx="110" cy="33" r="5"/><circle cx="172" cy="69" r="5"/><circle cx="172" cy="141" r="5"/><circle cx="110" cy="177" r="5"/><circle cx="48" cy="141" r="5"/><circle cx="48" cy="69" r="5"/></g>
+          <text x="110" y="20">1 Sinal</text>
+          <text x="182" y="62" text-anchor="start">2 Enriquecer</text>
+          <text x="182" y="152" text-anchor="start">3 Abordar</text>
+          <text x="110" y="198">4 Qualificar</text>
+          <text x="38" y="152" text-anchor="end">5 Vender</text>
+          <text x="38" y="62" text-anchor="end">6 Dados</text>
+        </g>
+      </svg>
+      <p>Os dados de cada venda voltam para o início e deixam o próximo ciclo mais preciso.</p>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- 05 EFEITO COMPOSTO -->
+<section class="sec">
+  <div class="sec__head"><span class="num">05</span><div><span class="eyebrow">O efeito composto</span><h2>Pequenos ganhos em cada etapa se multiplicam</h2><p>Num funil, as taxas de conversão se multiplicam. Por isso melhorias modestas e simultâneas geram um resultado final bem maior que a soma das partes.</p></div></div>
+  <div class="compound">
+    <div class="card sim">
+      <p class="lbl">Simulação · 5 etapas com +10% cada</p>
+      <div class="mult">
+        <div style="height:40%">×1,1</div><div style="height:44%">×1,1</div><div style="height:48%">×1,1</div><div style="height:53%">×1,1</div><div style="height:58%">×1,1</div><div class="res" style="height:100%">+61%</div>
+      </div>
+      <div class="multcap"><span>Atração</span><span>Primeiro contato</span><span>Qualificação</span><span>Proposta</span><span>Fechamento</span><span>Receita</span></div>
+      <p class="math"><b>1,1 × 1,1 × 1,1 × 1,1 × 1,1 = 1,61</b><br>Dez por cento de melhora em cinco etapas resulta em cerca de 61% mais receita com o mesmo investimento em atração.</p>
+    </div>
+    <div class="card sim curve">
+      <p class="lbl">Projeção · otimização pontual x sistema que aprende</p>
+      <svg viewBox="0 0 300 170" aria-label="Curva linear comparada a curva composta ao longo de 12 meses">
+        <g stroke="rgba(10,10,10,.08)"><line x1="30" y1="20" x2="290" y2="20"/><line x1="30" y1="60" x2="290" y2="60"/><line x1="30" y1="100" x2="290" y2="100"/><line x1="30" y1="140" x2="290" y2="140"/></g>
+        <line x1="30" y1="140" x2="290" y2="140" stroke="rgba(10,10,10,.3)"/>
+        <path d="M30 132 L290 96" fill="none" stroke="#5C5A54" stroke-width="2" stroke-dasharray="5 4"/>
+        <path d="M30 132 C 110 128, 170 112, 210 84 S 270 34, 290 18" fill="none" stroke="#FF6B00" stroke-width="3" stroke-linecap="round"/>
+        <path d="M30 132 C 110 128, 170 112, 210 84 S 270 34, 290 18 L290 96 L30 132 Z" fill="rgba(255,107,0,.12)"/>
+        <circle cx="290" cy="18" r="4.5" fill="#FF6B00"/><circle cx="290" cy="96" r="3.5" fill="#5C5A54"/>
+        <g font-family="JetBrains Mono, monospace" font-size="8" fill="#5C5A54"><text x="30" y="154">mês 1</text><text x="150" y="154" text-anchor="middle">mês 6</text><text x="290" y="154" text-anchor="end">mês 12</text><text x="22" y="24" text-anchor="end" transform="rotate(-90 14 70)">receita</text></g>
+      </svg>
+      <div class="legend"><span>Sistema com IA que aprende a cada ciclo</span><span class="lin">Ajustes pontuais</span></div>
+    </div>
+  </div>
+  <div class="flywheel">
+    <div><b>Mais dados</b>Cada interação registrada no CRM.</div>
+    <div><b>IA mais precisa</b>Qualificação e mensagens melhores.</div>
+    <div><b>Custo menor</b>Menos trabalho manual por venda.</div>
+    <div><b>Mais receita</b>Que financia o próximo ciclo.</div>
+  </div>
+  <p class="note">Simulação ilustrativa feita com uma conta de multiplicação. Os números da sua operação dependem do seu funil e do seu ponto de partida.</p>
+</section>
+
+<div class="rule"></div>
+
+<!-- 06 ERROS -->
+<section class="sec">
+  <div class="sec__head"><span class="num">06</span><div><span class="eyebrow">Principais erros</span><h2>O que mais trava a IA na receita</h2><p>Os mesmos tropeços aparecem em empresas de todos os tamanhos. Cada um tem uma correção simples.</p></div></div>
+  <div class="errors">
+    <div class="card err"><span class="x">✕</span><b>Comprar ferramenta antes de definir o processo</b><p><strong>Corrija:</strong> desenhe o fluxo no papel e só então escolha a ferramenta que executa.</p></div>
+    <div class="card err"><span class="x">✕</span><b>Colocar IA em cima de um CRM bagunçado</b><p><strong>Corrija:</strong> padronize etapas e origem do lead. IA sobre dado incompleto entrega resposta incompleta.</p></div>
+    <div class="card err"><span class="x">✕</span><b>Deixar a IA sem dono e sem meta</b><p><strong>Corrija:</strong> cada caso de uso com responsável, indicador e prazo de revisão.</p></div>
+    <div class="card err"><span class="x">✕</span><b>Automatizar o atendimento sem passagem para humano</b><p><strong>Corrija:</strong> defina quando o agente entrega a conversa ao vendedor, com histórico completo.</p></div>
+    <div class="card err"><span class="x">✕</span><b>Medir quantidade de uso e esquecer a receita</b><p><strong>Corrija:</strong> acompanhe CAC, conversão por etapa e ciclo de venda antes e depois.</p></div>
+    <div class="card err"><span class="x">✕</span><b>Ignorar LGPD e regras de dados</b><p><strong>Corrija:</strong> escreva regras de uso de dados de leads e clientes e treine o time.</p></div>
+  </div>
+</section>
+
+<!-- ASSINATURA -->
+<footer class="sign on-ink">
+  <div class="sign__grid">
+    <img src="../../assets/guilherme-avatar.jpg" alt="Guilherme Sanges">
+    <div>
+      <span class="eyebrow">Quem escreveu</span>
+      <h2>Guilherme Sanges</h2>
+      <p class="role">Especialista em Growth</p>
+      <p class="bio">Criador do método Máquina de Receita. Ajudo empresas a organizar marketing, vendas e IA numa operação que gera receita de forma previsível. Me siga para mais conteúdos de growth, RevOps e IA aplicada.</p>
+    </div>
+    <div class="links">
+      <a href="https://instagram.com/guilherme.sanges.growth"><i><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg></i>@guilherme.sanges.growth</a>
+      <a href="https://www.linkedin.com/in/guilhermesanges/"><i><svg viewBox="0 0 24 24"><path d="M8 10.5V16M8 7.6v.01M12 16v-5.5M12 13c0-1.7 1-2.7 2.5-2.7S17 11.3 17 13v3"/></svg></i>in/guilhermesanges</a>
+      <a href="https://guilhermesangesgrowth-maker.github.io/hub/?utm_source=playbook-gtm&amp;utm_medium=pdf&amp;utm_campaign=diagnostico-maturidade-ia"><i><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18"/></svg></i>Growth Hub</a>
+    </div>
+  </div>
+  <div class="sign__cta">
+    <p>Quer ver a sua operação <em>subir de nível</em>?</p>
+    <a class="btn" href="https://api.whatsapp.com/send/?phone=5519998878022&amp;text=Ol%C3%A1!%20Li%20o%20playbook%20de%20GTM%20Engineering%20e%20quero%20saber%20sobre%20o%20m%C3%A9todo%20M%C3%A1quina%20de%20Receita!">Falar no WhatsApp →</a>
+  </div>
+</footer>
+
+<script>
+/* Ajusta a altura da página do PDF ao conteúdo, para sair sempre em 1 página */
+document.fonts.ready.then(function () {
+  var h = Math.ceil(document.body.scrollHeight) + 2;
+  var s = document.createElement("style");
+  s.textContent = "@page { size: 794px " + h + "px; margin: 0; }";
+  document.head.appendChild(s);
+  document.documentElement.setAttribute("data-h", h);
+});
+</script>
+</body>
+</html>
