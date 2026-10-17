@@ -90,7 +90,7 @@ a { color: inherit; text-decoration: none; }
 .era { padding: 16px 16px 16px; position: relative; }
 .era + .era { border-left: 1px dashed rgba(10, 10, 10, 0.22); }
 .era .when { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
-.era h3 { font-size: 20px; margin: 4px 0 6px; }
+.era h3 { font-size: 20px; margin: 4px 0 6px; text-wrap: balance; }
 .era p { font-size: 11.5px; color: var(--muted); line-height: 1.5; }
 .era .kpi { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px; }
 .era .kpi span { font-family: var(--mono); font-size: 9px; padding: 3px 7px; border-radius: 999px; border: 1px solid var(--line); color: var(--fg); background: var(--bg); }
@@ -230,9 +230,9 @@ a { color: inherit; text-decoration: none; }
   <div class="card" style="overflow:hidden">
     <div class="track"><i></i><i></i><i></i></div>
     <div class="timeline">
-      <div class="era"><span class="when">Fase 1</span><h3>Performance</h3><p>Foco em mídia paga e volume. Cada área otimiza o próprio pedaço do funil.</p><div class="kpi"><span>CPL</span><span>CTR</span><span>Leads</span></div></div>
-      <div class="era"><span class="when">Fase 2</span><h3>Growth</h3><p>Funil inteiro e experimentos contínuos. Dados passam a orientar as prioridades.</p><div class="kpi"><span>Conversão</span><span>Retenção</span><span>Testes</span></div></div>
-      <div class="era now"><span class="when">Fase 3 · Agora</span><h3>RevOps + IA</h3><p>Uma operação única de receita, com dados conectados e IA executando partes do processo.</p><div class="kpi"><span>CAC</span><span>LTV</span><span>Payback</span><span>Ciclo de venda</span></div></div>
+      <div class="era"><span class="when">Fase 1</span><h3>Performance tradicional</h3><p>Foco em mídia paga e volume. Cada área otimiza o próprio pedaço do funil.</p><div class="kpi"><span>CPL</span><span>CTR</span><span>Leads</span></div></div>
+      <div class="era"><span class="when">Fase 2</span><h3>Funil e experimentos</h3><p>O funil passa a ser visto por inteiro. Dados e testes contínuos orientam as prioridades.</p><div class="kpi"><span>Conversão</span><span>Retenção</span><span>Testes</span></div></div>
+      <div class="era now"><span class="when">Fase 3 · Agora</span><h3>Growth com RevOps e IA</h3><p>Growth como alavanca de receita: uma operação única, com dados conectados e IA executando partes do processo.</p><div class="kpi"><span>CAC</span><span>LTV</span><span>Payback</span><span>Ciclo de venda</span></div></div>
     </div>
   </div>
   <p class="quote">Quem ganha mercado agora é quem consegue transformar dado em ação mais rápido que a concorrência.</p>
@@ -312,11 +312,11 @@ a { color: inherit; text-decoration: none; }
 
 <!-- 04 OPERAÇÃO -->
 <section class="sec">
-  <div class="sec__head"><span class="num">04</span><div><span class="eyebrow">Operação</span><h2>Do growth ao GTM Engineering</h2><p>GTM Engineering é a prática de construir a operação de go-to-market como um sistema: fluxos automatizados, dados conectados e IA executando tarefas repetitivas, com pessoas cuidando das decisões.</p></div></div>
+  <div class="sec__head"><span class="num">04</span><div><span class="eyebrow">Operação</span><h2>Da performance tradicional ao GTM Engineering</h2><p>GTM Engineering é a prática de construir a operação de go-to-market como um sistema: fluxos automatizados, dados conectados e IA executando tarefas repetitivas, com pessoas cuidando das decisões.</p></div></div>
   <div class="opgrid">
     <div class="card cmp">
       <table>
-        <thead><tr><th></th><th>Growth tradicional</th><th class="now">GTM Engineering</th></tr></thead>
+        <thead><tr><th></th><th>Performance tradicional</th><th class="now">GTM Engineering</th></tr></thead>
         <tbody>
           <tr><td>Prospecção</td><td>Listas genéricas e abordagem padrão</td><td>Sinais de intenção, enriquecimento e mensagem personalizada por IA</td></tr>
           <tr><td>Primeiro contato</td><td>Resposta quando o time consegue</td><td>Agente qualifica na hora e entrega o lead pronto ao vendedor</td></tr>
