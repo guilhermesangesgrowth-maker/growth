@@ -36,6 +36,7 @@ html{scroll-snap-type:y proximity;scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 button,input,select,textarea{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
 
@@ -78,7 +79,8 @@ button,input,select,textarea{font:inherit;color:inherit}
 .kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);display:inline-flex;gap:8px;align-items:center}
 .kicker::before{content:"";width:18px;height:1px;background:var(--accent)}
 h1,h2,h3{font-family:var(--f-display);font-weight:700;text-wrap:balance;margin:0;line-height:1.08}
-h1{font-size:clamp(46px,7vw,96px)}
+h1{font-size:clamp(32px,4.9vw,67px)}
+.tt{transform-origin:left center;will-change:transform,opacity;transition:transform .2s ease-out,opacity .2s ease-out}
 h2{font-size:clamp(28px,3.6vw,44px)}
 h3{font-size:clamp(19px,1.8vw,22px)}
 p{margin:0}
@@ -94,8 +96,8 @@ p{margin:0}
 body.presenter .nota{display:block}
 
 /* ---------- 1a. hero ---------- */
-.hero-photo{position:absolute;z-index:0;pointer-events:none;user-select:none;top:50%;right:2vw;width:clamp(420px,42vw,660px);aspect-ratio:1;object-fit:cover;transform:translateY(-46%);
-  -webkit-mask-image:radial-gradient(closest-side,#000 72%,transparent 100%);mask-image:radial-gradient(closest-side,#000 72%,transparent 100%)}
+.hero-photo{position:absolute;z-index:0;pointer-events:none;user-select:none;top:50%;right:8vw;width:clamp(235px,23.5vw,370px);height:auto;aspect-ratio:1/1;object-fit:cover;object-position:50% 30%;transform:translateY(-50%);
+  -webkit-mask-image:radial-gradient(circle closest-side,#000 72%,transparent 100%);mask-image:radial-gradient(circle closest-side,#000 72%,transparent 100%)}
 .hero-text{max-width:min(720px,56%);display:flex;flex-direction:column;gap:22px}
 .hero-text h1 small{display:block;font-family:var(--f-mono);font-weight:500;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);margin-top:14px}
 .thesis{font-size:17px;line-height:1.55;max-width:56ch}
@@ -491,7 +493,7 @@ td small{color:var(--ink-3);font-weight:400;font-size:12px;margin-left:6px}
   .kanban{grid-template-columns:minmax(0,1fr)}
   .levers .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .locked{min-height:420px}
-  .hero-photo{position:relative;top:auto;right:auto;transform:none;width:min(80vw,380px);margin:0 auto -20px;display:block;order:-1}
+  .hero-photo{position:relative;top:auto;right:auto;transform:none;width:min(45vw,213px);margin:0 auto 4px;display:block;order:-1}
   #apresentacao .wrap{gap:24px}
   .hero-text{max-width:100%}
 }
@@ -526,7 +528,6 @@ td small{color:var(--ink-3);font-weight:400;font-size:12px;margin-left:6px}
 </header>
 <nav class="dots" id="dots" aria-label="Dobras da reunião"></nav>
 <div class="tools">
-  <button class="tool" id="btnNotes" aria-pressed="false" title="Mostrar roteiro (tecla N)">Roteiro</button>
   <button class="tool" id="btnReset" title="Limpar dados para uma nova reunião">Nova reunião</button>
 </div>
 
@@ -547,7 +548,6 @@ td small{color:var(--ink-3);font-weight:400;font-size:12px;margin-left:6px}
         <div class="stat"><b>+12</b><span>segmentos validados</span></div>
         <div class="stat"><b>30 dias</b><span>para otimizar a máquina de receita</span></div>
       </div>
-      <div class="nota"><b>Roteiro</b>Apresentação rápida, até 2 minutos. Role para os cases e depois para o antes e agora do método.</div>
     </div>
   </div>
 </section>
@@ -608,7 +608,6 @@ td small{color:var(--ink-3);font-weight:400;font-size:12px;margin-left:6px}
         <p><strong>+12% vendas MoM</strong> com otimizações martech (SEO/GEO).</p>
       </article>
     </div>
-    <div class="nota"><b>Roteiro</b>Escolha o case mais parecido com o negócio do cliente e conte esse com detalhe. Para educação, o Grupo de Ensino Médico é o principal.</div>
   </div>
 </section>
 
@@ -644,7 +643,6 @@ td small{color:var(--ink-3);font-weight:400;font-size:12px;margin-left:6px}
         </div>
       </div>
     </div>
-    <div class="nota"><b>Roteiro</b>Antes: postar, engajar, vender. Agora: oito áreas convergindo para o lucro. Use isso para abrir a primeira pergunta.</div>
   </div>
 </section>
 
@@ -654,8 +652,6 @@ td small{color:var(--ink-3);font-weight:400;font-size:12px;margin-left:6px}
   <div class="wrap">
     <div class="kicker">Pergunta</div>
     <h2>O que te impede de <span class="o">lucrar mais</span> hoje?</h2>
-    <div class="nota"><b>Roteiro</b>Faça a pergunta e fique em silêncio. Deixe o cliente falar até o fim. Anote as dores com as palavras dele, elas voltam na proposta.
-      <textarea id="dores" data-k="dores" placeholder="Dores citadas pelo cliente…"></textarea></div>
   </div>
 </section>
 
@@ -674,7 +670,6 @@ td small{color:var(--ink-3);font-weight:400;font-size:12px;margin-left:6px}
         <div class="pilar"><span>+ 03</span><strong>Know-how</strong><p>Um método testado guia cada decisão do funil.</p></div>
       </div>
     </div>
-    <div class="nota"><b>Roteiro</b>Espere a resposta antes de revelar (tecla R). Se a resposta for “sim”, revele e ancore nos três pilares. Se for “não”, pergunte o que precisaria mudar para ser.</div>
   </div>
 </section>
 
@@ -734,7 +729,6 @@ td small{color:var(--ink-3);font-weight:400;font-size:12px;margin-left:6px}
         </div>
       </div>
     </div>
-    <div class="nota"><b>Roteiro</b>Preencha enquanto conversa. O ticket informado aqui já entra na calculadora. O plano ao lado fica desfocado de propósito: gera curiosidade para a dobra do método.</div>
   </div>
 </section>
 
@@ -787,7 +781,6 @@ td small{color:var(--ink-3);font-weight:400;font-size:12px;margin-left:6px}
       <div class="meta-track"><span class="fo" id="mtO"></span><span class="fa" id="mtA"></span><span class="goal" id="mtG" title="Meta"></span></div>
       <div class="legend"><span><i style="background:var(--bar-base)"></i>Mês anterior</span><span><i style="background:var(--accent)"></i>Growth 30D</span><span><i style="background:var(--ink);width:2px"></i>Meta</span></div>
     </div>
-    <div class="nota"><b>Roteiro</b>Funil 1: digite os números do último mês com o cliente vendo. Funil 2: informe a meta. Ele repete o funil do mês anterior e marca em vermelho quantos leads, oportunidades e vendas faltam para a meta. Mostre que, com o mesmo investimento e a mesma performance, a meta não vem. Funil 3: o alvo é a meta +10%. As alavancas vêm equilibradas para bater o alvo com o mesmo investimento; ajuste conforme o que o cliente acredita ser mais fácil de melhorar. As alavancas ficam em leads, oportunidades e vendas (o ticket se mantém). O resultado segue os seus ajustes e pode passar da super meta; as alavancas que você não tocou só sobem o necessário para a receita não ficar abaixo dela. Ao mudar qualquer número do funil 1 ou a meta, as três voltam a se dividir por igual.</div>
   </div>
 </section>
 
@@ -810,7 +803,6 @@ td small{color:var(--ink-3);font-weight:400;font-size:12px;margin-left:6px}
         <div class="kpi hot"><span class="label">Receita do mês 12</span><span class="v" id="cM12">–</span><span class="s" id="cM12S">–</span></div>
       </div>
     </div>
-    <div class="nota"><b>Roteiro</b>Pergunte e deixe o cliente estimar um número antes de mostrar (tecla R). Base: receita As Is da calculadora mantida flat contra crescimento composto de 5% ao mês.</div>
   </div>
 </section>
 
@@ -853,7 +845,6 @@ td small{color:var(--ink-3);font-weight:400;font-size:12px;margin-left:6px}
         <div class="semana" style="--w:100%"><span class="s">SEMANA 4</span><strong>Atingimento da super meta</strong><p>Foco total em fechamento e leitura do resultado contra a super meta.</p></div>
       </div>
     </div>
-    <div class="nota"><b>Roteiro</b>Conecte cada funil a uma dor anotada na dobra 2. Escolha os 2 ou 3 que mais doem para esse cliente.</div>
   </div>
 </section>
 
@@ -863,7 +854,6 @@ td small{color:var(--ink-3);font-weight:400;font-size:12px;margin-left:6px}
   <div class="wrap">
     <div class="kicker">Pergunta</div>
     <h2>Esse é o momento ideal para <span class="o">vender mais?</span></h2>
-    <div class="nota"><b>Roteiro</b>Mesma pergunta da dobra 3, agora com os números na mesa. Espere a resposta. Ela abre a apresentação do investimento.</div>
   </div>
 </section>
 
@@ -899,7 +889,6 @@ td small{color:var(--ink-3);font-weight:400;font-size:12px;margin-left:6px}
         </div>
       </div>
     </div>
-    <div class="nota"><b>Roteiro</b>Apresente o valor uma vez e pare. Mostre que o incremento projetado paga o programa e reforce a garantia. Os números vêm da calculadora.</div>
   </div>
 </section>
 
@@ -922,7 +911,6 @@ td small{color:var(--ink-3);font-weight:400;font-size:12px;margin-left:6px}
       <div class="h">Let&rsquo;s grow!!</div>
       <div class="handle">@guilherme.sanges.growth</div>
     </div>
-    <div class="nota"><b>Roteiro</b>Proponha a data do kick-off agora e envie o link do sinal ainda na ligação.</div>
   </div>
 </section>
 
@@ -933,6 +921,7 @@ td small{color:var(--ink-3);font-weight:400;font-size:12px;margin-left:6px}
 "use strict";
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const KEY="gs-reuniao-v1";
+let hasData=true, cur=null, secs=[];
 const BRL=new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});
 const NUM=new Intl.NumberFormat("pt-BR",{maximumFractionDigits:0});
 const brl=v=>isFinite(v)?BRL.format(v):"–";
@@ -1175,7 +1164,7 @@ function renderCalc(m){
     if(meta&&GAP[r.k]){const [h,n]=GAP[r.k];tag=gapOn?`<small class="neg">faltam ${num(Math.ceil(n-h))} p/ meta</small>`:`<small>meta coberta</small>`}
     if(meta&&r.k==="rec")tag=gapOn?`<small class="neg">faltam ${brl(meta-b.R)} p/ meta</small>`:`<small>meta coberta</small>`;
     $("#v2-"+r.k).innerHTML=V1[r.k]+tag;
-    $("#v3-"+r.k).innerHTML=r.k==="rec"
+    $("#v3-"+r.k).innerHTML=r.k==="rec"&&!(b.R>0)?"–":r.k==="rec"
       ?V3.rec+`<small>+${pct(o.R/b.R-1)} vs. mês anterior</small>`+(meta?`<small>+${pct(o.R/meta-1)} vs. meta</small>`:"")
       :V3[r.k]+dl(V1._[r.k],V3._[r.k],LOWER.has(r.k));
   });
@@ -1196,6 +1185,7 @@ function renderCalc(m){
   $("#kOptS").textContent=`+${pct(o.R/(meta||b.R)-1,0)} sobre a ${meta?"meta":"receita"} · super meta ${short(tgt)}`;
   $("#kInc").textContent=short(o.R-b.R);
   /* badge: incremento mensal da super meta e incremento acumulado em 12 meses (mesma conta do gráfico: +5% ao mês sobre a receita atual) */
+  hasData=b.R>0;if(cur!=null&&secs[cur])$("#goalBadge").hidden=+secs[cur].dataset.g<5||!hasData;
   $("#gbV").textContent=`+${short(o.R-b.R)}`;
   $("#gbY").textContent=`+${short(b.R*(Array.from({length:12},(_,k)=>Math.pow(1.05,k+1)).reduce((a,x)=>a+x,0)-12))}`;
   const top=Math.max(meta,o.R,b.R)*1.08||1;
@@ -1285,11 +1275,11 @@ Object.keys(S.revealed).forEach(id=>{const sec=document.getElementById(id);if(se
 if(S.revealed.custo){chartAnimated=true;renderChart(model())}
 
 /* ---------- navegação ---------- */
-const secs=$$(".dobra"), N=10;
+secs=$$(".dobra");const N=10;
 const firsts=[];secs.forEach(s=>{const g=+s.dataset.g;if(!firsts[g])firsts[g]=s});
 $("#dots").innerHTML=firsts.filter(Boolean).map(s=>`<a href="#${s.id}" data-g="${s.dataset.g}" aria-label="${s.dataset.name}"><span>${String(s.dataset.g).padStart(2,"0")} ${s.dataset.name}</span></a>`).join("");
-const dots=$$("#dots a");let cur=0;
-function setCur(i){cur=i;const g=+secs[i].dataset.g;$("#goalBadge").hidden=g<5;$("#counter").textContent=`${String(g).padStart(2,"0")} / ${N}`;dots.forEach(d=>d.classList.toggle("on",+d.dataset.g===g))}
+const dots=$$("#dots a");cur=0;
+function setCur(i){cur=i;const g=+secs[i].dataset.g;$("#goalBadge").hidden=g<5||!hasData;$("#counter").textContent=`${String(g).padStart(2,"0")} / ${N}`;dots.forEach(d=>d.classList.toggle("on",+d.dataset.g===g))}
 const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)setCur(secs.indexOf(e.target))})},{rootMargin:"-45% 0px -45% 0px"});
 secs.forEach(s=>io.observe(s));setCur(0);
 function go(i){i=Math.max(0,Math.min(secs.length-1,i));secs[i].scrollIntoView({behavior:reduce?"auto":"smooth"})}
@@ -1298,19 +1288,42 @@ document.addEventListener("keydown",e=>{
   if(e.metaKey||e.ctrlKey||e.altKey)return;
   if(e.key==="ArrowDown"||e.key==="PageDown"){e.preventDefault();go(cur+1)}
   else if(e.key==="ArrowUp"||e.key==="PageUp"){e.preventDefault();go(cur-1)}
-  else if(e.key==="n"||e.key==="N")toggleNotes();
   else if(e.key==="r"||e.key==="R"){if(secs[cur].querySelector("[data-reveal]"))reveal(secs[cur].id)}
 });
 
 /* ---------- roteiro e reset ---------- */
-function toggleNotes(){const on=document.body.classList.toggle("presenter");$("#btnNotes").setAttribute("aria-pressed",on);try{localStorage.setItem(KEY+"-notes",on?"1":"0")}catch(e){}}
-$("#btnNotes").addEventListener("click",toggleNotes);
-try{if(localStorage.getItem(KEY+"-notes")==="1"){document.body.classList.add("presenter");$("#btnNotes").setAttribute("aria-pressed","true")}}catch(e){}
+/* Nova reunião: zera simulador, pré-qualificação, anotações, estratégia e badge, sem recarregar */
+function resetMeeting(){
+  S=JSON.parse(JSON.stringify(DEF));S.example=false;S.calc={};S.strat=[];S.levMan={};S.levFixed=null;S.g={};S.revealed={};
+  save();
+  CALC_IDS.forEach(id=>$("#"+id).value="");$("#pqTicket").value="";
+  $$("[data-k]").forEach(el=>el.value="");
+  $$(".seg input").forEach(r=>r.checked=false);
+  $$(".revealed").forEach(sec=>sec.classList.remove("revealed"));chartAnimated=false;
+  $$(".kb-item").forEach(it=>{it.classList.remove("pinned");it.querySelector(".kb-btn").setAttribute("aria-expanded","false")});
+  $$(".kb-tg button").forEach(b=>{b.setAttribute("aria-expanded","false");b.textContent="Expandir ▾"});
+  oppLabel();renderAll();renderStrat();
+  go(0);
+}
+/* movimento sutil nos títulos: crescem e ganham opacidade perto do centro da tela, encolhem e somem ao sair */
+(function(){
+  if(reduce)return;
+  const TT=$$(".dobra h1, .dobra h2");TT.forEach(t=>t.classList.add("tt"));
+  let raf=0;
+  function tick(){raf=0;const vh=innerHeight;
+    TT.forEach(t=>{const r=t.getBoundingClientRect();if(r.bottom<-200||r.top>vh+200)return;
+      const c=(r.top+r.height/2)/vh, d=Math.min(1,Math.abs(c-.42)/.62);
+      t.style.transform=`translateY(${(c-.42)*-18}px) scale(${(1-.1*d).toFixed(3)})`;t.style.opacity=(1-.6*d*d).toFixed(3);});
+  }
+  addEventListener("scroll",()=>{if(!raf)raf=requestAnimationFrame(tick)},{passive:true});
+  addEventListener("resize",()=>{if(!raf)raf=requestAnimationFrame(tick)});
+  tick();
+})();
 let armed=null;
 $("#btnReset").addEventListener("click",()=>{
   const b=$("#btnReset");
   if(!armed){b.textContent="Confirmar limpeza";b.style.color="var(--accent-ink)";armed=setTimeout(()=>{armed=null;b.textContent="Nova reunião";b.style.color=""},3000);return}
-  clearTimeout(armed);armed=null;S=JSON.parse(JSON.stringify(DEF));save();location.reload();
+  clearTimeout(armed);armed=null;b.textContent="Nova reunião";b.style.color="";resetMeeting();
 });
 })();
 </script>
