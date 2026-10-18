@@ -1132,8 +1132,8 @@ function renderLevers(){balance();fillSelects()}
 const LOWER=new Set(["cpl","cac","caclt"]);
 function dl(a,b,low){if(!isFinite(a)||!isFinite(b)||a===0)return"";const d=b/a-1;if(Math.abs(d)<.0005)return`<small class="z">0%</small>`;return`<small${(low?d>0:d<0)?' class="neg"':""}>${d>0?"+":""}${pct(d)}</small>`}
 const xr=v=>isFinite(v)?v.toLocaleString("pt-BR",{maximumFractionDigits:1})+"x":"–";
-/* CAC/LTV = CAC ÷ LTV por cliente (LTV ÷ vendas) = investimento ÷ LTV total; exibido como razão (ex.: 0,33) */
-function vals(f){return {inv:brl(f.inv),leads:num(f.L),cpl:brl(f.inv/f.L),c1:pct(f.c1),opps:num(f.O),c2:pct(f.c2),vendas:f.V<10&&f.V%1?f.V.toLocaleString("pt-BR",{maximumFractionDigits:1}):num(f.V),cac:brl(f.inv/f.V),ticket:brl(f.T),ltv:brl(f.LTV),caclt:isFinite(f.inv/f.LTV)?(f.inv/f.LTV).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2}):"–",rec:brl(f.R),
+/* CAC/LTV = CAC ÷ LTV por cliente (LTV ÷ vendas) = investimento ÷ LTV total; exibido em % (ex.: 0,33%) */
+function vals(f){return {inv:brl(f.inv),leads:num(f.L),cpl:brl(f.inv/f.L),c1:pct(f.c1),opps:num(f.O),c2:pct(f.c2),vendas:f.V<10&&f.V%1?f.V.toLocaleString("pt-BR",{maximumFractionDigits:1}):num(f.V),cac:brl(f.inv/f.V),ticket:brl(f.T),ltv:brl(f.LTV),caclt:pct(f.inv/f.LTV,2),rec:brl(f.R),
   _:{inv:f.inv,leads:f.L,cpl:f.inv/f.L,c1:f.c1,opps:f.O,c2:f.c2,vendas:f.V,cac:f.inv/f.V,ticket:f.T,ltv:f.LTV,caclt:f.inv/f.LTV,rec:f.R}}}
 function bars(id,f,mx,cls,need){
   const w=v=>Math.max(6,Math.sqrt((v||0)/mx)*100);
