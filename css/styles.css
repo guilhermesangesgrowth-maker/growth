@@ -187,7 +187,7 @@ button { font-family: inherit; cursor: pointer; }
 
 @media (min-width: 640px) {
   .hero__title { font-size: 52px; }
-  .hero__stats { grid-template-columns: repeat(4, 1fr); }
+  .hero__stats { grid-template-columns: repeat(2, minmax(0, 220px)); }
 
 }
 @media (min-width: 1024px) {

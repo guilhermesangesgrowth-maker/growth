@@ -10,7 +10,7 @@ produto, finanças e gestão) e operar tudo como uma máquina de receita.
 
 ## Seções da página
 
-- Hero: promessa de otimizar a máquina de receita em até 30 dias, com acesso rápido aos
+- Hero: promessa de otimizar a máquina de receita em 30 dias, com acesso rápido aos
   materiais e ao contato direto por WhatsApp.
 - O Mercado: comparação entre o caminho antigo (postar, engajar, vender) e o atual, em que
   oito áreas convergem para o lucro.
