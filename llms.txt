@@ -32,3 +32,9 @@ de diversos segmentos. Instagram: https://instagram.com/guilherme.sanges.growth 
 
 - Este arquivo segue a convenção llms.txt (https://llmstxt.org) para facilitar a leitura do
   site por agentes e modelos de linguagem.
+
+## Guia Growth 30D
+
+Página em https://guilhermesangesgrowth-maker.github.io/hub/guia-growth-30d/ com diagnóstico gratuito de 8 perguntas
+(nota de 0 a 21) e playbook em formato de site, com 7 áreas do método Máquina de Receita: Tese, Construção do
+produto, Posicionamento, Canais de aquisição, IA e martech, Processos de vendas e Satisfação e expansão.
