@@ -188,3 +188,91 @@ body[data-view="quiz"] .nav__mobile, body[data-view="resultado"] .nav__mobile { 
   .gq-peek__radar, .gq-peek__bars { display: none; }
   .gq-peek__inner { padding: 16px 20px; }
 }
+
+/* subtítulo do hero em h2, com aparência de texto corrido */
+h2.hero__subtitle { font-family: var(--font-body, "Archivo", Arial, sans-serif); font-weight: 400; letter-spacing: 0; }
+
+/* prévia desfocada dentro do card do diagnóstico (captura) */
+.guia-peek { margin-bottom: 18px; min-height: 230px; background: var(--off-white); }
+.guia-peek .gq-peek__radar { max-width: 190px; }
+.guia-peek .gq-peek__radar { display: block; }
+.guia-peek .gq-peek__bars { display: grid; }
+.guia-peek .gq-peek__inner { padding: 20px; }
+
+/* prévia desfocada do playbook */
+.guia-peek__pb { display: grid; gap: 12px; }
+.pbp-head { display: flex; gap: 12px; align-items: flex-start; }
+.pbp-head span { font-family: var(--font-display); font-weight: 700; font-size: 34px; color: var(--orange); line-height: 0.9; }
+.pbp-head div { flex: 1; display: grid; gap: 7px; padding-top: 4px; }
+.pbp-head i { display: block; height: 10px; width: 40%; border-radius: 5px; background: var(--orange); }
+.pbp-head b { display: block; height: 16px; width: 90%; border-radius: 5px; background: var(--black); }
+.pbp-lines { display: grid; gap: 7px; }
+.pbp-lines i { display: block; height: 8px; border-radius: 4px; background: rgba(10, 10, 10, 0.35); }
+.pbp-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.pbp-cards i { display: block; height: 42px; border-radius: 8px; border: 1px solid rgba(10, 10, 10, 0.3); background: #fff; }
+.pbp-acts { display: grid; gap: 7px; }
+.pbp-acts i { display: block; height: 22px; border-radius: 8px; border: 1px solid var(--orange); background: rgba(255, 107, 0, 0.12); }
+
+/* ---------- O Mercado: tese antes x depois ---------- */
+.tese-grid { max-width: var(--container); margin: 0 auto; display: grid; gap: 18px; }
+@media (min-width: 800px) { .tese-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; } }
+.tese-col { background: #fff; border: 1px solid var(--dark-line); border-radius: var(--radius); padding: 22px 22px 8px; }
+.tese-col--now { border-color: var(--orange); box-shadow: 6px 6px 0 var(--orange); }
+.tese-tag { display: inline-block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-on-light); margin-bottom: 14px; }
+.tese-tag--now { color: var(--orange-ink); font-weight: 600; }
+.tese-steps { list-style: none; margin: 0; padding: 0; display: grid; }
+.tese-steps li { position: relative; padding: 0 0 26px 38px; }
+.tese-steps li::before { content: ""; position: absolute; left: 9px; top: 24px; bottom: 2px; width: 1px; background: var(--dark-line); }
+.tese-steps li:last-child::before { display: none; }
+.tese-steps li::after { content: ""; position: absolute; left: 3px; top: 4px; width: 13px; height: 13px; border-radius: 50%; border: 2px solid var(--gray-on-light); background: #fff; }
+.tese-col--now .tese-steps li::after { border-color: var(--orange); background: var(--orange); }
+.tese-col:not(.tese-col--now) .tese-steps li:last-child::after { border-color: #b3261e; }
+.tese-steps b { display: block; font-family: var(--font-display); font-size: 19px; line-height: 1.2; margin-bottom: 4px; }
+.tese-steps span { display: block; font-size: 14px; line-height: 1.5; color: var(--gray-on-light); }
+
+/* ---------- O Mercado: curva do negócio + máquina de receita ---------- */
+.tese-grid { align-items: start; }
+@media (min-width: 900px) { .tese-grid { grid-template-columns: repeat(2, 1fr); } }
+.tese-card { background: #fff; border: 1px solid var(--dark-line); border-radius: var(--radius); padding: 22px 20px 24px; min-width: 0; }
+.tese-card__label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--orange-ink); margin: 0 0 14px; }
+.curva { display: block; width: 100%; height: auto; max-width: 520px; margin: 0 auto; overflow: visible; }
+.curva__axis { stroke: rgba(10, 10, 10, 0.28); stroke-width: 1; }
+.curva__seg { fill: none; stroke-width: 4; stroke-linecap: round; }
+.curva__seg--1 { stroke: var(--black); }
+.curva__seg--2 { stroke: #b3261e; }
+.curva__seg--3 { stroke: var(--orange); stroke-width: 5; }
+.curva__vale-bg { fill: rgba(179, 38, 30, 0.08); }
+.curva__dot { fill: #fff; stroke: var(--black); stroke-width: 2.5; }
+.curva__dot--vale { stroke: #b3261e; }
+.curva__lbl { font-family: var(--font-display); font-weight: 700; font-size: 17px; fill: var(--black); }
+.curva__lbl--vale { fill: #b3261e; }
+.curva__lbl--now { fill: var(--orange-ink); }
+.curva__ax { font-family: var(--font-mono); font-size: 11px; fill: var(--gray-on-light); letter-spacing: 0.06em; text-transform: uppercase; }
+.curva-legenda { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 8px; }
+.curva-legenda li { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; line-height: 1.4; }
+.curva-legenda i { flex: none; width: 22px; height: 5px; border-radius: 3px; margin-top: 8px; }
+.curva-legenda .c1 { background: var(--black); }
+.curva-legenda .c2 { background: #b3261e; }
+.curva-legenda .c3 { background: var(--orange); }
+.curva-legenda b { display: block; font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gray-on-light); }
+.tese-linha { display: grid; gap: 10px; margin-bottom: 18px; }
+.tese-linha:last-child { margin-bottom: 0; }
+.tese-card .antes { font-size: 20px; gap: 12px; max-width: none; }
+.tese-card .agora__svg { max-width: 460px; }
+
+.tese-fecho { max-width: var(--container); margin: 26px auto 0; padding: 24px 24px 26px; border-radius: var(--radius); background: var(--black); color: var(--off-white); }
+.tese-fecho__main { font-family: var(--font-display); font-weight: 700; font-size: 24px; line-height: 1.2; margin: 0 0 10px; }
+@media (min-width: 700px) { .tese-fecho__main { font-size: 30px; } }
+.tese-fecho__sub { font-size: 16px; line-height: 1.55; margin: 0; color: var(--off-white-dim, #b9b5ac); }
+
+/* ---------- tabela Sem x Com Growth 30D ---------- */
+.vs-wrap { max-width: var(--container); margin: 26px auto 0; background: #fff; border: 1px solid var(--dark-line); border-radius: var(--radius); overflow: hidden; }
+.vs { width: 100%; border-collapse: collapse; }
+.vs__cap { text-align: left; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--orange-ink); padding: 18px 20px 12px; }
+.vs th { text-align: left; font-family: var(--font-display); font-size: 17px; padding: 12px 16px; }
+.vs__sem { background: var(--off-white-deep); color: var(--gray-on-light); }
+.vs__com { background: var(--black); color: var(--orange); }
+.vs td { vertical-align: top; padding: 14px 16px; border-top: 1px solid var(--dark-line); font-size: 14px; line-height: 1.5; width: 50%; }
+.vs td:first-child { color: var(--gray-on-light); }
+.vs td:last-child { background: rgba(255, 107, 0, 0.08); font-weight: 600; }
+@media (min-width: 800px) { .vs th { font-size: 20px; padding: 14px 22px; } .vs td { font-size: 15px; padding: 16px 22px; } }

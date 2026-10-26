@@ -16,8 +16,7 @@ produto, finanças e gestão) e operar tudo como uma máquina de receita.
   oito áreas convergem para o lucro.
 - O Método Máquina de Receita: diagrama de Venn com quatro círculos (Mercado, Negócio,
   Growth, Tecnologia) e a máquina de receita na interseção central.
-- Serviços: Consultoria de Growth, Assessoria High-Ticket (negócios com ticket acima de
-  R$50k) e Assessoria Vendas On-line (negócios com ticket até R$50k).
+- Solução: Programa Growth 30D, que unifica diagnóstico, operação dos funis, mídia paga, pré-vendas, IA e martech em um programa de 30 dias com acompanhamento semanal.
 - Cases: Consultoria de Growth para Startups, Growth B2B para Fintech e Growth B2C para
   Rede Fitness.
 - Sobre mim: biografia de Guilherme Sanges e resultados.
