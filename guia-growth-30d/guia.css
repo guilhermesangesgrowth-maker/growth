@@ -468,3 +468,5 @@ body.md-open { overflow: hidden; }
 .gj-top .gj-back { margin: 0; }
 .gj-reset { font: inherit; font-size: 13px; font-weight: 600; color: var(--gray-on-light); background: none; border: 1px solid var(--dark-line); border-radius: 999px; padding: 7px 14px; cursor: pointer; }
 .gj-reset:hover { color: var(--black); border-color: var(--black); }
+
+.md-fs.bad { border-color: #b3261e; }

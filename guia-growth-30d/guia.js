@@ -269,8 +269,9 @@ var PLAYBOOK = {
 var CONFIG = {
   whatsapp: "5519998878022",
   // Google Forms (respostas gravadas na planilha "[GS GROWTH] leads-guia-growth-30D"). Vazio = não envia
+  gtmId: "",               // ID do contêiner do Google Tag Manager (ex.: "GTM-XXXXXXX"). Vazio = não carrega
   leadEndpoint: "https://docs.google.com/forms/d/e/1FAIpQLSf7K-fnfHxo8OGYD715wdvWaF0r1p61pyV3kAbxDS8_Pd_n6w/formResponse",
-  formFields: { etapa: "entry.176202070", origem: "entry.1587842509", nome: "entry.598034783", email: "entry.362575635", whatsapp: "entry.745510118", pagina: "entry.722341163", segmento: "entry.1739758473", porte: "entry.1257151820", estagio: "entry.1229289482", jornada: "entry.1355015536", consentimento: "entry.748315144" },
+  formFields: { etapa: "entry.176202070", origem: "entry.1587842509", nome: "entry.598034783", email: "entry.362575635", whatsapp: "entry.745510118", pagina: "entry.722341163", segmento: "entry.1739758473", porte: "entry.1257151820", estagio: "entry.1229289482", jornada: "entry.1355015536", consentimento: "entry.748315144", investe: "entry.1475592940" },
   origem: "guia-growth-30d",
   storageKey: "g30d-v3",
   scrollToAsk: 260         // quantos pixels de rolagem depois de abrir uma área até pedir o cadastro
@@ -349,6 +350,7 @@ var SEGS = [
 ];
 function seg(id) { return SEGS.filter(function (s) { return s.id === id; })[0]; }
 function segLabel() { var s = state.segmento ? seg(state.segmento) : null; return s ? s.label : ""; }
+var INVEST = ["Não invisto em marketing", "Invisto mas não tenho o resultado que gostaria", "Invisto e estou satisfeito(a) com o resultado"];
 var PORTES = ["Só eu", "2 a 10 pessoas", "11 a 50 pessoas", "Mais de 50 pessoas"];
 
 /* ---------- estado ---------- */
@@ -385,6 +387,7 @@ function waUrl() {
     msg = "Olá, sou " + state.lead.nome + " (" + (segLabel() || "profissional") + ", " + state.lead.porte + "). ";
     var es = state.jornada ? estagio(state.jornada) : null;
     if (es) msg += es.curto + ". ";
+    if (state.lead.investe) msg += "Marketing: " + state.lead.investe + ". ";
     msg += "Li o Guia Growth 30D e quero agendar uma Sessão Diagnóstico!";
   }
   return "https://api.whatsapp.com/send/?phone=" + CONFIG.whatsapp + "&text=" + encodeURIComponent(msg);
@@ -398,6 +401,7 @@ function sendLead(stage) {
   body.append(f.nome, state.lead.nome); body.append(f.email, state.lead.email); body.append(f.whatsapp, state.lead.whatsapp);
   body.append(f.segmento, segLabel()); body.append(f.porte, state.lead.porte); body.append(f.estagio, estagioLabel());
   body.append(f.jornada, state.jornada || ""); body.append(f.consentimento, state.lead.consent ? "sim" : "nao");
+  body.append(f.investe, state.lead.investe || "");
   body.append(f.pagina, location.href.split("#")[0]);
   try {
     fetch(CONFIG.leadEndpoint, { method: "POST", mode: "no-cors", body: body, keepalive: true }).catch(function () {});
@@ -423,14 +427,53 @@ function resetAll() {
   arm.on = false; arm.asked = false;
   closeModal(true);
   if (modal) buildModal();
-  if (current === "guia" || location.hash === "#playbook") { renderGuia(); window.scrollTo(0, 0); }
+  if (current === "guia" || location.hash.indexOf("#playbook") === 0) {
+    if (location.hash !== "#playbook") history.replaceState(null, "", location.pathname + location.search + "#playbook");
+    renderGuia(); window.scrollTo(0, 0);
+  }
+}
+
+/* ---------- qualificação, URLs de destino e Google Tag Manager ----------
+ * Depois do cadastro, a URL do guia muda conforme a resposta sobre investimento em marketing:
+ *   #playbook-1  quem investe em marketing (satisfeito ou insatisfeito)  = qualificado
+ *   #playbook-2  quem não investe em marketing                            = não qualificado
+ * No GTM, use um gatilho "Mudança no histórico" ou "Visualização de página" com a condição
+ * "Page URL termina com #playbook-1" para o remarketing só dos qualificados. */
+function qualKey() {
+  var v = state.lead && state.lead.investe;
+  if (v === INVEST[1]) return "qualificado-insatisfeito";
+  if (v === INVEST[2]) return "qualificado-satisfeito";
+  if (v === INVEST[0]) return "nao-qualificado";
+  return "";
+}
+function guideHash() {
+  var k = qualKey();
+  if (k === "nao-qualificado") return "#playbook-2";   // não investe em marketing
+  return k ? "#playbook-1" : "#playbook";             // investe (satisfeito ou insatisfeito)
+}
+
+window.dataLayer = window.dataLayer || [];
+function dl(event, extra) {
+  var o = { event: event, qualificacao: qualKey() || "sem-cadastro", segmento: segLabel(), estagio: state.jornada || "" };
+  for (var k in (extra || {})) o[k] = extra[k];
+  window.dataLayer.push(o);
+}
+function loadGtm() {
+  if (!CONFIG.gtmId) return;
+  window.dataLayer.push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+  var s = document.createElement("script"); s.async = true;
+  s.src = "https://www.googletagmanager.com/gtm.js?id=" + encodeURIComponent(CONFIG.gtmId);
+  document.head.appendChild(s);
 }
 
 function route() {
   var h = location.hash;
   if (h === "#recomecar") { resetAll(); history.replaceState(null, "", location.pathname + location.search + "#playbook"); route(); return; }
-  if (h === "#playbook") {
-    renderGuia(); showView("guia"); window.scrollTo(0, 0); return;
+  if (h.indexOf("#playbook") === 0) {
+    if (current === "guia") return;   // troca entre #playbook e #playbook-... não recarrega o guia
+    renderGuia(); showView("guia"); window.scrollTo(0, 0);
+    if (state.lead && h !== guideHash()) location.hash = guideHash();   // visitante que já se cadastrou
+    return;
   }
   closeModal(true);
   showView("captura");
@@ -646,12 +689,13 @@ function validateLead(d) {
   var digits = d.whatsapp.replace(/\D/g, "");
   if (digits.length < 10 || digits.length > 11) e.whats = "Informe um telefone com DDD.";
   if (!d.porte) e.porte = "Escolha o tamanho da empresa.";
+  if (!d.investe) e.investe = "Escolha uma opção.";
   if (!d.consent) e.consent = "Marque para continuar.";
   return e;
 }
 function readLead() {
   function v(id) { var el = $(id); return el ? el.value.trim() : ""; }
-  return { nome: v("m-nome"), email: v("m-email"), whatsapp: v("m-whats"), porte: v("m-porte"), consent: !!$("m-consent").checked };
+  return { nome: v("m-nome"), email: v("m-email"), whatsapp: v("m-whats"), porte: v("m-porte"), investe: (document.querySelector('input[name="investe"]:checked') || {}).value || "", consent: !!$("m-consent").checked };
 }
 function unlockAll() {
   document.querySelectorAll(".ar__gate.is-locked").forEach(function (g) { g.classList.remove("is-locked"); });
@@ -671,6 +715,7 @@ function buildModal() {
     '<div class="md-two">' + fld("email", "E-mail", '<input id="m-email" type="email" autocomplete="email" inputmode="email">') +
     fld("whats", "Telefone", '<input id="m-whats" type="tel" autocomplete="tel" inputmode="tel" placeholder="(00) 00000-0000">') + '</div>' +
     fld("porte", "Tamanho da empresa", '<select id="m-porte">' + opts(PORTES) + '</select>') +
+    '<fieldset class="md-fs" id="mf-investe"><legend>Já investe em marketing (agência, audiovisual ou tráfego)?</legend>' + INVEST.map(function (t) { return '<label class="md-opt"><input type="radio" name="investe" value="' + esc(t) + '"><span class="md-dot"></span><span>' + esc(t) + '</span></label>'; }).join("") + '<span class="err" id="me-investe" role="alert"></span></fieldset>' +
     '<p class="md-sum" id="mdSummary"></p>' +
     '<div class="fld" id="mf-consent"><label class="md-consent" for="m-consent"><input id="m-consent" type="checkbox"><span>Concordo em receber o guia e contatos sobre growth, conforme a LGPD.</span></label><span class="err" id="me-consent" role="alert"></span></div>' +
     '<button type="submit" class="btn btn--primary md-submit">Liberar o guia</button>' +
@@ -684,7 +729,7 @@ function startFlow() { goTo("#playbook"); }
 document.addEventListener("click", function (e) {
   var cta = e.target.closest("#navCta");
   if (cta) {
-    if (cta.getAttribute("data-mode") === "wa") { sendLead("cta-whatsapp"); window.open(waUrl(), "_blank", "noopener"); }
+    if (cta.getAttribute("data-mode") === "wa") { sendLead("cta-whatsapp"); dl("guia_cta_whatsapp"); window.open(waUrl(), "_blank", "noopener"); }
     else startFlow();
     return;
   }
@@ -705,7 +750,7 @@ document.addEventListener("click", function (e) {
   }
 
   var wa = e.target.closest("#ctaWa, #servicos .offer-card__cta");
-  if (wa) sendLead("cta-whatsapp");
+  if (wa) { sendLead("cta-whatsapp"); dl("guia_cta_whatsapp"); }
 
   if (e.target.closest("[data-reset]")) { resetAll(); return; }
   var sgb = e.target.closest("[data-seg]");
@@ -754,17 +799,20 @@ modal.addEventListener("input", function (e) {
 modal.addEventListener("submit", function (e) {
   e.preventDefault();
   var d = readLead(), errs = validateLead(d);
-  ["nome", "email", "whats", "porte", "consent"].forEach(function (k) {
+  ["nome", "email", "whats", "porte", "investe", "consent"].forEach(function (k) {
     var f = $("mf-" + k), m = $("me-" + k);
     if (f) f.classList.toggle("bad", !!errs[k]);
     if (m) m.textContent = errs[k] || "";
   });
-  var first = ["nome", "email", "whats", "porte", "consent"].filter(function (k) { return errs[k]; })[0];
-  if (first) { var el = $("m-" + first); if (el) el.focus(); return; }
+  var first = ["nome", "email", "whats", "porte", "investe", "consent"].filter(function (k) { return errs[k]; })[0];
+  if (first) { var el = $("m-" + first) || document.querySelector('input[name="investe"]'); if (el) el.focus(); return; }
   state.lead = d; saveState();
   sendLead("cadastro");
   closeModal(true);
   unlockAll();
+  dl("guia_cadastro");
+  if (qualKey().indexOf("qualificado") === 0) dl("lead_qualificado");   // investe em marketing (satisfeito ou não)
+  location.hash = guideHash();   // URL de destino diferente para qualificado e não qualificado
 });
 
 views.guia.addEventListener("change", function (e) {
@@ -776,4 +824,5 @@ views.guia.addEventListener("change", function (e) {
 
 window.addEventListener("hashchange", route);
 loadState();
+loadGtm();
 route();
