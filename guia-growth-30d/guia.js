@@ -268,7 +268,9 @@ var PLAYBOOK = {
  * ===================================================================== */
 var CONFIG = {
   whatsapp: "5519998878022",
-  leadEndpoint: "",        // URL do Web App do Google Apps Script (ver leads-sheets.gs). Vazio = não envia
+  // Google Forms (respostas gravadas na planilha "[GS GROWTH] leads-guia-growth-30D"). Vazio = não envia
+  leadEndpoint: "https://docs.google.com/forms/d/e/1FAIpQLSf7K-fnfHxo8OGYD715wdvWaF0r1p61pyV3kAbxDS8_Pd_n6w/formResponse",
+  formFields: { etapa: "entry.176202070", origem: "entry.1587842509", nome: "entry.598034783", email: "entry.362575635", whatsapp: "entry.745510118", pagina: "entry.722341163", segmento: "entry.1739758473", porte: "entry.1257151820", estagio: "entry.1229289482", jornada: "entry.1355015536", consentimento: "entry.748315144" },
   origem: "guia-growth-30d",
   storageKey: "g30d-v3",
   scrollToAsk: 260         // quantos pixels de rolagem depois de abrir uma área até pedir o cadastro
@@ -391,15 +393,14 @@ function waUrl() {
 /* Envia ao Google Sheets (Apps Script). Cada etapa atualiza a mesma linha da pessoa. */
 function sendLead(stage) {
   if (!CONFIG.leadEndpoint || !state.lead) return;
-  var payload = {
-    stage: stage, origem: CONFIG.origem,
-    nome: state.lead.nome, email: state.lead.email, whatsapp: state.lead.whatsapp,
-    segmento: segLabel(), porte: state.lead.porte, estagio: estagioLabel(),
-    jornada: state.jornada || "", consent: state.lead.consent ? "sim" : "nao",
-    pagina: location.href.split("#")[0]
-  };
+  var f = CONFIG.formFields, body = new URLSearchParams();
+  body.append(f.etapa, stage); body.append(f.origem, CONFIG.origem);
+  body.append(f.nome, state.lead.nome); body.append(f.email, state.lead.email); body.append(f.whatsapp, state.lead.whatsapp);
+  body.append(f.segmento, segLabel()); body.append(f.porte, state.lead.porte); body.append(f.estagio, estagioLabel());
+  body.append(f.jornada, state.jornada || ""); body.append(f.consentimento, state.lead.consent ? "sim" : "nao");
+  body.append(f.pagina, location.href.split("#")[0]);
   try {
-    fetch(CONFIG.leadEndpoint, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=UTF-8" }, body: JSON.stringify(payload), keepalive: true }).catch(function () {});
+    fetch(CONFIG.leadEndpoint, { method: "POST", mode: "no-cors", body: body, keepalive: true }).catch(function () {});
   } catch (err) {}
 }
 
