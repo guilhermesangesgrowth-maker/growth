@@ -3,7 +3,7 @@
 Site estático (HTML/CSS/JS puro, sem build) para captura de leads via frameworks,
 ferramentas e análises voltados a quem lidera receita em negócios de qualquer porte.
 
-No ar em: **https://guilhermesangesgrowth-maker.github.io/hub/**
+No ar em: **https://guilhermesangesgrowth-maker.github.io/growth/**
 
 ## Estrutura
 
