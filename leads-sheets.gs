@@ -1,5 +1,5 @@
 /**
- * Recebe os cadastros do Guia Growth 30D (e de outras iscas) e grava no Google Sheets.
+ * Recebe os cadastros do Guia Growth 30D e grava no Google Sheets.
  *
  * Como publicar (uma vez):
  * 1. Crie uma planilha no Google Sheets (ex.: "Leads Growth Hub").
@@ -12,15 +12,13 @@
  * 6. Para testar, rode a função testeManual() no editor e confira se uma linha apareceu na aba "Leads".
  *
  * Cada pessoa vira UMA linha (identificada por e-mail + origem). As etapas seguintes
- * (resultado, clique no WhatsApp) atualizam a mesma linha.
+ * (etapa da jornada escolhida, clique no WhatsApp) atualizam a mesma linha.
  */
 
 var ABA = "Leads";
 var COLUNAS = [
-  "criado_em", "atualizado_em", "origem", "nome", "email", "whatsapp", "cargo", "porte", "perfil",
-  "consentimento", "ultima_etapa", "nota", "nivel",
-  "tese", "produto", "posicionamento", "canais", "ia", "vendas", "expansao",
-  "clicou_whatsapp", "pagina"
+  "criado_em", "atualizado_em", "origem", "nome", "email", "whatsapp", "segmento", "porte",
+  "estagio", "jornada", "consentimento", "ultima_etapa", "clicou_whatsapp", "pagina"
 ];
 
 function doPost(e) {
@@ -54,8 +52,8 @@ function gravar_(d) {
   var agora = new Date();
   var email = String(d.email).trim().toLowerCase();
   var origem = String(d.origem || "");
-  var idxEmail = COLUNAS.indexOf("email") + 1;
-  var idxOrigem = COLUNAS.indexOf("origem") + 1;
+  var idxEmail = COLUNAS.indexOf("email");
+  var idxOrigem = COLUNAS.indexOf("origem");
 
   // procura a linha existente (mesmo e-mail e mesma origem)
   var ultima = aba.getLastRow();
@@ -63,7 +61,7 @@ function gravar_(d) {
   if (ultima > 1) {
     var valores = aba.getRange(2, 1, ultima - 1, COLUNAS.length).getValues();
     for (var i = valores.length - 1; i >= 0; i--) {
-      if (String(valores[i][idxEmail - 1]).toLowerCase() === email && String(valores[i][idxOrigem - 1]) === origem) {
+      if (String(valores[i][idxEmail]).toLowerCase() === email && String(valores[i][idxOrigem]) === origem) {
         linha = i + 2;
         break;
       }
@@ -81,18 +79,11 @@ function gravar_(d) {
   registro.atualizado_em = agora;
   registro.origem = origem;
   registro.email = email;
-  ["nome", "whatsapp", "cargo", "porte", "perfil", "pagina"].forEach(function (c) {
+  ["nome", "whatsapp", "segmento", "porte", "estagio", "jornada", "pagina"].forEach(function (c) {
     if (d[c]) registro[c] = d[c];
   });
   if (d.consent) registro.consentimento = d.consent;
   if (d.stage) registro.ultima_etapa = d.stage;
-
-  if (d.stage === "resultado") {
-    registro.nota = d.score;
-    registro.nivel = d.nivel;
-    var a = d.areas || {};
-    ["tese", "produto", "posicionamento", "canais", "ia", "vendas", "expansao"].forEach(function (k) { registro[k] = a[k]; });
-  }
   if (d.stage === "cta-whatsapp") registro.clicou_whatsapp = "sim";
 
   var linhaValores = COLUNAS.map(function (c) { return registro[c] === undefined ? "" : registro[c]; });
@@ -106,6 +97,6 @@ function resposta_(obj) {
 
 /** Rode esta função no editor para criar a aba e testar a gravação. */
 function testeManual() {
-  gravar_({ stage: "cadastro", origem: "teste", nome: "Teste", email: "teste@exemplo.com", whatsapp: "(19) 99999-9999", cargo: "Dono, CEO ou sócio", porte: "Só eu", perfil: "outro", consent: "sim", pagina: "teste" });
-  gravar_({ stage: "resultado", origem: "teste", email: "teste@exemplo.com", score: 12, nivel: "estruturado", areas: { tese: 2, produto: 1, posicionamento: 3, canais: 1, ia: 2, vendas: 2, expansao: 1 } });
+  gravar_({ stage: "cadastro", origem: "teste", nome: "Teste", email: "teste@exemplo.com", whatsapp: "(19) 99999-9999", segmento: "Saúde e Bem-estar", porte: "Só eu", estagio: "Quero construir e vender a minha consultoria/mentoria em 30 dias.", consent: "sim", pagina: "teste" });
+  gravar_({ stage: "jornada", origem: "teste", email: "teste@exemplo.com", jornada: "posicionamento" });
 }

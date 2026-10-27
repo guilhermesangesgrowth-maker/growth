@@ -89,19 +89,6 @@ window.addEventListener(
   start();
 })();
 
-/* =====================================================================
- * GUIA GROWTH 30D: fluxo captura -> diagnóstico -> resultado + playbook
- * Tudo em uma única URL: / (captura), #diagnostico (perguntas), #resultado
- * ===================================================================== */
-var CONFIG = {
-  whatsapp: "5519998878022",
-  leadEndpoint: "",        // URL do Web App do Google Apps Script (ver leads-sheets.gs). Vazio = não envia
-  origem: "guia-growth-30d",
-  storageKey: "g30d-v2",
-  gateBefore: 5            // o cadastro aparece antes da pergunta de índice 5 (a 6ª), ou seja, entre a 5ª e a 6ª
-};
-
-/* ---------- Áreas do método (uma pergunta e uma seção do playbook para cada) ---------- */
 var AREAS = [
   { id: "tese", short: "Tese", name: "Tese", sub: "O cenário do mercado",
     tip: "Escreva a sua tese em três frases: o que o mercado faz de errado, o que você faz diferente e qual resultado o cliente leva." },
@@ -118,70 +105,6 @@ var AREAS = [
   { id: "expansao", short: "Expansão", name: "Satisfação e expansão", sub: "CX e expansão de receita",
     tip: "Defina um marco de resultado para cada cliente, peça indicação nesse momento e tenha uma oferta de continuidade pronta." }
 ];
-
-/* ---------- Perguntas: 1 de perfil (sem nota) + 7 (uma por área), de 0 a 3 pontos ---------- */
-var QUESTIONS = [
-  { id: "perfil", area: null, text: "Qual é a sua atuação principal?", opts: [
-    { t: "Saúde (médico, dentista, psicólogo...)", v: "saude" },
-    { t: "Engenharia ou arquitetura", v: "engenharia-arquitetura" },
-    { t: "Advocacia, contabilidade ou finanças", v: "juridico-financas" },
-    { t: "Executivo(a) ou gestor(a) de empresa", v: "executivo" },
-    { t: "Empresário(a) de varejo ou serviço de alto ticket", v: "empresario" },
-    { t: "Outro", v: "outro" } ] },
-
-  { id: "q_tese", area: "tese", text: "Você sabe qual é o inimigo comum do seu cliente, a prática ou crença do mercado que atrapalha o resultado dele?", opts: [
-    { t: "Nunca pensei nisso.", s: 0 },
-    { t: "Tenho uma ideia, mas nunca escrevi.", s: 1 },
-    { t: "Tenho uma tese escrita e uso nas conversas.", s: 2 },
-    { t: "A tese está clara e aparece no conteúdo, na proposta e na venda.", s: 3 } ] },
-  { id: "q_produto", area: "produto", text: "Quão claro é o cliente que você atende e o problema que resolve?", opts: [
-    { t: "Atendo quem aparecer.", s: 0 },
-    { t: "Tenho um perfil geral, sem um problema específico.", s: 1 },
-    { t: "Cliente ideal e problema definidos.", s: 2 },
-    { t: "Cliente, problema, resultado e método documentados e testados.", s: 3 } ] },
-  { id: "q_posicionamento", area: "posicionamento", text: "Como o mercado entende o que você faz e por que escolher você?", opts: [
-    { t: "Me descrevem pelo cargo ou pela formação.", s: 0 },
-    { t: "Falo do que sei fazer, sem delimitar público e resultado.", s: 1 },
-    { t: "Tenho uma frase com público e resultado.", s: 2 },
-    { t: "Frase, diferencial e provas consistentes em perfil, proposta e conversas.", s: 3 } ] },
-  { id: "q_canais", area: "canais", text: "De onde vêm hoje os seus potenciais clientes?", opts: [
-    { t: "Quase só de indicação, sem previsibilidade.", s: 0 },
-    { t: "Indicação e algum conteúdo ocasional.", s: 1 },
-    { t: "Mais de um canal ativo, com rotina.", s: 2 },
-    { t: "Canais acompanhados, com meta de conversas por mês.", s: 3 } ] },
-
-  { id: "q_ia", area: "ia", text: "Como você usa CRM, automação e IA na operação de vendas?", opts: [
-    { t: "Planilhas e conversas soltas.", s: 0 },
-    { t: "CRM básico ou uso ocasional de IA.", s: 1 },
-    { t: "CRM organizado, com automações e IA em tarefas repetitivas.", s: 2 },
-    { t: "Ferramentas integradas, com painel e números por etapa.", s: 3 } ] },
-  { id: "q_vendas", area: "vendas", text: "Como é o seu processo de vendas, da primeira conversa ao fechamento?", opts: [
-    { t: "Conversa solta, sem roteiro.", s: 0 },
-    { t: "Roteiro informal, que muda a cada conversa.", s: 1 },
-    { t: "Sessão diagnóstico com roteiro, proposta e follow-up com prazos.", s: 2 },
-    { t: "Processo padronizado, com número por etapa e meta semanal.", s: 3 } ] },
-  { id: "q_expansao", area: "expansao", text: "Como você mantém e expande a receita de quem já é cliente?", opts: [
-    { t: "O projeto termina e a relação também.", s: 0 },
-    { t: "Peço indicação de vez em quando.", s: 1 },
-    { t: "Acompanho o cliente e peço indicação depois do resultado.", s: 2 },
-    { t: "Rotina de acompanhamento, indicações, upsell e parcerias planejados.", s: 3 } ] }
-];
-
-var LEVELS = [
-  { slug: "inicial", name: "Base a construir", range: "0 a 5", min: 0,
-    summary: "A consultoria ainda depende de indicação e de decisões soltas. O melhor retorno está em definir tese, produto e posicionamento antes de investir em canais.",
-    next: "Comece pela semana 0 do plano: tese, produto e posicionamento. Depois abra um canal por vez." },
-  { slug: "exploratorio", name: "Em validação", range: "6 a 10", min: 6,
-    summary: "Você já vende, mas o resultado depende de esforço individual. O ganho vem de transformar o que funciona em processo.",
-    next: "Padronize a sessão diagnóstico, crie a cadência de follow-up e escolha dois canais para rodar com rotina." },
-  { slug: "estruturado", name: "Estruturado", range: "11 a 16", min: 11,
-    summary: "Há produto, canais e rotina de vendas. O próximo salto vem de medir cada etapa e de expandir a receita de quem já é cliente.",
-    next: "Meça o funil por etapa, automatize o que é repetitivo e ative indicação e continuidade." },
-  { slug: "avancado", name: "Previsível", range: "17 a 21", min: 17,
-    summary: "A consultoria tem processo e números. O foco passa a ser escala, ticket e retorno por canal.",
-    next: "Otimize o canal que mais rende, aumente o ticket com uma oferta de continuidade e delegue tarefas repetitivas para automação e IA." }
-];
-var MAX_SCORE = 21;
 
 /* ---------- Playbook: uma seção para cada área do método ---------- */
 var PLAYBOOK = {
@@ -336,388 +259,431 @@ var PLAYBOOK = {
   }
 };
 
-var PLAN30 = [
-  { w: "Semana 0", t: "Preparação", d: "Tese, produto e posicionamento. Painel de números definido." },
-  { w: "Semana 1", t: "Início", d: "Dois canais no ar, CRM montado e material rico publicado." },
-  { w: "Semana 2", t: "Otimizações", d: "Leitura dos primeiros números e ajuste do roteiro de vendas." },
-  { w: "Semana 3", t: "Aceleração", d: "Mais volume no que gerou sessões e automações na operação." },
-  { w: "Semana 4", t: "Fechamento", d: "Propostas, decisões, indicações e oferta de continuidade." }
+
+/* =====================================================================
+ * GUIA GROWTH 30D: captura -> guia em formato de site (#playbook)
+ * 1) A pessoa se localiza na jornada (diagrama) e abre as áreas do método.
+ * 2) Depois de abrir uma área e rolar a página, abre o cadastro.
+ * 3) Com o cadastro feito, todo o conteúdo fica liberado.
+ * ===================================================================== */
+var CONFIG = {
+  whatsapp: "5519998878022",
+  leadEndpoint: "",        // URL do Web App do Google Apps Script (ver leads-sheets.gs). Vazio = não envia
+  origem: "guia-growth-30d",
+  storageKey: "g30d-v3",
+  scrollToAsk: 260         // quantos pixels de rolagem depois de abrir uma área até pedir o cadastro
+};
+
+/* Tipo de infográfico de cada área */
+var INFO = { tese: "converge", produto: "flow", posicionamento: "formula", canais: "funnels", ia: "layers", vendas: "flow", expansao: "cycle" };
+
+/* Estágio do negócio: aparece no diagrama da jornada e no cadastro */
+var ESTAGIOS = [
+  { v: "construir", t: "Quero construir e vender a minha consultoria/mentoria em 30 dias.",
+    titulo: "Travado, sem consultoria ou mentoria", curto: "Ainda não tenho consultoria ou mentoria",
+    desc: "Você tem experiência e resultado, mas ainda não transformou isso em uma consultoria ou mentoria que vende. O foco é definir o que vender, para quem e como se posicionar.",
+    areas: ["tese", "produto", "posicionamento"] },
+  { v: "melhorar", t: "Já tenho um produto de conhecimento, mas quero melhorar o marketing e vender mais em 30 dias.",
+    titulo: "Com produto, travado em vendas", curto: "Tenho produto de conhecimento, mas as vendas travaram",
+    desc: "O produto existe, mas a demanda e a conversão não acompanham. O foco é gerar oportunidades, organizar a operação comercial e fechar mais.",
+    areas: ["canais", "vendas", "ia"] },
+  { v: "acelerar", t: "Já tenho um produto de conhecimento e quero acelerar o ecossistema (marketing, vendas, IA e expansão de receita).",
+    titulo: "Com produto, quer acelerar o ecossistema", curto: "Tenho produto e quero acelerar o ecossistema",
+    desc: "O básico funciona. O foco é ganhar escala com IA e martech, aumentar o valor de cada cliente e abrir novas fontes de receita, como indicações e parcerias.",
+    areas: ["ia", "expansao", "canais"] }
 ];
+function estagio(v) { return ESTAGIOS.filter(function (e) { return e.v === v; })[0]; }
+/* Segmentos e o que muda no playbook para cada um (analogias do ofício de quem vende a consultoria) */
+var SEGS = [
+  { id: "saude", label: "Saúde e Bem-estar", who: "clínicas, consultórios e profissionais de saúde", notes: {
+    tese: "No seu mercado, o inimigo comum costuma ser o marketing de clínica que vende procedimento e promessa. A sua tese mostra a prática que atrapalha a gestão e o resultado de quem você orienta.",
+    produto: "Pense como numa consulta: a anamnese é o cliente e o problema, o diagnóstico é o resultado esperado e o protocolo é o método em etapas, cada uma com um entregável.",
+    posicionamento: "Na saúde, a confiança vem da especialidade. Escolha um recorte, como gestão de clínicas de uma especialidade, e use a sua formação como prova do método.",
+    canais: "Indicação entre colegas e sociedades de especialidade seguem fortes. Some a isso conteúdo com casos de gestão e uma lista de contatos qualificada.",
+    ia: "Use IA para resumir reuniões, rascunhar propostas e responder primeiros contatos. Trate os dados com o mesmo rigor do sigilo profissional, respeitando a LGPD.",
+    vendas: "Conduza a sessão diagnóstico como uma consulta: escute, mapeie o problema, explique o plano e combine o retorno antes de encerrar.",
+    expansao: "Acompanhe o cliente como num tratamento contínuo: revisões periódicas, marcos de resultado e indicação de colegas no momento certo." } },
+  { id: "engenharia", label: "Engenharia e Construção", who: "construtoras, incorporadoras e escritórios de engenharia", notes: {
+    tese: "O inimigo comum é a obra gerida por planilha solta e prazos que escorregam. A tese mostra o gargalo que o mercado ignora e o método que você usa para resolvê-lo.",
+    produto: "Defina o produto como um projeto: escopo, cronograma, entregáveis por fase e critério de aceite.",
+    posicionamento: "Posicione-se por tipo de obra ou de problema (custo, prazo ou qualidade) e use projetos entregues como prova.",
+    canais: "Eventos setoriais, associações e relacionamento com incorporadoras rendem bem. Registre cada contato e combine com conteúdo técnico no LinkedIn.",
+    ia: "Automatize relatórios de acompanhamento, orçamentos preliminares e resumos de reunião, com revisão técnica antes de enviar.",
+    vendas: "Trate cada conversa como um levantamento de campo: meça o problema, estime o impacto em custo e prazo e proponha a solução por fases.",
+    expansao: "Entregue por fases e use o fim de cada fase como porta para a próxima. Indicações entre incorporadoras e fornecedores completam o ciclo." } },
+  { id: "arquitetura", label: "Arquitetura e Design", who: "escritórios de arquitetura e design", notes: {
+    tese: "O inimigo comum é o escritório que vive de projeto por projeto e de orçamento negociado a desconto. A tese mostra um modelo de negócio mais previsível.",
+    produto: "Use o raciocínio do briefing: as perguntas certas no começo definem o projeto. Estruture o método com entregáveis visíveis, como diagnóstico, estudo e plano.",
+    posicionamento: "Posicione-se por um estilo de gestão ou por um tipo de escritório e mostre resultados de negócio ao lado do portfólio estético.",
+    canais: "Indicações de clientes e de parceiros, como engenheiros e fornecedores, funcionam. Some uma rotina de conteúdo com bastidores da gestão do escritório.",
+    ia: "Use IA para pesquisa de referências, textos de proposta e organização de briefings, mantendo a autoria e a revisão final com você.",
+    vendas: "Faça da sessão diagnóstico um briefing: entenda o contexto, feche o escopo e entregue uma proposta clara com valor por fase.",
+    expansao: "Projeto entregue é o melhor momento para pedir indicação e propor a etapa seguinte, como acompanhamento ou um novo projeto." } },
+  { id: "juridico", label: "Direito, Contabilidade e Finanças", who: "escritórios jurídicos, contábeis e financeiros", notes: {
+    tese: "O inimigo comum é a venda por hora e a captação por indicação sem processo. A tese mostra por que um serviço recorrente e com escopo definido protege a margem.",
+    produto: "Transforme o conhecimento em um serviço com escopo fechado: diagnóstico, plano e acompanhamento mensal.",
+    posicionamento: "Escolha uma especialidade e um tipo de cliente. A reputação técnica funciona como prova, desde que a frase fale do resultado para o cliente.",
+    canais: "Parcerias com outros profissionais, eventos e LinkedIn funcionam bem. Combine com conteúdo que explique riscos e oportunidades em linguagem simples.",
+    ia: "IA ajuda em pesquisa, resumos e rascunhos. Defina regras claras de sigilo e de dados do cliente e revise tudo antes de usar.",
+    vendas: "Conduza a conversa inicial como um diagnóstico, mostre o risco de não agir e envie a proposta com escopo e valor no mesmo dia.",
+    expansao: "Acompanhamento recorrente e revisões periódicas aumentam o valor do cliente. Peça indicação depois de um resultado concreto." } },
+  { id: "executivo", label: "Executivo ou gestor de empresa", who: "empresas do setor em que você atuou", notes: {
+    tese: "O inimigo comum é a consultoria genérica, que entrega slides e não mergulha na operação. A sua tese nasce da vivência de quem já comandou resultado.",
+    produto: "Transforme a sua experiência em um método com nome, etapas e entregáveis, aplicado a um problema que você já resolveu dentro de empresas.",
+    posicionamento: "Use a trajetória como prova. A frase de posicionamento fala do resultado que você gera para empresas do seu setor, com nomes e números públicos.",
+    canais: "A sua rede de contatos é o canal mais forte. Estruture uma lista, uma abordagem e um conteúdo de LinkedIn com bastidores de gestão.",
+    ia: "Use IA para pesquisa de mercado, preparação de reuniões e propostas, e mantenha o acompanhamento de cada conversa em um CRM simples.",
+    vendas: "Venda como numa reunião de diretoria: diagnóstico, impacto no resultado e plano de ação em etapas, com data de decisão combinada.",
+    expansao: "Programas de continuidade, treinamento do time do cliente e indicações dentro da rede de executivos ampliam a receita." } },
+  { id: "empresario", label: "Empresário de serviço de alto ticket", who: "empresários do seu mercado", notes: {
+    tese: "O inimigo comum é o crescimento que vira agenda lotada e lucro menor. A tese mostra como vender mais sem aumentar o desgaste operacional.",
+    produto: "Empacote o que você já faz bem no seu negócio em um programa para outros empresários do mesmo mercado, com método, etapas e entregáveis.",
+    posicionamento: "Posicione-se como quem já construiu o resultado que o cliente quer. Os números e a história do seu negócio são a prova.",
+    canais: "Associações, eventos e a base de clientes e fornecedores são ótimos canais. Registre cada contato e crie uma oferta de entrada.",
+    ia: "Passe para as ferramentas o que consome a sua agenda: primeiro atendimento, lembretes, propostas e relatórios.",
+    vendas: "Leve para a conversa a mesma disciplina de vendas do seu negócio: diagnóstico, proposta clara e acompanhamento até o fechamento.",
+    expansao: "Cuide do pós-venda como parte do produto: marcos de resultado, depoimentos e indicações entre empresários do mesmo mercado." } },
+  { id: "outro", label: "Outro segmento", who: "empresas e profissionais do seu mercado", notes: {} }
+];
+function seg(id) { return SEGS.filter(function (s) { return s.id === id; })[0]; }
+function segLabel() { var s = state.segmento ? seg(state.segmento) : null; return s ? s.label : ""; }
+var PORTES = ["Só eu", "2 a 10 pessoas", "11 a 50 pessoas", "Mais de 50 pessoas"];
 
-/* ===================================================================== */
-/* Estado e utilidades                                                    */
-/* ===================================================================== */
-var state = { i: 0, answers: {}, lead: null, leadDraft: {}, done: false, checks: {}, mode: "q" };
-
+/* ---------- estado ---------- */
+var state = { lead: null, segmento: null, jornada: null, open: {}, checks: {} };
 function loadState() {
   try {
-    var raw = localStorage.getItem(CONFIG.storageKey);
-    if (!raw) return;
-    var s = JSON.parse(raw);
-    state.answers = s.answers || {};
-    state.lead = s.lead || null;
-    state.done = !!s.done;
-    state.checks = s.checks || {};
-    state.i = s.i || 0;
+    var s = JSON.parse(localStorage.getItem(CONFIG.storageKey) || "{}");
+    state.lead = s.lead || null; state.segmento = s.segmento || null; state.jornada = s.jornada || null; state.checks = s.checks || {};
   } catch (e) {}
 }
 function saveState() {
-  try {
-    localStorage.setItem(CONFIG.storageKey, JSON.stringify({ answers: state.answers, lead: state.lead, done: state.done, checks: state.checks, i: state.i }));
-  } catch (e) {}
+  try { localStorage.setItem(CONFIG.storageKey, JSON.stringify({ lead: state.lead, segmento: state.segmento, jornada: state.jornada, checks: state.checks })); } catch (e) {}
 }
 
 function $(id) { return document.getElementById(id); }
 function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
 function pad(n) { return (n < 10 ? "0" : "") + n; }
+function area(id) { return AREAS.filter(function (a) { return a.id === id; })[0]; }
 
-var views = { captura: $("view-captura"), quiz: $("view-quiz"), resultado: $("view-resultado") };
+var views = { captura: $("view-captura"), guia: $("view-guia") };
 var shared = $("shared-bottom");
 var navCta = $("navCta");
 var navLinks = $("navLinksCaptura");
+var current = "";
 
-function levelFor(total) {
-  var lv = LEVELS[0];
-  for (var k = 0; k < LEVELS.length; k++) { if (total >= LEVELS[k].min) lv = LEVELS[k]; }
-  return lv;
+function estagioLabel() {
+  var e = state.jornada ? estagio(state.jornada) : null;
+  return e ? e.t : "";
 }
 
-function compute() {
-  var per = {}, total = 0;
-  AREAS.forEach(function (a) { per[a.id] = 0; });
-  QUESTIONS.forEach(function (q) {
-    if (!q.area) return;
-    var a = state.answers[q.id];
-    if (a !== undefined) { per[q.area] = q.opts[a].s; total += q.opts[a].s; }
-  });
-  return { per: per, total: total, level: levelFor(total) };
-}
-
-function profileSlug() {
-  var a = state.answers.perfil;
-  return a === undefined ? "nao-informado" : QUESTIONS[0].opts[a].v;
-}
-
-function answeredCount() {
-  return QUESTIONS.filter(function (q) { return state.answers[q.id] !== undefined; }).length;
-}
-
-function waUrl(withResult) {
-  var msg = "Olá! ";
-  if (state.lead) msg = "Olá, sou " + state.lead.nome + " (" + state.lead.cargo + ", " + state.lead.porte + "). ";
-  if (withResult) {
-    var r = compute();
-    msg += "Fiz o diagnóstico Growth 30D (nota " + r.total + "/" + MAX_SCORE + ", nível " + r.level.name + ") e quero agendar uma Sessão Diagnóstico!";
-  } else {
-    msg = "Olá, vim do hub de growth e quero agendar uma Sessão Diagnóstico!";
+function waUrl() {
+  var msg = "Olá, vim do hub de growth e quero agendar uma Sessão Diagnóstico!";
+  if (state.lead) {
+    msg = "Olá, sou " + state.lead.nome + " (" + (segLabel() || "profissional") + ", " + state.lead.porte + "). ";
+    var es = state.jornada ? estagio(state.jornada) : null;
+    if (es) msg += es.curto + ". ";
+    msg += "Li o Guia Growth 30D e quero agendar uma Sessão Diagnóstico!";
   }
   return "https://api.whatsapp.com/send/?phone=" + CONFIG.whatsapp + "&text=" + encodeURIComponent(msg);
 }
 
-/* Envia o cadastro ao Google Sheets (Apps Script). Cada etapa atualiza a mesma linha. */
+/* Envia ao Google Sheets (Apps Script). Cada etapa atualiza a mesma linha da pessoa. */
 function sendLead(stage) {
   if (!CONFIG.leadEndpoint || !state.lead) return;
-  var r = compute();
   var payload = {
     stage: stage, origem: CONFIG.origem,
     nome: state.lead.nome, email: state.lead.email, whatsapp: state.lead.whatsapp,
-    cargo: state.lead.cargo, porte: state.lead.porte, perfil: profileSlug(),
-    consent: state.lead.consent ? "sim" : "nao", pagina: location.href.split("#")[0]
+    segmento: segLabel(), porte: state.lead.porte, estagio: estagioLabel(),
+    jornada: state.jornada || "", consent: state.lead.consent ? "sim" : "nao",
+    pagina: location.href.split("#")[0]
   };
-  if (stage === "resultado") { payload.score = r.total; payload.nivel = r.level.slug; payload.areas = r.per; }
   try {
     fetch(CONFIG.leadEndpoint, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=UTF-8" }, body: JSON.stringify(payload), keepalive: true }).catch(function () {});
   } catch (err) {}
 }
 
-/* ===================================================================== */
-/* Roteamento por hash: (vazio) captura | #diagnostico | #resultado       */
-/* ===================================================================== */
-var current = "";
+/* ---------- roteamento: (vazio) captura | #playbook ---------- */
 function showView(name) {
   current = name;
-  Object.keys(views).forEach(function (k) { views[k].hidden = k !== name; });
-  shared.hidden = name === "quiz";
+  views.captura.hidden = name !== "captura";
+  views.guia.hidden = name !== "guia";
   document.body.setAttribute("data-view", name);
   navLinks.hidden = name !== "captura";
-  navCta.hidden = name === "quiz";
-  if (name === "resultado") { navCta.textContent = "Agendar Sessão Diagnóstico"; navCta.setAttribute("data-mode", "wa"); }
+  if (name === "guia") { navCta.textContent = "Agendar Sessão Diagnóstico"; navCta.setAttribute("data-mode", "wa"); }
   else { navCta.textContent = "Acessar guia"; navCta.removeAttribute("data-mode"); }
 }
+function goTo(hash) { if (location.hash === hash) route(); else location.hash = hash; }
 
-function goTo(hash) {
-  if (location.hash === hash) route(); else location.hash = hash;
+/* Limpa segmento, estágio, cadastro e checklist deste navegador e volta ao passo 1 */
+function resetAll() {
+  state.lead = null; state.segmento = null; state.jornada = null; state.checks = {};
+  try { localStorage.removeItem(CONFIG.storageKey); } catch (e) {}
+  arm.on = false; arm.asked = false;
+  closeModal(true);
+  if (modal) buildModal();
+  if (current === "guia" || location.hash === "#playbook") { renderGuia(); window.scrollTo(0, 0); }
 }
 
 function route() {
   var h = location.hash;
-  if (h === "#resultado") {
-    if (state.done) { renderResult(); showView("resultado"); window.scrollTo(0, 0); return; }
-    if (state.lead || answeredCount() > 0) { location.hash = "#diagnostico"; return; }
-    history.replaceState(null, "", location.pathname + location.search);
-    showView("captura"); return;
+  if (h === "#recomecar") { resetAll(); history.replaceState(null, "", location.pathname + location.search + "#playbook"); route(); return; }
+  if (h === "#playbook") {
+    renderGuia(); showView("guia"); window.scrollTo(0, 0); return;
   }
-  if (h === "#diagnostico") {
-    showView("quiz");
-    if (state.done) { state.answers = {}; state.done = false; state.i = 0; saveState(); }
-    startQuizFromState();
-    window.scrollTo(0, 0);
-    return;
-  }
+  closeModal(true);
   showView("captura");
-  if (h && h.length > 1) {
-    var el = document.getElementById(h.slice(1));
-    if (el) el.scrollIntoView();
-  }
+  if (h && h.length > 1) { var el = document.getElementById(h.slice(1)); if (el) el.scrollIntoView(); }
 }
 
-/* ===================================================================== */
-/* Diagnóstico                                                            */
-/* ===================================================================== */
-function startQuizFromState() {
-  // retoma na primeira pergunta sem resposta
-  var firstOpen = 0;
-  for (var k = 0; k < QUESTIONS.length; k++) { if (state.answers[QUESTIONS[k].id] === undefined) { firstOpen = k; break; } firstOpen = k + 1; }
-  if (firstOpen >= QUESTIONS.length) firstOpen = QUESTIONS.length - 1;
-  state.i = firstOpen;
-  state.mode = (state.i >= CONFIG.gateBefore && !state.lead) ? "lead" : "q";
-  if (state.mode === "lead") state.i = CONFIG.gateBefore;
-  renderQuiz();
+/* ---------- infográficos de cada área ---------- */
+function igConverge(d) {
+  var enemies = d.cards.map(function (c) { return '<li>' + esc(c.t) + '</li>'; }).join("");
+  return '<div class="ig ig-conv"><div class="ig-conv__l"><p class="ig-k">Inimigos comuns</p><ul>' + enemies + '</ul></div>' +
+    '<div class="ig-conv__arrow" aria-hidden="true">→</div>' +
+    '<div class="ig-conv__r"><p class="ig-k">A sua tese</p><b>O que o mercado faz de errado, o que você faz e o resultado do cliente</b></div></div>';
 }
-
-function progressHtml(upTo) {
-  var bars = "";
-  for (var k = 0; k < QUESTIONS.length; k++) bars += '<i class="' + (k <= upTo ? "on" : "") + '"></i>';
-  return '<div class="gq-progress" aria-hidden="true">' + bars + '</div>';
+function igFlow(d) {
+  var steps = d.cards.map(function (c, i) { return '<li><i>' + (i + 1) + '</i><span>' + esc(c.t.replace(/^\d+\.\s*/, "")) + '</span></li>'; }).join("");
+  return '<ol class="ig ig-flow">' + steps + '</ol>';
 }
-
-/* Prévia desfocada do resultado: provoca a pessoa a continuar */
-function peekHtml() {
-  var n = AREAS.length, cx = 100, cy = 86, R = 62;
-  function pt(i, rad) { var a = -Math.PI / 2 + i * 2 * Math.PI / n; return (cx + rad * Math.cos(a)).toFixed(1) + "," + (cy + rad * Math.sin(a)).toFixed(1); }
-  var demo = [2.2, 1.4, 2.6, 1.1, 1.8, 2.4, 0.9];
-  var rings = [1, 2, 3].map(function (v) { return '<polygon class="rd-grid" points="' + AREAS.map(function (_, i) { return pt(i, R * v / 3); }).join(" ") + '"/>'; }).join("");
-  var area = AREAS.map(function (_, i) { return pt(i, R * demo[i] / 3); }).join(" ");
-  var done = answeredCount(), total = QUESTIONS.length;
-  var blur = Math.max(3, 12 - done * 1.2).toFixed(1);
-  var left = total - done;
-  var msg;
-  if (state.mode === "lead") msg = "Falta o cadastro e " + left + " pergunta" + (left === 1 ? "" : "s") + " para liberar o seu resultado.";
-  else if (!state.lead && done < CONFIG.gateBefore) msg = "O seu resultado aparece aqui. Você cadastra os dados na pergunta " + (CONFIG.gateBefore + 1) + ".";
-  else msg = "Faltam " + left + " pergunta" + (left === 1 ? "" : "s") + " para liberar o seu resultado.";
-  return '<div class="gq-peek" role="group" aria-label="Prévia desfocada do resultado">' +
-    '<div class="gq-peek__inner" style="filter:blur(' + blur + 'px)" aria-hidden="true">' +
-    '<div class="gq-peek__score"><b>14</b><small>/' + MAX_SCORE + '</small><span>Nível do seu negócio</span></div>' +
-    '<svg viewBox="0 0 200 172" class="gq-peek__radar">' + rings + '<polygon class="rd-area" points="' + area + '"/></svg>' +
-    '<div class="gq-peek__bars"><i style="width:72%"></i><i style="width:48%"></i><i style="width:86%"></i></div></div>' +
-    '<div class="gq-peek__lock"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><p>' + esc(msg) + '</p></div></div>';
+function igFormula(d) {
+  var chips = ["Ajudo", "[público]", "a", "[resultado]", "em", "[prazo]", "com", "[método]"].map(function (t) { return t.charAt(0) === "[" ? '<em>' + esc(t) + '</em>' : '<span>' + esc(t) + '</span>'; }).join(" ");
+  var pillars = d.cards.map(function (c) { return '<li>' + esc(c.t) + '</li>'; }).join("");
+  return '<div class="ig ig-form"><p class="ig-form__s">' + chips + '</p><ul class="ig-form__p">' + pillars + '</ul></div>';
 }
-
-function renderQuiz() {
-  if (state.mode === "lead") return renderLead();
-  var q = QUESTIONS[state.i], n = QUESTIONS.length, cur = state.answers[q.id];
-  var area = q.area ? AREAS.filter(function (a) { return a.id === q.area; })[0] : null;
-  var opts = q.opts.map(function (o, idx) {
-    var sel = cur === idx;
-    return '<label class="gq-opt' + (sel ? " sel" : "") + '"><input type="radio" name="q" value="' + idx + '"' + (sel ? " checked" : "") + '><span class="gq-dot"></span><span>' + esc(o.t) + '</span></label>';
+function igFunnels(d) {
+  var cols = d.cards.map(function (c, i) {
+    var items = (c.list || []).map(function (x) { return '<li>' + esc(x.split(":")[0]) + '</li>'; }).join("");
+    return '<div class="ig-fun' + (i === 2 ? " last" : "") + '"><b>' + esc(c.t.replace(/^Funil \d · /, "")) + '</b><span class="ig-fun__n">Funil ' + (i + 1) + '</span><ul>' + items + '</ul></div>';
+  }).join('<div class="ig-fun__arrow" aria-hidden="true">→</div>');
+  return '<div class="ig ig-funnels">' + cols + '</div>';
+}
+function igLayers(d) {
+  var order = ["Dados", "Automação", "Inteligência", "Canais"];
+  var items = d.cards.slice(0, 4).map(function (c) { return c.t; });
+  var layers = ["CRM e pipeline", "Painel de growth", "Automação", "IA aplicada", "Mídia e tracking"].map(function (t, i) {
+    return '<li class="l' + (i + 1) + '"><i>' + (i + 1) + '</i><span>' + esc(t) + '</span></li>';
+  }).reverse().join("");
+  return '<div class="ig ig-layers"><p class="ig-k">Ordem de construção, de baixo para cima</p><ol reversed>' + layers + '</ol></div>';
+}
+function igCycle(d) {
+  var labels = d.cards.map(function (c) { return c.t; });
+  var pos = [[160, 24], [296, 120], [160, 216], [24, 120]];
+  var nodes = labels.map(function (t, i) {
+    var anchor = i === 1 ? "end" : (i === 3 ? "start" : "middle");
+    var x = i === 1 ? pos[i][0] - 14 : (i === 3 ? pos[i][0] + 14 : pos[i][0]);
+    var y = i === 0 ? pos[i][1] - 14 : (i === 2 ? pos[i][1] + 22 : pos[i][1] + 4);
+    return '<circle cx="' + pos[i][0] + '" cy="' + pos[i][1] + '" r="7" class="cy-dot"/><text x="' + x + '" y="' + y + '" text-anchor="' + anchor + '" class="cy-lbl">' + esc(t) + '</text>';
   }).join("");
-  var last = state.i === n - 1;
-  views.quiz.innerHTML =
-    '<div class="gq"><div class="gq-card">' +
-    progressHtml(state.i) +
-    '<div class="gq-count"><span>Pergunta ' + (state.i + 1) + ' de ' + n + '</span><span>' + esc(area ? area.name : "Sobre você") + '</span></div>' +
-    '<p class="eyebrow">' + esc(area ? area.sub : "Contexto") + '</p>' +
-    '<fieldset class="gq-fs"><legend><h2 data-focus>' + esc(q.text) + '</h2></legend><div class="gq-opts">' + opts + '</div></fieldset>' +
-    '<div class="gq-nav"><button class="btn btn--ghost" type="button" data-act="back">Voltar</button>' +
-    '<button class="btn btn--primary" type="button" data-act="next"' + (cur === undefined ? " disabled" : "") + '>' + (last ? "Ver resultado" : "Próxima") + '</button></div>' +
-    '</div>' + peekHtml() + '</div>';
-  focusHeading();
+  return '<div class="ig ig-cycle"><svg viewBox="0 0 320 250" role="img" aria-label="Ciclo de satisfação e expansão da receita"><defs><marker id="cyA" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#FF6B00"/></marker></defs>' +
+    '<ellipse cx="160" cy="120" rx="136" ry="96" class="cy-ring"/>' +
+    '<path d="M175 26 A136 96 0 0 1 294 106" class="cy-arc" marker-end="url(#cyA)"/><path d="M294 134 A136 96 0 0 1 175 214" class="cy-arc" marker-end="url(#cyA)"/><path d="M145 214 A136 96 0 0 1 26 134" class="cy-arc" marker-end="url(#cyA)"/><path d="M26 106 A136 96 0 0 1 145 26" class="cy-arc" marker-end="url(#cyA)"/>' +
+    '<text x="160" y="116" text-anchor="middle" class="cy-core">Mais receita</text><text x="160" y="134" text-anchor="middle" class="cy-sub">de quem já é cliente</text>' + nodes + '</svg></div>';
+}
+function infographic(id, d) {
+  var t = INFO[id];
+  return t === "converge" ? igConverge(d) : t === "flow" ? igFlow(d) : t === "formula" ? igFormula(d) : t === "funnels" ? igFunnels(d) : t === "layers" ? igLayers(d) : igCycle(d);
 }
 
-function renderLead() {
-  var d = state.leadDraft || {};
-  function opts(list, cur) {
-    return '<option value="">Selecione</option>' + list.map(function (t) { return '<option' + (cur === t ? " selected" : "") + '>' + esc(t) + '</option>'; }).join("");
+/* ---------- vista do guia ---------- */
+function journeyHtml() {
+  var cur = state.jornada ? estagio(state.jornada) : null;
+  var st = ESTAGIOS.map(function (e, i) {
+    var sel = cur && cur.v === e.v;
+    return '<button type="button" role="radio" aria-checked="' + !!sel + '" class="gs' + (sel ? " here" : "") + '" data-jornada="' + e.v + '">' +
+      '<span class="gs-n">' + (i + 1) + '</span><span class="gs-t">' + esc(e.titulo) + '</span><span class="gs-d">' + esc(e.curto) + '</span></button>';
+  }).join('<span class="gs-arrow" aria-hidden="true">→</span>');
+  var panel;
+  if (!cur) panel = '<p class="gj-hint">Toque no estágio mais próximo da sua realidade. O guia indica por quais áreas da máquina de receita começar.</p>';
+  else {
+    var chips = cur.areas.map(function (id) { return '<li>' + esc(area(id).name) + '</li>'; }).join("");
+    panel = '<div class="gj-here"><span class="gj-tag">Você está aqui</span><h3>' + esc(cur.titulo) + '</h3><p>' + esc(cur.desc) + '</p>' +
+      '<p class="gj-start">Por onde começar</p><ol class="gj-chips">' + chips + '</ol>' +
+      '<button type="button" class="btn btn--primary" data-open-area="' + cur.areas[0] + '">Abrir a primeira área</button></div>';
   }
-  var cargos = ["Profissional liberal ou autônomo(a)", "Dono, CEO ou sócio", "Diretor(a)", "Gerente", "Coordenador(a)", "Analista", "Consultor(a) ou freelancer", "Estudante", "Outro"];
-  var portes = ["Só eu", "2 a 10 pessoas", "11 a 50 pessoas", "Mais de 50 pessoas"];
-  function fld(id, label, control) {
-    return '<div class="fld" id="fld-' + id + '"><label for="f-' + id + '">' + label + '</label>' + control + '<span class="err" id="err-' + id + '" role="alert"></span></div>';
-  }
-  var left = QUESTIONS.length - CONFIG.gateBefore;
-  views.quiz.innerHTML =
-    '<div class="gq"><div class="gq-card">' +
-    progressHtml(CONFIG.gateBefore - 1) +
-    '<div class="gq-count"><span>Falta pouco</span><span>' + left + ' perguntas restantes</span></div>' +
-    '<p class="eyebrow">Seu resultado está quase pronto</p>' +
-    '<h2 data-focus>Cadastre-se para continuar</h2>' +
-    '<p class="gq-lead">Informe seus dados para seguir com as últimas perguntas e liberar o diagnóstico completo e o Playbook Growth 30D.</p>' +
-    '<form class="gq-form" id="lead-form" novalidate>' +
-    fld("nome", "Nome", '<input id="f-nome" name="nome" type="text" autocomplete="name" value="' + esc(d.nome || "") + '">') +
-    '<div class="gq-two">' +
-    fld("email", "E-mail", '<input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" value="' + esc(d.email || "") + '">') +
-    fld("whats", "WhatsApp", '<input id="f-whats" name="whats" type="tel" autocomplete="tel" inputmode="tel" placeholder="(19) 99999-9999" value="' + esc(d.whatsapp || "") + '">') +
-    '</div><div class="gq-two">' +
-    fld("cargo", "Cargo", '<select id="f-cargo" name="cargo">' + opts(cargos, d.cargo) + '</select>') +
-    fld("porte", "Tamanho da empresa", '<select id="f-porte" name="porte">' + opts(portes, d.porte) + '</select>') +
-    '</div>' +
-    '<div class="fld" id="fld-consent"><label class="gq-consent" for="f-consent"><input id="f-consent" name="consent" type="checkbox"' + (d.consent ? " checked" : "") + '><span>Concordo em receber o resultado e contatos sobre growth, conforme a LGPD.</span></label><span class="err" id="err-consent" role="alert"></span></div>' +
-    '<p class="gq-privacy">Sem spam. Você pode pedir a remoção dos seus dados quando quiser.</p>' +
-    '<div class="gq-nav"><button class="btn btn--ghost" id="backlead" type="button" data-act="backlead">Voltar</button><button class="btn btn--primary" id="submitlead" type="submit">Continuar</button></div>' +
-    '</form></div>' + peekHtml() + '</div>';
-  focusHeading();
+  return '<div class="gs-map" role="radiogroup" aria-label="Estágio do seu negócio">' + st + '</div><div class="gj-panel" id="gjPanel" aria-live="polite">' + panel + '</div>';
 }
 
-function focusHeading() {
-  var h = views.quiz.querySelector("[data-focus]");
-  if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
+function areaHtml(a, i) {
+  var d = PLAYBOOK[a.id];
+  var cur = state.jornada ? estagio(state.jornada) : null;
+  var here = !!(cur && cur.areas.indexOf(a.id) !== -1);
+  var intro = d.intro.map(function (p) { return "<p>" + esc(p) + "</p>"; }).join("");
+  var formula = (d.formula && INFO[a.id] !== "formula") ?'<p class="pb-formula">' + esc(d.formula) + '</p>' : "";
+  var cards = d.cards.map(function (c) {
+    var list = c.list ? '<ul>' + c.list.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + '</ul>' : "";
+    return '<div class="pb-card"><b>' + esc(c.t) + '</b><p>' + esc(c.p) + '</p>' + list + '</div>';
+  }).join("");
+  var dream = d.dream ? '<p class="pb-dream">' + esc(d.dream) + '</p>' : "";
+  var acts = d.actions.map(function (x, k) {
+    var key = a.id + "-" + k, on = !!state.checks[key];
+    return '<li><label class="pb-check' + (on ? " on" : "") + '"><input type="checkbox" data-check="' + key + '"' + (on ? " checked" : "") + '><span class="pb-box"></span><span class="pb-act"><em>' + esc(x.w) + '</em>' + esc(x.t) + '</span></label></li>';
+  }).join("");
+  var errs = d.errors.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("");
+  var sg = state.segmento ? seg(state.segmento) : null;
+  var segNote = (sg && sg.notes[a.id]) ? '<p class="ar__seg"><b>No seu segmento (' + esc(sg.label) + ')</b>' + esc(sg.notes[a.id]) + '</p>' : "";
+  return '<article class="ar' + (here ? " is-here" : "") + '" id="ar-' + a.id + '" data-area="' + a.id + '">' +
+    '<h3 class="ar__h"><button type="button" class="ar__head" aria-expanded="false" aria-controls="arb-' + a.id + '" data-toggle="' + a.id + '">' +
+    '<span class="ar__num">' + pad(i + 1) + '</span><span class="ar__txt"><span class="ar__name">' + esc(a.name) + '</span><span class="ar__sub">' + esc(a.sub) + '</span></span>' +
+    '<span class="ar__here">Recomendado para você</span><span class="ar__chev" aria-hidden="true"></span></button></h3>' +
+    '<div class="ar__body" id="arb-' + a.id + '" hidden>' +
+    '<h4 class="ar__title">' + esc(d.title) + '</h4><div class="pb-intro">' + intro + '</div>' + segNote + formula +
+    infographic(a.id, d) +
+    '<div class="ar__gate' + (state.lead ? "" : " is-locked") + '"><div class="ar__gate-in">' +
+    '<h5 class="pb-sub">' + esc(d.cardsTitle) + '</h5><div class="pb-cards">' + cards + '</div>' + dream +
+    '<h5 class="pb-sub">Faça nos 30 dias</h5><ul class="pb-acts">' + acts + '</ul>' +
+    '<div class="pb-errors"><b>Erros comuns</b><ul>' + errs + '</ul></div></div>' +
+    '<div class="ar__lock"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><p>Cadastre-se para ler o restante desta etapa e as demais.</p><button type="button" class="btn btn--primary" data-ask>Liberar o guia gratuito</button></div>' +
+    '</div></div></article>';
 }
 
-function readLead() {
-  function v(id) { var el = document.getElementById(id); return el ? el.value.trim() : ""; }
-  var c = document.getElementById("f-consent");
-  return { nome: v("f-nome"), email: v("f-email"), whatsapp: v("f-whats"), cargo: v("f-cargo"), porte: v("f-porte"), consent: !!(c && c.checked) };
+function segHtml() {
+  var cur = state.segmento;
+  return '<div class="sg-map" role="radiogroup" aria-label="Segmento">' + SEGS.map(function (s) {
+    var sel = cur === s.id;
+    return '<button type="button" role="radio" aria-checked="' + sel + '" class="sg' + (sel ? " here" : "") + '" data-seg="' + s.id + '">' + esc(s.label) + '</button>';
+  }).join("") + '</div>';
+}
+
+function playbookInner() {
+  var s = state.segmento ? seg(state.segmento) : null;
+  var sub = s ? "Conteúdo ajustado para quem atende " + s.who + ". " : "";
+  return '<div class="deck__header deck__header--wide"><p class="eyebrow">Playbook Growth 30D' + (s ? " · " + esc(s.label) : "") + '</p>' +
+    '<h2 class="deck__title">As 7 áreas da máquina de receita' + (s ? " para o seu segmento" : "") + '</h2>' +
+    '<p class="deck__subtitle">' + esc(sub) + 'Abra uma área para ver o que fazer, como fazer e os erros mais comuns. ' + (state.lead ? "O seu acesso está liberado." : "Depois de abrir uma área e continuar a leitura, você faz um cadastro rápido e libera todo o conteúdo.") + '</p></div>' +
+    '<div class="ar-list">' + AREAS.map(areaHtml).join("") + '</div>' +
+    '<div class="pb-cta"><p>Quer fazer isso com acompanhamento? Na Sessão Diagnóstico eu avalio o seu momento e monto o plano para o seu caso.</p>' +
+    '<a class="btn btn--primary" id="ctaWa" href="' + esc(waUrl()) + '" target="_blank" rel="noopener">Agendar Sessão Diagnóstico</a></div>';
+}
+
+function syncSteps() {
+  $("stEst").hidden = !state.segmento;
+  $("playbook").hidden = !(state.segmento && state.jornada);
+}
+
+function renderGuia() {
+  views.guia.innerHTML =
+    '<section class="deck deck--light gj" id="jornada"><div class="gj-wrap">' +
+    '<div class="gj-top"><a href="#" class="gj-back" data-act="home">← Voltar ao início</a>' +
+    '<button type="button" class="gj-reset" data-reset>Recomeçar do zero</button></div>' +
+    '<div class="gj-step" id="stSeg">' +
+    '<p class="eyebrow">Guia Growth 30D · Passo 1 de 2</p>' +
+    '<h1 class="gj-title">Qual é o seu segmento?</h1>' +
+    '<p class="gj-lead">O playbook usa exemplos e analogias do seu mercado. Escolha o segmento mais próximo da sua atuação.</p>' +
+    '<div id="sgBox">' + segHtml() + '</div></div>' +
+    '<div class="gj-step gj-step--2" id="stEst"' + (state.segmento ? "" : " hidden") + '>' +
+    '<p class="eyebrow">Passo 2 de 2</p>' +
+    '<h2 class="gj-title gj-title--2">Em que estágio do seu negócio você está?</h2>' +
+    '<p class="gj-lead">Escolha o estágio mais próximo da sua realidade. O guia indica por quais das 7 áreas da máquina de receita começar.</p>' +
+    '<div id="gjDiagram">' + journeyHtml() + '</div></div>' +
+    '</div></section>' +
+    '<section class="deck deck--tone" id="playbook"' + ((state.segmento && state.jornada) ? "" : " hidden") + '><div class="pb-inner" id="pbInner">' + playbookInner() + '</div></section>';
+  updateWaLinks();
+}
+function renderPlaybook() { var pb = $("pbInner"); if (pb) pb.innerHTML = playbookInner(); updateWaLinks(); }
+function updateWaLinks() {
+  var wa = waUrl();
+  var c = $("ctaWa"); if (c) c.setAttribute("href", wa);
+  document.querySelectorAll("#servicos .offer-card__cta").forEach(function (a) { a.setAttribute("href", wa); });
+}
+
+/* ---------- abrir áreas e pedir o cadastro depois da rolagem ---------- */
+var arm = { on: false, base: 0, asked: false };
+function armAsk(delay) {
+  if (state.lead) return;
+  arm.on = true; arm.asked = false;
+  setTimeout(function () { arm.base = window.scrollY; }, delay || 0);
+}
+function toggleArea(id, force) {
+  var art = $("ar-" + id); if (!art) return;
+  var head = art.querySelector(".ar__head"), body = $("arb-" + id);
+  var open = force === undefined ? head.getAttribute("aria-expanded") !== "true" : force;
+  head.setAttribute("aria-expanded", open ? "true" : "false");
+  body.hidden = !open;
+  art.classList.toggle("is-open", open);
+  if (open) armAsk(60);
+}
+window.addEventListener("scroll", function () {
+  if (!arm.on || arm.asked || state.lead || current !== "guia") return;
+  if (Math.abs(window.scrollY - arm.base) > CONFIG.scrollToAsk) { arm.asked = true; openModal(); }
+}, { passive: true });
+
+/* ---------- cadastro (pop-up) ---------- */
+var modal = $("leadModal"), lastFocus = null;
+function openModal() {
+  if (!modal || state.lead) return;
+  lastFocus = document.activeElement;
+  modal.hidden = false;
+  document.body.classList.add("md-open");
+  var sm = $("mdSummary");
+  if (sm) sm.innerHTML = '<b>Segmento:</b> ' + esc(segLabel() || "-") + '<br><b>Estágio:</b> ' + esc((state.jornada && estagio(state.jornada)) ? estagio(state.jornada).curto : "-");
+  var f = $("m-nome"); if (f) setTimeout(function () { f.focus(); }, 30);
+}
+function refreshJourney() {
+  var dg = $("gjDiagram"); if (dg) dg.innerHTML = journeyHtml();
+  var cE = state.jornada ? estagio(state.jornada) : null;
+  document.querySelectorAll(".ar").forEach(function (a) { a.classList.toggle("is-here", !!cE && cE.areas.indexOf(a.getAttribute("data-area")) !== -1); });
+}
+function closeModal(silent) {
+  if (!modal || modal.hidden) return;
+  modal.hidden = true;
+  document.body.classList.remove("md-open");
+  if (!silent && lastFocus && lastFocus.focus) lastFocus.focus();
+}
+function maskPhone(v) {
+  var d = String(v).replace(/[^0-9]/g, "").slice(0, 11);
+  if (d.length > 6) return "(" + d.slice(0, 2) + ") " + d.slice(2, d.length > 10 ? 7 : 6) + "-" + d.slice(d.length > 10 ? 7 : 6);
+  if (d.length > 2) return "(" + d.slice(0, 2) + ") " + d.slice(2);
+  if (d.length > 0) return "(" + d;
+  return "";
 }
 function validateLead(d) {
   var e = {};
   if (d.nome.length < 2) e.nome = "Informe seu nome.";
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(d.email)) e.email = "Informe um e-mail válido.";
   var digits = d.whatsapp.replace(/\D/g, "");
-  if (digits.length < 10 || digits.length > 13) e.whats = "Informe um WhatsApp com DDD.";
-  if (!d.cargo) e.cargo = "Escolha o seu cargo.";
+  if (digits.length < 10 || digits.length > 11) e.whats = "Informe um telefone com DDD.";
   if (!d.porte) e.porte = "Escolha o tamanho da empresa.";
   if (!d.consent) e.consent = "Marque para continuar.";
   return e;
 }
-function showLeadErrors(errs) {
-  ["nome", "email", "whats", "cargo", "porte", "consent"].forEach(function (k) {
-    var f = document.getElementById("fld-" + k), m = document.getElementById("err-" + k);
-    if (!f || !m) return;
-    f.classList.toggle("bad", !!errs[k]);
-    m.textContent = errs[k] || "";
-  });
+function readLead() {
+  function v(id) { var el = $(id); return el ? el.value.trim() : ""; }
+  return { nome: v("m-nome"), email: v("m-email"), whatsapp: v("m-whats"), porte: v("m-porte"), consent: !!$("m-consent").checked };
 }
-
-/* ===================================================================== */
-/* Resultado + playbook                                                   */
-/* ===================================================================== */
-function radarSvg(per) {
-  var n = AREAS.length, cx = 190, cy = 160, R = 100, W = 380, H = 330;
-  function ang(i) { return -Math.PI / 2 + i * 2 * Math.PI / n; }
-  function pt(i, rad) { return [cx + rad * Math.cos(ang(i)), cy + rad * Math.sin(ang(i))]; }
-  function poly(v) { return AREAS.map(function (_, i) { var p = pt(i, R * v / 3); return p[0].toFixed(1) + "," + p[1].toFixed(1); }).join(" "); }
-  var rings = [1, 2, 3].map(function (v) { return '<polygon class="rd-grid" points="' + poly(v) + '"/>'; }).join("");
-  var axes = AREAS.map(function (_, i) { var p = pt(i, R); return '<line class="rd-axis" x1="' + cx + '" y1="' + cy + '" x2="' + p[0].toFixed(1) + '" y2="' + p[1].toFixed(1) + '"/>'; }).join("");
-  var area = AREAS.map(function (a, i) { var p = pt(i, R * per[a.id] / 3); return p[0].toFixed(1) + "," + p[1].toFixed(1); }).join(" ");
-  var dots = AREAS.map(function (a, i) { var p = pt(i, R * per[a.id] / 3); return '<circle class="rd-dot" cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="4.5"/>'; }).join("");
-  var labels = AREAS.map(function (a, i) {
-    var p = pt(i, R + 16), c = Math.cos(ang(i)), sn = Math.sin(ang(i));
-    var anchor = c > 0.3 ? "start" : (c < -0.3 ? "end" : "middle");
-    var y = sn < -0.6 ? p[1] - 20 : (sn > 0.6 ? p[1] + 10 : p[1] - 4);
-    return '<text class="rd-lbl" text-anchor="' + anchor + '" x="' + p[0].toFixed(1) + '" y="' + y.toFixed(1) + '">' + esc(a.short) +
-      '<tspan class="rd-val" x="' + p[0].toFixed(1) + '" dy="14">' + per[a.id] + '/3</tspan></text>';
-  }).join("");
-  return '<svg class="rd" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Gráfico de teia de aranha com a pontuação do seu negócio por área">' +
-    rings + axes + '<polygon class="rd-area" points="' + area + '"/>' + dots + labels + '</svg>';
+function unlockAll() {
+  document.querySelectorAll(".ar__gate.is-locked").forEach(function (g) { g.classList.remove("is-locked"); });
+  var sub = document.querySelector("#playbook .deck__subtitle");
+  if (sub) sub.textContent = "Abra uma área para ver o que fazer, como fazer e os erros mais comuns. O seu acesso está liberado.";
+  updateWaLinks();
 }
-
-function sectionHtml(area, idx, r, prio) {
-  var d = PLAYBOOK[area.id], sc = r.per[area.id];
-  var isPrio = prio.indexOf(area.id) !== -1;
-  var intro = d.intro.map(function (p) { return "<p>" + esc(p) + "</p>"; }).join("");
-  var formula = d.formula ? '<p class="pb-formula">' + esc(d.formula) + '</p>' : "";
-  var cards = d.cards.map(function (c) {
-    var list = c.list ? '<ul>' + c.list.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + '</ul>' : "";
-    return '<div class="pb-card"><b>' + esc(c.t) + '</b><p>' + esc(c.p) + '</p>' + list + '</div>';
-  }).join("");
-  var dream = d.dream ? '<p class="pb-dream">' + esc(d.dream) + '</p>' : "";
-  var acts = d.actions.map(function (a, k) {
-    var key = area.id + "-" + k, on = !!state.checks[key];
-    return '<li><label class="pb-check' + (on ? " on" : "") + '"><input type="checkbox" data-check="' + key + '"' + (on ? " checked" : "") + '><span class="pb-box"></span><span class="pb-act"><em>' + esc(a.w) + '</em>' + esc(a.t) + '</span></label></li>';
-  }).join("");
-  var errs = d.errors.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("");
-  return '<section class="pb-sec' + (isPrio ? " is-prio" : "") + '" id="pb-' + area.id + '" aria-labelledby="pb-h-' + area.id + '">' +
-    '<div class="pb-head"><span class="pb-num">' + pad(idx + 1) + '</span><div>' +
-    '<p class="eyebrow">' + esc(area.name) + ' · ' + esc(area.sub) + '</p>' +
-    '<h3 id="pb-h-' + area.id + '">' + esc(d.title) + '</h3>' +
-    '<p class="pb-score"><span class="pb-chip">Seu nível: ' + sc + '/3</span>' + (isPrio ? '<span class="pb-chip pb-chip--prio">Prioridade para você</span>' : "") + '</p></div></div>' +
-    '<div class="pb-intro">' + intro + '</div>' + formula +
-    '<h4 class="pb-sub">' + esc(d.cardsTitle) + '</h4><div class="pb-cards">' + cards + '</div>' + dream +
-    '<h4 class="pb-sub">Faça nos 30 dias</h4><ul class="pb-acts">' + acts + '</ul>' +
-    '<div class="pb-errors"><b>Erros comuns</b><ul>' + errs + '</ul></div>' +
-    '</section>';
+function buildModal() {
+  function opts(list) { return '<option value="">Selecione</option>' + list.map(function (t) { return '<option>' + esc(t) + '</option>'; }).join(""); }
+  function fld(id, label, control) { return '<div class="fld" id="mf-' + id + '"><label for="m-' + id + '">' + label + '</label>' + control + '<span class="err" id="me-' + id + '" role="alert"></span></div>'; }
+  modal.innerHTML = '<div class="md-card" role="dialog" aria-modal="true" aria-labelledby="mdTitle">' +
+    '<button type="button" class="md-x" data-md-close aria-label="Fechar">×</button>' +
+    '<p class="eyebrow">Acesso gratuito</p><h2 id="mdTitle">Libere o Guia Growth 30D</h2>' +
+    '<p class="md-lead">Cadastre-se para ler todas as áreas do playbook e acompanhar as ações dos 30 dias.</p>' +
+    '<form class="md-form" id="mdForm" novalidate>' +
+    fld("nome", "Nome", '<input id="m-nome" type="text" autocomplete="name">') +
+    '<div class="md-two">' + fld("email", "E-mail", '<input id="m-email" type="email" autocomplete="email" inputmode="email">') +
+    fld("whats", "Telefone", '<input id="m-whats" type="tel" autocomplete="tel" inputmode="tel" placeholder="(00) 00000-0000">') + '</div>' +
+    fld("porte", "Tamanho da empresa", '<select id="m-porte">' + opts(PORTES) + '</select>') +
+    '<p class="md-sum" id="mdSummary"></p>' +
+    '<div class="fld" id="mf-consent"><label class="md-consent" for="m-consent"><input id="m-consent" type="checkbox"><span>Concordo em receber o guia e contatos sobre growth, conforme a LGPD.</span></label><span class="err" id="me-consent" role="alert"></span></div>' +
+    '<button type="submit" class="btn btn--primary md-submit">Liberar o guia</button>' +
+    '<p class="md-priv">Sem spam. Você pode pedir a remoção dos seus dados quando quiser.</p></form></div>';
 }
+if (modal) buildModal();
 
-function checksTotals() {
-  var total = 0, done = 0;
-  AREAS.forEach(function (a) { PLAYBOOK[a.id].actions.forEach(function (_, k) { total++; if (state.checks[a.id + "-" + k]) done++; }); });
-  return { total: total, done: done };
-}
-
-function renderResult() {
-  var r = compute(), lv = r.level;
-  var ranked = AREAS.slice().sort(function (a, b) { return r.per[a.id] - r.per[b.id] || AREAS.indexOf(a) - AREAS.indexOf(b); });
-  var prio = ranked.slice(0, 3).map(function (a) { return a.id; });
-  var scale = LEVELS.map(function (l) {
-    return '<div class="' + (l.slug === lv.slug ? "on" : "") + '">' + esc(l.name) + '<small>' + l.range + ' pontos</small></div>';
-  }).join("");
-  var bars = AREAS.map(function (a) {
-    return '<button type="button" class="rs-bar" data-go="pb-' + a.id + '"><span class="rs-bar__row"><span>' + esc(a.name) + '</span><b>' + r.per[a.id] + '/3</b></span><span class="rs-bar__track"><i style="width:' + (r.per[a.id] / 3 * 100) + '%"></i></span></button>';
-  }).join("");
-  var prios = ranked.slice(0, 3).map(function (a, i) {
-    return '<article class="rs-prio"><span class="rs-prio__n">' + (i + 1) + '</span><div><h4>' + esc(a.name) + ' <em>' + r.per[a.id] + '/3</em></h4><p>' + esc(a.tip) + '</p><button type="button" class="rs-link" data-go="pb-' + a.id + '">Ver no playbook →</button></div></article>';
-  }).join("");
-  var toc = AREAS.map(function (a, i) {
-    return '<button type="button" class="pb-toc__item' + (prio.indexOf(a.id) !== -1 ? " prio" : "") + '" data-go="pb-' + a.id + '"><span>' + pad(i + 1) + '</span>' + esc(a.name) + '<small>' + r.per[a.id] + '/3</small></button>';
-  }).join("");
-  var plan = PLAN30.map(function (p) {
-    return '<div class="pl-step"><span>' + esc(p.w) + '</span><b>' + esc(p.t) + '</b><p>' + esc(p.d) + '</p></div>';
-  }).join("");
-  var secs = AREAS.map(function (a, i) { return sectionHtml(a, i, r, prio); }).join("");
-  var ct = checksTotals();
-  var name = state.lead ? state.lead.nome.split(" ")[0] : "";
-
-  views.resultado.innerHTML =
-    '<section class="deck deck--light rs-top" id="resultado-topo"><div class="rs-wrap">' +
-    '<p class="eyebrow">' + (name ? "Resultado de " + esc(name) : "Seu resultado") + '</p>' +
-    '<div class="rs-score"><div class="rs-num" aria-label="Nota ' + r.total + ' de ' + MAX_SCORE + '">' + r.total + '<small>/' + MAX_SCORE + '</small></div>' +
-    '<div><h2 class="rs-level" data-focus>' + esc(lv.name) + '</h2><p class="rs-sum">' + esc(lv.summary) + '</p></div></div>' +
-    '<div class="rs-scale">' + scale + '</div>' +
-    '<p class="rs-next"><b>Próximo passo:</b> ' + esc(lv.next) + '</p>' +
-    '<div class="rs-grid"><div class="rs-radar">' + radarSvg(r.per) + '</div><div class="rs-bars"><p class="rs-label">Pontuação por área</p>' + bars + '</div></div>' +
-    '<p class="rs-label rs-label--mt">Onde agir primeiro</p><div class="rs-prios">' + prios + '</div>' +
-    '</div></section>' +
-
-    '<section class="deck deck--tone pb-wrap" id="playbook"><div class="pb-inner">' +
-    '<div class="deck__header deck__header--wide"><p class="eyebrow">Playbook Growth 30D</p>' +
-    '<h2 class="deck__title">Mapeie a sua operação e tenha um plano para faturar pelo menos +10% em 30 dias</h2>' +
-    '<p class="deck__subtitle">O playbook segue as 7 áreas do método Máquina de Receita. As áreas com a menor nota estão marcadas como prioridade. Marque cada ação concluída e acompanhe o seu avanço.</p></div>' +
-    '<div class="pb-progress"><div class="pb-progress__txt"><b id="pbDone">' + ct.done + '</b> de ' + ct.total + ' ações concluídas</div><div class="pb-progress__bar"><i id="pbBar" style="width:' + (ct.total ? ct.done / ct.total * 100 : 0) + '%"></i></div></div>' +
-    '<nav class="pb-toc" aria-label="Áreas do playbook">' + toc + '</nav>' +
-    secs +
-    '<section class="pb-sec pb-plan" id="pb-plano"><div class="pb-head"><span class="pb-num">30D</span><div><p class="eyebrow">Plano resumido</p><h3>Os 30 dias em cinco semanas</h3></div></div><div class="pl-steps">' + plan + '</div></section>' +
-    '<div class="pb-cta"><p>Quer fazer isso com acompanhamento? Na Sessão Diagnóstico eu avalio o seu resultado e monto o plano para o seu caso.</p>' +
-    '<a class="btn btn--primary" id="ctaWa" href="' + esc(waUrl(true)) + '" target="_blank" rel="noopener">Agendar Sessão Diagnóstico</a></div>' +
-    '<div class="rs-again"><button class="btn btn--ghost" type="button" data-act="copy">Copiar resumo</button><button class="btn btn--ghost" type="button" data-act="redo">Refazer diagnóstico</button><span class="ok" id="okMsg" role="status"></span></div>' +
-    '</div></section>';
-
-  // atualiza os links de WhatsApp dos serviços com o resultado
-  var wa = waUrl(true);
-  document.querySelectorAll("#servicos .offer-card__cta").forEach(function (a) { a.setAttribute("href", wa); });
-}
-
-/* ===================================================================== */
-/* Eventos                                                                */
-/* ===================================================================== */
-function startFlow() {
-  if (state.done) { goTo("#resultado"); return; }
-  goTo("#diagnostico");
-}
+/* ---------- eventos ---------- */
+function startFlow() { goTo("#playbook"); }
 
 document.addEventListener("click", function (e) {
   var cta = e.target.closest("#navCta");
   if (cta) {
-    if (cta.getAttribute("data-mode") === "wa") { sendLead("cta-whatsapp"); window.open(waUrl(true), "_blank", "noopener"); }
+    if (cta.getAttribute("data-mode") === "wa") { sendLead("cta-whatsapp"); window.open(waUrl(), "_blank", "noopener"); }
     else startFlow();
     return;
   }
@@ -725,8 +691,10 @@ document.addEventListener("click", function (e) {
   if (start) { e.preventDefault(); startFlow(); return; }
 
   var anc = e.target.closest('a[href^="#"]');
-  if (anc && current === "resultado") {
-    var aid = anc.getAttribute("href").slice(1);
+  if (anc && current === "guia") {
+    var href = anc.getAttribute("href");
+    if (href === "#" || anc.getAttribute("data-act") === "home") { e.preventDefault(); history.pushState(null, "", location.pathname + location.search); route(); return; }
+    var aid = href.slice(1);
     if (aid === "servicos" || aid === "redes") {
       e.preventDefault();
       var tg = document.getElementById(aid);
@@ -738,88 +706,71 @@ document.addEventListener("click", function (e) {
   var wa = e.target.closest("#ctaWa, #servicos .offer-card__cta");
   if (wa) sendLead("cta-whatsapp");
 
-  var go = e.target.closest("[data-go]");
-  if (go) {
-    var el = document.getElementById(go.getAttribute("data-go"));
-    if (el) { var top = el.getBoundingClientRect().top + window.scrollY - 76; window.scrollTo({ top: top, behavior: "smooth" }); }
+  if (e.target.closest("[data-reset]")) { resetAll(); return; }
+  var sgb = e.target.closest("[data-seg]");
+  if (sgb) {
+    state.segmento = sgb.getAttribute("data-seg"); saveState();
+    $("sgBox").innerHTML = segHtml();
+    syncSteps(); renderPlaybook();
+    if (state.lead) sendLead("segmento");
+    var st2 = $("stEst");
+    if (st2) window.scrollTo({ top: st2.getBoundingClientRect().top + window.scrollY - 84, behavior: "smooth" });
     return;
   }
-
-  var b = e.target.closest("[data-act]");
-  if (!b) return;
-  var act = b.getAttribute("data-act");
-  if (act === "back") {
-    if (state.i === 0) { history.pushState(null, "", location.pathname + location.search); route(); }
-    else { state.mode = "q"; state.i -= 1; if (state.i === CONFIG.gateBefore - 1) state.mode = "q"; renderQuiz(); }
-  } else if (act === "backlead") {
-    state.mode = "q"; state.i = CONFIG.gateBefore - 1; renderQuiz();
-  } else if (act === "next") {
-    var q = QUESTIONS[state.i];
-    if (state.answers[q.id] === undefined) return;
-    saveState();
-    if (state.i === QUESTIONS.length - 1) {
-      state.done = true; saveState();
-      sendLead("resultado");
-      location.hash = "#resultado";
-    } else if (state.i + 1 === CONFIG.gateBefore && !state.lead) {
-      state.mode = "lead"; state.i = CONFIG.gateBefore; renderQuiz(); window.scrollTo(0, 0);
-    } else {
-      state.i += 1; renderQuiz(); window.scrollTo(0, 0);
-    }
-  } else if (act === "redo") {
-    state.answers = {}; state.done = false; state.i = 0; state.mode = "q"; saveState();
-    goTo("#diagnostico");
-  } else if (act === "copy") {
-    var r = compute();
-    var txt = "Meu diagnóstico Growth 30D: " + r.total + "/" + MAX_SCORE + " (" + r.level.name + "). Faça o seu: " + location.href.split("#")[0];
-    var ok = $("okMsg");
-    var done = function () { ok.textContent = "Resumo copiado."; };
-    var fail = function () { ok.textContent = "Não foi possível copiar. Resumo: " + txt; };
-    try { navigator.clipboard.writeText(txt).then(done, fail); } catch (err) { fail(); }
+  var jr = e.target.closest("[data-jornada]");
+  if (jr) {
+    state.jornada = jr.getAttribute("data-jornada"); saveState();
+    refreshJourney(); syncSteps(); renderPlaybook();
+    if (state.lead) sendLead("jornada");
+    var pbs = $("gjPanel"); if (pbs && window.innerWidth < 800) pbs.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    return;
   }
+  if (e.target.closest("[data-see-playbook]")) {
+    var pbk = $("playbook");
+    if (pbk) window.scrollTo({ top: pbk.getBoundingClientRect().top + window.scrollY - 70, behavior: "smooth" });
+    return;
+  }
+  var oa = e.target.closest("[data-open-area]");
+  if (oa) {
+    var id = oa.getAttribute("data-open-area");
+    toggleArea(id, true);
+    var art = $("ar-" + id);
+    window.scrollTo({ top: art.getBoundingClientRect().top + window.scrollY - 76, behavior: "smooth" });
+    armAsk(900);
+    return;
+  }
+  var tg2 = e.target.closest("[data-toggle]");
+  if (tg2) { toggleArea(tg2.getAttribute("data-toggle")); return; }
+  if (e.target.closest("[data-ask]")) { openModal(); return; }
+  if (e.target.closest("[data-md-close]") || e.target === modal) { closeModal(); return; }
 });
 
-views.quiz.addEventListener("change", function (e) {
-  if (e.target.name !== "q") return;
-  var q = QUESTIONS[state.i];
-  state.answers[q.id] = parseInt(e.target.value, 10);
-  saveState();
-  var labels = views.quiz.querySelectorAll(".gq-opt");
-  for (var k = 0; k < labels.length; k++) labels[k].classList.toggle("sel", labels[k].contains(e.target));
-  var nx = views.quiz.querySelector('[data-act="next"]');
-  if (nx) nx.disabled = false;
-});
+document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeModal(); });
 
-views.quiz.addEventListener("input", function (e) {
-  var t = e.target;
-  if (t && t.closest && t.closest("#lead-form")) state.leadDraft = readLead();
+modal.addEventListener("input", function (e) {
+  if (e.target && e.target.id === "m-whats") e.target.value = maskPhone(e.target.value);
 });
-
-views.quiz.addEventListener("submit", function (e) {
-  if (e.target.id !== "lead-form") return;
+modal.addEventListener("submit", function (e) {
   e.preventDefault();
   var d = readLead(), errs = validateLead(d);
-  state.leadDraft = d;
-  showLeadErrors(errs);
-  var first = ["nome", "email", "whats", "cargo", "porte", "consent"].filter(function (k) { return errs[k]; })[0];
-  if (first) { document.getElementById("f-" + first).focus(); return; }
-  state.lead = d; state.mode = "q"; state.i = CONFIG.gateBefore;
-  saveState();
+  ["nome", "email", "whats", "porte", "consent"].forEach(function (k) {
+    var f = $("mf-" + k), m = $("me-" + k);
+    if (f) f.classList.toggle("bad", !!errs[k]);
+    if (m) m.textContent = errs[k] || "";
+  });
+  var first = ["nome", "email", "whats", "porte", "consent"].filter(function (k) { return errs[k]; })[0];
+  if (first) { var el = $("m-" + first); if (el) el.focus(); return; }
+  state.lead = d; saveState();
   sendLead("cadastro");
-  renderQuiz();
-  window.scrollTo(0, 0);
+  closeModal(true);
+  unlockAll();
 });
 
-views.resultado.addEventListener("change", function (e) {
+views.guia.addEventListener("change", function (e) {
   var k = e.target.getAttribute && e.target.getAttribute("data-check");
   if (!k) return;
-  state.checks[k] = e.target.checked;
-  saveState();
-  var lab = e.target.closest(".pb-check");
-  if (lab) lab.classList.toggle("on", e.target.checked);
-  var ct = checksTotals();
-  $("pbDone").textContent = ct.done;
-  $("pbBar").style.width = (ct.total ? ct.done / ct.total * 100 : 0) + "%";
+  state.checks[k] = e.target.checked; saveState();
+  var lab = e.target.closest(".pb-check"); if (lab) lab.classList.toggle("on", e.target.checked);
 });
 
 window.addEventListener("hashchange", route);
