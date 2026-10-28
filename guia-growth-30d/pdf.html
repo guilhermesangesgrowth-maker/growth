@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>Guia Growth 30D</title>
+<link rel="stylesheet" href="../css/fonts.css" />
+<link rel="stylesheet" href="../css/styles.css" />
+<link rel="stylesheet" href="guia.css" />
+<link rel="stylesheet" href="guia-print.css" />
+</head>
+<body class="pdf">
+<!-- Fonte do PDF "Guia Growth 30D". Gerado por navegador headless a partir desta página. -->
+<div hidden><span id="year"></span><header id="nav"></header><div id="view-captura"></div><div id="view-guia"></div><div id="shared-bottom"></div><a id="navCta"></a><nav id="navLinksCaptura"></nav></div>
+<main id="pdfRoot"></main>
+<script src="guia.js"></script>
+<script>
+(function () {
+  closeOverlay(); views.guia.innerHTML = ""; document.body.classList.remove("gm-open", "gm-s3");
+  state.lead = { nome: "", email: "", whatsapp: "", porte: "", investe: "", consent: true };
+  var wk = WEEKS.map(function (W) {
+    var items = W.areas.map(function (id) { var a = area(id); return areaHtml(a, AREAS.indexOf(a)); }).join("");
+    return '<section class="wk"><div class="wk__h"><span class="wk__n">' + esc(W.w) + '</span><span class="wk__t">' + esc(W.t) + '</span></div><div class="ar-list">' + items + '</div></section>';
+  }).join("");
+  var cover = '<section class="pdf-cover"><p class="eyebrow">Guia Growth 30D · Material gratuito</p>' +
+    '<h1>Venda mais serviços high-ticket em 30 dias</h1>' +
+    '<p class="pdf-lead">O roadmap de 4 semanas para escalar as vendas do seu serviço high-ticket e da sua consultoria/mentoria, com as 7 áreas da máquina de receita: o que fazer, como fazer e os erros mais comuns.</p>' +
+    '<ol class="pv-list">' + AREAS.map(function (a, i) { return '<li><span>' + pad(i + 1) + '</span><b>' + esc(a.name) + '</b><small>' + esc(a.sub) + '</small></li>'; }).join("") + '</ol>' +
+    '<p class="pdf-by">Guilherme Sanges · Especialista em Growth</p></section>';
+  var end = '<section class="pdf-end"><h2>Quer fazer isso com acompanhamento?</h2><p>Na Sessão Diagnóstico eu avalio o seu momento e monto o plano para o seu caso.</p>' +
+    '<p><a href="' + esc(waUrl()) + '">Agendar Sessão Diagnóstico pelo WhatsApp</a></p></section>';
+  document.getElementById("pdfRoot").innerHTML = cover + '<div class="wk-list">' + wk + '</div>' + end;
+  document.querySelectorAll(".ar__body").forEach(function (b) { b.hidden = false; });
+  document.querySelectorAll(".ar").forEach(function (a) { a.classList.add("is-open"); });
+  document.title = "Guia Growth 30D";
+})();
+</script>
+</body>
+</html>

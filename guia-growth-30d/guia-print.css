@@ -1,0 +1,23 @@
+/* Versão do guia para PDF (A4) */
+@page { size: A4; margin: 14mm 14mm 16mm; }
+body.pdf { background: #fff; color: #0a0a0a; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.pdf main { max-width: 760px; margin: 0 auto; padding: 0; }
+.pdf-cover { padding: 8mm 0 10mm; break-after: page; }
+.pdf-cover h1 { font-family: var(--font-display); font-size: 44px; line-height: 1.05; margin: 10px 0 14px; }
+.pdf-lead { font-size: 15px; line-height: 1.6; color: #444; margin: 0 0 22px; }
+.pdf-by { margin: 22px 0 0; font-family: var(--font-mono); font-size: 12px; color: #444; }
+.pdf .wk-list { display: block; }
+.pdf .wk { margin: 0 0 14mm; padding-left: 14px; }
+.pdf .wk__h { break-after: avoid; }
+.pdf .ar { break-inside: auto; margin-bottom: 8mm; }
+.pdf .ar__head { break-after: avoid; cursor: default; }
+.pdf .ar__chev, .pdf .ar__here { display: none !important; }
+.pdf .ar__body { display: block !important; }
+.pdf .pb-card, .pdf .ar__seg, .pdf .pb-errors, .pdf .ig, .pdf svg { break-inside: avoid; }
+.pdf .ar__gate-in { filter: none !important; }
+.pdf .ar__lock { display: none !important; }
+.pdf .pb-check { cursor: default; }
+.pdf-end { break-before: avoid; margin-top: 8mm; padding: 6mm 8mm; background: #0a0a0a; color: #f5f3ef; border-radius: 10px; }
+.pdf-end h2 { font-family: var(--font-display); font-size: 24px; margin: 0 0 6px; }
+.pdf-end p { margin: 0 0 8px; }
+.pdf-end a { color: #FF6B00; font-weight: 700; }
