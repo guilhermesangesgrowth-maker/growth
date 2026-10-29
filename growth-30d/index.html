@@ -868,10 +868,10 @@ td small{color:var(--ink-3);font-weight:400;font-size:12px;margin-left:6px}
     </div>
     <div class="inv">
       <div class="price">
-        <div><span class="label">Investimento no programa</span><div class="v">R$ 10.000</div></div>
+        <div><span class="label">Investimento no programa</span><div class="v">R$ 9.000</div></div>
         <div class="split">
-          <div><span class="label">50% antes</span><strong>R$ 5.000</strong><span>Sinal para reservar a agenda</span></div>
-          <div><span class="label">50% depois</span><strong>R$ 5.000</strong><span>Restante após a assinatura do contrato</span></div>
+          <div><span class="label">50% antes</span><strong>R$ 4.500</strong><span>Sinal para reservar a agenda</span></div>
+          <div><span class="label">50% depois</span><strong>R$ 4.500</strong><span>Restante após a assinatura do contrato</span></div>
         </div>
         <div class="garantia">
           <svg viewBox="0 0 36 36" fill="none" aria-hidden="true"><path d="M18 3 6 8v9c0 7.6 5.1 13.7 12 16 6.9-2.3 12-8.4 12-16V8L18 3Z" stroke="#C94F00" stroke-width="1.6" fill="rgba(255,107,0,.14)"/><path d="m12.5 18 4 4 7-8" stroke="#C94F00" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1242,7 +1242,7 @@ function renderChart(m){
 }
 
 /* ---------- investimento ---------- */
-const PRICE=10000;
+const PRICE=9000;
 function renderInv(){
   const m=model(), emp=(S.txt.empresa||"").trim();
   $("#invTitle").textContent=emp?`Proposta para ${emp}`:"Proposta";
