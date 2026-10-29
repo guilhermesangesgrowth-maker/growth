@@ -400,13 +400,6 @@ function estagioLabel() {
 
 function waUrl() {
   var msg = "Olá, vim do Guia Growth 30D e quero agendar uma Sessão Diagnóstico!";
-  if (state.lead) {
-    msg = "Olá, sou " + state.lead.nome + " (" + (segLabel() || "profissional") + ", " + state.lead.porte + "). ";
-    var es = state.jornada ? estagio(state.jornada) : null;
-    if (es) msg += es.curto + ". ";
-    if (state.lead.investe) msg += "Marketing: " + state.lead.investe + ". ";
-    msg += "Li o Guia Growth 30D e quero agendar uma Sessão Diagnóstico!";
-  }
   return "https://api.whatsapp.com/send/?phone=" + CONFIG.whatsapp + "&text=" + encodeURIComponent(msg);
 }
 

@@ -547,7 +547,7 @@ body.gm-open #view-captura, body.gm-open #shared-bottom, body.gm-open .nav, body
 .wa-float:hover { transform: scale(1.07); box-shadow: 0 8px 22px rgba(0, 0, 0, 0.38); }
 .wa-float:focus-visible { outline: 3px solid var(--black); outline-offset: 3px; }
 .wa-float svg { width: 24px; height: 24px; }
-.wa-float { display: none; }
+.wa-float { z-index: 95; }
 
 /* prévia do guia: o aviso de cadastro não compete com o conteúdo desfocado */
 .guia-peek .gq-peek__lock { background: rgba(245, 243, 239, 0.82); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); gap: 10px; }
@@ -555,8 +555,8 @@ body.gm-open #view-captura, body.gm-open #shared-bottom, body.gm-open .nav, body
 
 /* ============ GUIA EM 3 TELAS: preview, cadastro, roadmap ============ */
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-/* botão do WhatsApp só aparece na tela 3, acima do rodapé fixo */
-body.gm-s3 .wa-float { display: flex; z-index: 95; bottom: 88px; }
+/* botão do WhatsApp sempre visível; na tela 3 sobe para ficar acima do rodapé fixo */
+body.gm-s3 .wa-float { bottom: 88px; }
 @media (min-width: 760px) { body.gm-s3 .wa-float { bottom: 28px; right: 28px; } }
 /* tela 1: preview */
 .gm-screen--pv { text-align: left; cursor: pointer; }
