@@ -89,93 +89,80 @@ window.addEventListener(
   start();
 })();
 
+
+/* Roadmap de 4 semanas: 7 seções do guia (4 na semana 1, uma em cada semana seguinte) */
 var AREAS = [
-  { id: "tese", short: "Tese", name: "Tese", sub: "O cenário do mercado",
-    tip: "Escreva a sua tese em três frases: o que o mercado faz de errado, o que você faz diferente e qual resultado o cliente leva." },
-  { id: "produto", short: "Produto", name: "Construção do produto", sub: "ICP e problem-solving",
-    tip: "Escolha um cliente ideal e um problema, e desenhe o método em 3 a 5 etapas com um entregável em cada uma." },
-  { id: "posicionamento", short: "Posição", name: "Posicionamento", sub: "A frase que o cliente certo reconhece",
-    tip: "Escreva a frase de posicionamento e atualize bio, proposta e apresentação com ela, junto com três provas." },
-  { id: "canais", short: "Canais", name: "Canais de aquisição", sub: "Funis do método",
-    tip: "Escolha dois canais, defina uma rotina semanal para cada um e acompanhe quantas conversas qualificadas eles geram." },
-  { id: "ia", short: "IA e martech", name: "IA e martech", sub: "Soluções core de IA e martech",
-    tip: "Organize o CRM com etapas e origem do lead, monte um painel simples e automatize a primeira resposta e o follow-up." },
-  { id: "vendas", short: "Vendas", name: "Processos de vendas", sub: "Alta performance em inside sales",
-    tip: "Padronize a sessão diagnóstico com roteiro, termine sempre com proposta e próximo passo agendado e crie a cadência de follow-up." },
-  { id: "expansao", short: "Expansão", name: "Satisfação e expansão", sub: "CX e expansão de receita",
-    tip: "Defina um marco de resultado para cada cliente, peça indicação nesse momento e tenha uma oferta de continuidade pronta." }
+  { id: "negocio", short: "Negócio", name: "Negócio e monetização", sub: "Modelo, margem, caixa e ciclo comercial",
+    tip: "Desenhe o modelo de negócio de cada frente, calcule a margem e projete o caixa dos próximos 90 dias." },
+  { id: "mercado", short: "Mercado", name: "Posicionamento e mercado", sub: "Problema, diferença, público, concorrência e marca",
+    tip: "Escreva a frase de posicionamento, mapeie cinco concorrentes e atualize bio, proposta e apresentação." },
+  { id: "canais", short: "Canais", name: "Canais de aquisição", sub: "Funis, ferramentas e conteúdo",
+    tip: "Escolha dois canais, defina uma rotina semanal para cada um e conecte as ferramentas para registrar a origem de cada contato." },
+  { id: "vendas", short: "Vendas", name: "Vendas", sub: "Processos, time e ferramentas",
+    tip: "Padronize a sessão diagnóstico com roteiro, termine sempre com proposta e próximo passo agendado e registre tudo no CRM." },
+  { id: "implementacao", short: "Implementação", name: "Implementação", sub: "Plano estratégico, indicadores e hipóteses",
+    tip: "Transforme o diagnóstico em um plano com poucas ações, cada uma com dono, prazo, indicador e hipótese." },
+  { id: "analises", short: "Análises", name: "Análises e otimizações", sub: "Mensuração e ajustes",
+    tip: "Compare os números com as hipóteses, ache a etapa com maior perda e teste uma mudança por vez." },
+  { id: "resultados", short: "Resultados", name: "Resultados e sequência", sub: "Análises finais, ampliação e finalização",
+    tip: "Compare o início com o fim, amplie o que deu certo e escreva o plano dos próximos 30 dias." }
 ];
 
-/* ---------- Playbook: uma seção para cada área do método ---------- */
+/* Notas por segmento: cada seção reaproveita a nota do tema mais próximo (as novas seções de análise e implementação não têm nota) */
+var NOTE_MAP = { negocio: "produto", mercado: "posicionamento", canais: "canais", vendas: "vendas", resultados: "expansao" };
+
+/* ---------- Playbook: uma seção para cada área do roadmap ---------- */
 var PLAYBOOK = {
-  tese: {
-    title: "Autoridade sozinha deixou de vender serviço high-ticket",
+  negocio: {
+    title: "Entenda como o seu negócio ganha dinheiro antes de vender mais",
     intro: [
-      "Quem compra um serviço de alto valor recebe ofertas de concorrentes, agências e gurus todos os dias. Ter um currículo forte abre portas, mas a decisão de compra pede uma tese: o que o mercado faz de errado, o que você faz diferente e qual resultado o cliente leva.",
-      "A tese organiza tudo o que vem depois, tanto para o serviço principal (a clínica, o escritório, a consultoria) quanto para a frente de consultoria ou mentoria. Ela define o que você publica, o que você promete e como conduz a venda."
+      "Vender mais só ajuda quando cada venda deixa margem e o caixa aguenta o ritmo. Esta é a base do guia: enxergar o modelo de negócio, a margem de cada serviço, o caixa e o tempo entre o primeiro contato e o pagamento.",
+      "Isso vale para o serviço principal e para a frente de consultoria ou mentoria. Cada uma tem custos, preço e ciclo comercial próprios. Crescer sem esses números claros aumenta o trabalho e não aumenta o lucro."
     ],
-    cardsTitle: "Os três inimigos comuns",
+    cardsTitle: "Os quatro pontos do negócio",
     cards: [
-      { t: "A agência que só posta", p: "Entrega post bonito, alcance e curtida, e a agenda segue vazia. O que paga a conta são reuniões marcadas e contratos fechados." },
-      { t: "A agenda limitada", p: "No modelo de serviços, a receita fica presa ao seu tempo. O resultado é uma rotina exaustiva e um teto de faturamento." },
-      { t: "O guru do marketing", p: "Vende mentoria em grupo, repete a mesma fórmula para todo mundo e não mergulha no seu negócio." }
-    ],
-    dream: "O sonho comum: mais receita com menos trabalho, sem depender só de postar.",
-    actions: [
-      { w: "Semana 0", t: "Escreva a sua tese em três frases: o que o mercado faz de errado, o que você faz e qual resultado o cliente leva." },
-      { w: "Semana 0", t: "Liste cinco concorrentes ou alternativas e anote como cada um se posiciona." },
-      { w: "Semana 1", t: "Pergunte a cinco clientes por que escolheram você e quais alternativas consideraram." },
-      { w: "Semana 1", t: "Transforme a tese em uma pauta fixa de conteúdo e em um slide da sua apresentação de vendas." }
-    ],
-    errors: ["Copiar a tese de outra pessoa do mercado.", "Uma tese genérica como \"ajudo empresas a crescer\".", "Falar mal de concorrentes em vez de mostrar a prática que prejudica o cliente."]
-  },
-  produto: {
-    title: "Defina quem você atende e o que cada serviço entrega",
-    intro: [
-      "Serviço high-ticket que atende qualquer pessoa vira serviço difícil de vender. O produto começa por um cliente ideal (ICP) e por um problema que ele reconhece e paga para resolver.",
-      "Isso vale para o serviço principal e para a frente de consultoria ou mentoria. Cada um precisa de método, etapas e entregáveis que o cliente enxerga, compara e compra. Quando os dois conversam, o cliente do serviço principal vira o primeiro cliente da consultoria."
-    ],
-    cardsTitle: "Os quatro blocos do produto",
-    cards: [
-      { t: "Cliente ideal", p: "Quem é, em que setor e porte atua, em que momento está e qual gatilho faz essa pessoa procurar ajuda." },
-      { t: "Problema", p: "A dor em uma frase, nas palavras do cliente, e o custo de continuar com ela." },
-      { t: "Resultado e prazo", p: "O que muda ao final do projeto e em quanto tempo, com uma forma clara de medir." },
-      { t: "Método e entregáveis", p: "Três a cinco etapas com nome, cada uma com um entregável que o cliente recebe." }
+      { t: "Modelo de negócio", p: "Quem paga, por qual motivo e de que forma: projeto, recorrência, honorário por êxito ou mentoria." },
+      { t: "Margem", p: "O que sobra de cada serviço depois do seu tempo, da equipe e dos custos diretos. É a base do preço." },
+      { t: "Caixa", p: "Quando o dinheiro entra e quando sai, para saber quanto você pode investir em crescimento sem aperto." },
+      { t: "Ciclo comercial", p: "Quantos dias passam entre o primeiro contato e o pagamento, etapa por etapa, para achar onde a venda trava." }
     ],
     actions: [
-      { w: "Semana 0", t: "Escolha um cliente ideal para o serviço principal e escreva as cinco perguntas que ele faz antes de contratar." },
-      { w: "Semana 0", t: "Liste três problemas que você resolve e escolha o de maior urgência e maior valor." },
-      { w: "Semana 0", t: "Desenhe o método em 3 a 5 etapas com nome e entregável. Se existir a frente de consultoria ou mentoria, desenhe o método dela também." },
-      { w: "Semana 1", t: "Feche escopo, prazo e preço baseado no valor do resultado, e não nas horas." }
+      { w: "Semana 1", t: "Desenhe o modelo de negócio de cada frente (serviço principal e consultoria ou mentoria) em uma página: cliente, oferta, preço e forma de pagamento." },
+      { w: "Semana 1", t: "Calcule a margem de cada serviço considerando o seu tempo e os custos diretos." },
+      { w: "Semana 1", t: "Monte uma projeção simples de caixa para os próximos 90 dias." },
+      { w: "Semana 1", t: "Registre o ciclo comercial das últimas vendas, do primeiro contato ao pagamento." }
     ],
-    errors: ["Atender todos os perfis e depois não saber vender para nenhum.", "Vender horas em vez de resultado.", "Método sem nome e sem entregáveis, que o cliente não consegue comparar."]
+    errors: ["Definir o preço pelas horas e ignorar o valor do resultado.", "Investir em marketing sem conhecer a margem de cada serviço.", "Ignorar o caixa e depender de um único grande cliente."]
   },
-  posicionamento: {
-    title: "Uma frase que faz o cliente certo levantar a mão",
+  mercado: {
+    title: "Mostre ao cliente por que escolher você",
     intro: [
-      "Posicionamento é a resposta rápida para \"por que contratar você e não outra pessoa?\". Quem tem carreira sólida costuma se descrever pelo cargo e pela formação. O cliente quer saber o que muda para ele.",
-      "A frase de posicionamento junta público, resultado, prazo e método, e precisa aparecer do mesmo jeito no perfil, na proposta e na conversa de venda, para o serviço principal e para a frente de consultoria ou mentoria."
+      "Quem contrata um serviço de alto valor compara alternativas antes de decidir. Posicionamento é a resposta clara para \"por que contratar você?\", apoiada no problema que você resolve, no público que atende e no que você faz de diferente.",
+      "Olhar para o mercado ajuda a escolher onde competir: quem são os concorrentes, o que eles prometem e quais inovações mudam a decisão de compra. A marca reúne tudo isso e precisa soar igual no serviço principal e na consultoria ou mentoria."
     ],
     formula: "Ajudo [público] a [resultado] em [prazo], com [método].",
     cardsTitle: "O que sustenta o posicionamento",
     cards: [
-      { t: "Categoria", p: "Em que \"prateleira\" o cliente coloca você. Ela precisa ser entendida em segundos." },
-      { t: "Diferencial", p: "A prática ou o método que só você faz desse jeito e por que isso gera melhor resultado." },
-      { t: "Prova", p: "Casos, números públicos, depoimentos e a sua trajetória, escolhidos para o cliente ideal." },
-      { t: "Consistência", p: "A mesma frase em bio, LinkedIn, proposta, apresentação e abertura da sessão diagnóstico." }
+      { t: "Problem-solving", p: "O problema que o cliente reconhece, nas palavras dele, e o custo de continuar com ele." },
+      { t: "Diferenciação", p: "A prática ou o método que só você faz desse jeito e por que isso gera melhor resultado." },
+      { t: "Público-alvo", p: "Quem é o cliente ideal, em que momento está e qual gatilho o faz procurar ajuda." },
+      { t: "Inovações", p: "Tecnologias, formatos e práticas novas do seu mercado que mudam o que o cliente espera." },
+      { t: "Concorrência", p: "Quem disputa a mesma decisão, como se posiciona e onde existe espaço para você." },
+      { t: "Marca", p: "Nome, discurso e provas repetidos do mesmo jeito no perfil, na proposta e na conversa de venda." }
     ],
     actions: [
-      { w: "Semana 0", t: "Escreva a frase de posicionamento com a fórmula e peça a três pessoas para repeti-la com as palavras delas." },
-      { w: "Semana 1", t: "Atualize bio, LinkedIn, proposta e primeiro slide da apresentação com a frase." },
-      { w: "Semana 1", t: "Reúna três provas relevantes para o seu cliente ideal e deixe-as prontas para uso." }
+      { w: "Semana 1", t: "Escreva a frase de posicionamento com a fórmula e peça a três pessoas para repeti-la com as palavras delas." },
+      { w: "Semana 1", t: "Liste cinco concorrentes ou alternativas e anote como cada um se posiciona." },
+      { w: "Semana 1", t: "Converse com cinco clientes para entender por que escolheram você e quais alternativas consideraram." },
+      { w: "Semana 1", t: "Atualize bio, LinkedIn, proposta e apresentação com a frase e três provas." }
     ],
-    errors: ["Descrever-se pelo cargo e pela lista de serviços.", "Prometer resultado sem prova.", "Mudar a frase a cada semana e confundir o mercado."]
+    errors: ["Descrever-se pelo cargo e pela lista de serviços.", "Copiar o posicionamento de um concorrente.", "Mudar a frase toda semana e confundir o mercado."]
   },
   canais: {
     title: "Gerar, converter e monetizar demanda",
     intro: [
       "O método Máquina de Receita organiza a aquisição em três funis. Cada funil tem ações próprias, e você não precisa de todas ao mesmo tempo. Dois canais bem executados valem mais que seis abandonados.",
-      "O critério de escolha é simples: onde o seu cliente ideal já está e onde você consegue manter uma rotina semanal. Os mesmos canais podem alimentar o serviço principal e a frente de consultoria ou mentoria."
+      "As ferramentas (página, CRM, e-mail e WhatsApp) sustentam os funis, e o conteúdo é o combustível: cada peça fala de um problema do cliente e termina em uma chamada para ação. Os mesmos canais podem alimentar o serviço principal e a frente de consultoria ou mentoria."
     ],
     cardsTitle: "Os três funis",
     cards: [
@@ -186,38 +173,16 @@ var PLAYBOOK = {
     actions: [
       { w: "Semana 1", t: "Escolha dois canais, um de conteúdo ou rede de contatos e um de conversão, e defina a rotina semanal de cada um." },
       { w: "Semana 1", t: "Crie um material rico de entrada (diagnóstico, guia ou checklist) com uma chamada para a sessão diagnóstico." },
-      { w: "Semana 2", t: "Leia os números: quantas conversas cada canal gerou e quantas viraram sessão diagnóstico." },
-      { w: "Semana 3", t: "Aumente o volume no canal que gerou mais sessões e pause o que não gerou." }
+      { w: "Semana 1", t: "Liste as ferramentas de cada funil e conecte-as para registrar a origem de cada contato." },
+      { w: "Semana 1", t: "Defina três temas de conteúdo baseados nos problemas que o seu cliente ideal reconhece." }
     ],
     errors: ["Abrir muitos canais ao mesmo tempo.", "Publicar sem uma chamada para ação.", "Medir curtida em vez de conversa qualificada."]
-  },
-  ia: {
-    title: "A base de dados primeiro, a IA depois",
-    intro: [
-      "Ferramenta nova não resolve processo desorganizado. A ordem de construção importa: dados primeiro, depois automações, depois inteligência e, por último, os canais.",
-      "Em serviços high-ticket, cada contato vale muito e a agenda é curta. A meta é economizar tempo nas tarefas repetitivas e nunca perder uma oportunidade por falta de resposta."
-    ],
-    cardsTitle: "As soluções core",
-    cards: [
-      { t: "CRM e pipeline", p: "Cada oportunidade com etapa, dono, origem e próxima ação. É a fonte única de verdade." },
-      { t: "Painel de growth", p: "Cinco números na mesma tela: conversas, sessões diagnóstico, propostas, fechamentos e receita." },
-      { t: "Automação", p: "Resposta inicial, lembretes de follow-up e avisos de proposta parada, sem trabalho manual." },
-      { t: "IA aplicada", p: "Resumo de reunião, rascunho de proposta, qualificação do contato e pesquisa de mercado, sempre com revisão humana." },
-      { t: "Mídia e tracking", p: "Origem de cada contato registrada até a venda, para saber o que realmente gera receita." }
-    ],
-    actions: [
-      { w: "Semana 1", t: "Monte o CRM com as etapas do seu funil e a origem do contato. Pode ser uma ferramenta simples." },
-      { w: "Semana 1", t: "Crie o painel com cinco números e abra-o toda segunda-feira." },
-      { w: "Semana 3", t: "Automatize a primeira resposta e o lembrete de follow-up." },
-      { w: "Semana 3", t: "Escolha uma tarefa repetitiva para a IA (por exemplo, resumo de reunião ou rascunho de proposta) e defina quem revisa." }
-    ],
-    errors: ["Comprar ferramenta antes de desenhar o processo.", "Colocar IA em cima de um CRM bagunçado.", "Automatizar a conversa sem prever a entrada de uma pessoa."]
   },
   vendas: {
     title: "Uma sessão diagnóstico que termina em decisão",
     intro: [
-      "Alta performance em inside sales vem de processo, e não de talento natural. Em serviços de ticket alto, vence quem conduz a conversa com perguntas, mostra o custo do problema e fecha o próximo passo na hora.",
-      "A sessão diagnóstico é o coração da venda, seja ela de um procedimento, de um projeto ou de uma consultoria. Ela precisa de roteiro, de uma proposta que sai rápido e de um follow-up com prazo."
+      "Alta performance em vendas vem de processo, e não de talento natural. Em serviços de ticket alto, vence quem conduz a conversa com perguntas, mostra o custo do problema e fecha o próximo passo na hora.",
+      "A sessão diagnóstico é o coração da venda, seja ela de um procedimento, de um projeto ou de uma consultoria. Quando existe time comercial, todos seguem o mesmo roteiro. As ferramentas (CRM, modelo de proposta e agenda) tiram o trabalho manual e evitam que uma oportunidade fique parada."
     ],
     cardsTitle: "O roteiro da sessão diagnóstico",
     cards: [
@@ -229,43 +194,77 @@ var PLAYBOOK = {
       { t: "6. Próximo passo", p: "Saia da conversa com uma data de decisão combinada." }
     ],
     actions: [
-      { w: "Semana 0", t: "Escreva o roteiro da sessão com as perguntas de cada etapa." },
+      { w: "Semana 1", t: "Escreva o roteiro da sessão com as perguntas de cada etapa." },
       { w: "Semana 1", t: "Crie um modelo de proposta de uma página que você consiga enviar em até 24 horas." },
-      { w: "Semana 2", t: "Monte a cadência de follow-up: mensagem em 1 dia, 3 dias e 7 dias, com prova, resposta às objeções e data de decisão." },
-      { w: "Semana 4", t: "Revise as propostas abertas, decida com cada pessoa e registre os motivos das perdas." }
+      { w: "Semana 1", t: "Defina quem faz o quê no processo comercial e registre cada oportunidade no CRM, com etapa e próxima ação." },
+      { w: "Semana 1", t: "Monte a cadência de follow-up: mensagem em 1 dia, 3 dias e 7 dias, com prova, resposta às objeções e data de decisão." }
     ],
     errors: ["Apresentar o método antes de entender o problema.", "Mandar a proposta dias depois da conversa.", "Esperar o cliente voltar sem data combinada."]
   },
-  expansao: {
-    title: "O cliente satisfeito é o seu melhor canal",
+  implementacao: {
+    title: "Coloque o plano no ar com metas e hipóteses claras",
     intro: [
-      "Vender para quem já confia em você custa menos do que conquistar um cliente novo. Satisfação e expansão fecham o ciclo da máquina de receita: o resultado do cliente gera indicação, continuidade e parcerias.",
-      "É aqui que o serviço principal e a frente de consultoria ou mentoria se alimentam: o cliente satisfeito indica novos clientes e pode virar aluno ou cliente da consultoria. Isso exige método. Sem um marco de resultado e um momento certo para pedir, a indicação fica ao acaso."
+      "Na semana 2 o plano sai do papel. O plano estratégico reúne as ações das quatro frentes da semana 1, com responsável, prazo e o resultado esperado de cada uma.",
+      "Cada ação nasce de uma hipótese (\"se eu fizer isso, espero aquele resultado\") e de um indicador que mostra se ela funcionou. Assim, o que der certo é ampliado e o que não der certo é ajustado com rapidez."
     ],
-    cardsTitle: "As quatro alavancas",
+    cardsTitle: "Os três elementos da implementação",
     cards: [
-      { t: "Experiência do cliente (CX)", p: "Onboarding claro, rituais de acompanhamento e entregáveis no prazo combinado." },
-      { t: "Indicações", p: "Pedido feito no marco de resultado, com uma frase pronta e um modelo de apresentação ao novo contato." },
-      { t: "Upsell e cross-sell", p: "Continuidade do projeto, um nível acima do serviço ou um produto complementar, planejados antes do fim do projeto." },
-      { t: "Parceiros", p: "Profissionais de áreas complementares que atendem o mesmo público e trocam indicações com você." }
+      { t: "Plano estratégico", p: "Ações priorizadas por impacto e esforço, cada uma com dono, prazo e entrega." },
+      { t: "Indicadores", p: "Poucos números na mesma tela: conversas, sessões diagnóstico, propostas, fechamentos e receita." },
+      { t: "Hipóteses", p: "Cada ação com uma aposta escrita: o que você espera que aconteça e quando vai medir." }
     ],
     actions: [
-      { w: "Semana 2", t: "Defina o marco de resultado de cada cliente em andamento e a data de uma conversa de avaliação." },
-      { w: "Semana 3", t: "Faça o pedido de indicação nesse marco, com a frase pronta." },
-      { w: "Semana 4", t: "Monte a oferta de continuidade e apresente aos clientes que concluíram o projeto." },
-      { w: "Semana 4", t: "Liste três profissionais complementares e proponha uma parceria de indicação." }
+      { w: "Semana 2", t: "Transforme o diagnóstico da semana 1 em um plano com poucas ações, cada uma com dono e prazo." },
+      { w: "Semana 2", t: "Escolha cinco indicadores e crie o painel que você abre toda segunda-feira." },
+      { w: "Semana 2", t: "Escreva uma hipótese para cada ação e a data em que vai avaliá-la." },
+      { w: "Semana 2", t: "Coloque as ações no ar e registre o que foi feito em cada dia." }
     ],
-    errors: ["Encerrar o projeto sem conversar sobre o próximo passo.", "Pedir indicação antes de o cliente ver resultado.", "Não medir a satisfação, só presumir."]
+    errors: ["Plano com ações demais e nenhuma terminada.", "Indicadores sem dono e sem rotina de leitura.", "Executar sem escrever a hipótese e depois não saber o que aprendeu."]
+  },
+  analises: {
+    title: "Leia os números e ajuste o que importa",
+    intro: [
+      "A semana 3 serve para aprender com os primeiros resultados. Mensurar é comparar o que aconteceu com a hipótese e entender o motivo, olhando cada etapa do caminho do contato até a venda.",
+      "A otimização acontece onde o número mostra a perda: um canal que gera conversa e nenhuma sessão, uma proposta que não vira decisão, um follow-up que não acontece. Ajuste uma coisa por vez para saber o que funcionou."
+    ],
+    cardsTitle: "O ciclo de otimização",
+    cards: [
+      { t: "1. Mensurar", p: "Reúna os números de cada etapa: contatos, conversas, sessões, propostas e fechamentos." },
+      { t: "2. Diagnosticar", p: "Compare com as hipóteses e encontre a etapa em que a maior parte das pessoas se perde." },
+      { t: "3. Otimizar", p: "Mude uma variável por vez (mensagem, oferta, página ou roteiro) e acompanhe o efeito." },
+      { t: "4. Decidir", p: "Amplie o que funcionou, ajuste o que ficou no meio do caminho e pause o que não gerou resultado." }
+    ],
+    actions: [
+      { w: "Semana 3", t: "Reúna os números da semana 2 no painel e compare com as hipóteses." },
+      { w: "Semana 3", t: "Identifique a etapa do funil com maior perda e escolha uma mudança para testar." },
+      { w: "Semana 3", t: "Aumente o volume no canal que mais gerou sessões e pause o que não gerou conversas." },
+      { w: "Semana 3", t: "Revise as propostas abertas e registre o motivo de cada perda." }
+    ],
+    errors: ["Mudar várias coisas ao mesmo tempo e não saber o que funcionou.", "Medir curtida e alcance em vez de conversas e vendas.", "Decidir pela sensação do momento e não pelos números."]
+  },
+  resultados: {
+    title: "Feche o ciclo e planeje o que vem depois",
+    intro: [
+      "Na semana 4 você consolida o que aprendeu. As análises finais comparam o ponto de partida com o resultado em receita, margem, conversas e fechamentos, e mostram o que gerou retorno.",
+      "O que deu certo é ampliado com mais volume, mais canais ou uma oferta de continuidade. A finalização registra o processo em um documento simples e define o plano dos próximos 30 dias, para o serviço principal e para a frente de consultoria ou mentoria."
+    ],
+    cardsTitle: "As etapas de fechamento",
+    cards: [
+      { t: "Análises finais", p: "Compare o início e o fim com os mesmos indicadores definidos na semana 2." },
+      { t: "Ampliar o que deu certo", p: "Dê mais volume e rotina aos canais e às ofertas de melhor retorno e peça indicação aos clientes satisfeitos." },
+      { t: "Finalização", p: "Documente o processo, os aprendizados e os modelos usados (roteiros, propostas e cadência)." },
+      { t: "Sequência", p: "Defina metas e ações dos próximos 30 dias e a oferta de continuidade para os clientes." }
+    ],
+    actions: [
+      { w: "Semana 4", t: "Monte o comparativo do início e do fim com os indicadores definidos." },
+      { w: "Semana 4", t: "Escolha os dois ganhos mais claros e planeje como ampliá-los." },
+      { w: "Semana 4", t: "Peça indicação aos clientes que viram resultado e apresente a oferta de continuidade." },
+      { w: "Semana 4", t: "Documente o processo e escreva o plano dos próximos 30 dias." }
+    ],
+    errors: ["Encerrar o ciclo sem registrar o que foi aprendido.", "Ampliar tudo ao mesmo tempo em vez de focar no que deu retorno.", "Pedir indicação antes de o cliente ver resultado."]
   }
 };
 
-var PLAN30 = [
-  { w: "Semana 0", t: "Preparação", d: "Tese, produto e posicionamento. Painel de números definido." },
-  { w: "Semana 1", t: "Início", d: "Dois canais no ar, CRM montado e material rico publicado." },
-  { w: "Semana 2", t: "Otimizações", d: "Leitura dos primeiros números e ajuste do roteiro de vendas." },
-  { w: "Semana 3", t: "Aceleração", d: "Mais volume no que gerou sessões e automações na operação." },
-  { w: "Semana 4", t: "Fechamento", d: "Propostas, decisões, indicações e oferta de continuidade." }
-];
 
 /* =====================================================================
  * GUIA GROWTH 30D: captura -> guia em formato de site (#playbook)
@@ -285,7 +284,7 @@ var CONFIG = {
 };
 
 /* Tipo de infográfico de cada área */
-var INFO = { tese: "converge", produto: "flow", posicionamento: "formula", canais: "funnels", ia: "layers", vendas: "flow", expansao: "cycle" };
+var INFO = { negocio: "flow", mercado: "formula", canais: "funnels", vendas: "flow", implementacao: "flow", analises: "flow", resultados: "flow" };
 
 /* Estágio do negócio: aparece no diagrama da jornada e no cadastro */
 var ESTAGIOS = [
@@ -526,7 +525,7 @@ function areaHtml(a, i) {
   }).join("");
   var errs = d.errors.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("");
   var sg = state.segmento ? seg(state.segmento) : null;
-  var segNote = (sg && sg.notes[a.id]) ? '<p class="ar__seg"><b>No seu segmento (' + esc(sg.label) + ')</b>' + esc(sg.notes[a.id]) + '</p>' : "";
+  var segNote = (sg && sg.notes[NOTE_MAP[a.id]]) ? '<p class="ar__seg"><b>No seu segmento (' + esc(sg.label) + ')</b>' + esc(sg.notes[NOTE_MAP[a.id]]) + '</p>' : "";
   return '<article class="ar' + (here ? " is-here" : "") + '" id="ar-' + a.id + '" data-area="' + a.id + '">' +
     '<h3 class="ar__h"><button type="button" class="ar__head" aria-expanded="false" aria-controls="arb-' + a.id + '" data-toggle="' + a.id + '">' +
     '<span class="ar__num">' + pad(i + 1) + '</span><span class="ar__txt"><span class="ar__name">' + esc(a.name) + '</span><span class="ar__sub">' + esc(a.sub) + '</span></span>' +
@@ -545,10 +544,10 @@ function areaHtml(a, i) {
 
 /* ---------- guia em pop-up: 1 preview, 2 cadastro (uma pergunta por tela), 3 entrega do roadmap ---------- */
 var WEEKS = [
-  { w: "Semana 1", t: "Diagnóstico e produto", areas: ["tese", "produto"] },
-  { w: "Semana 2", t: "Posicionamento e aquisição", areas: ["posicionamento", "canais"] },
-  { w: "Semana 3", t: "Máquina de vendas", areas: ["ia", "vendas"] },
-  { w: "Semana 4", t: "Retenção e expansão", areas: ["expansao"] }
+  { w: "Semana 1", t: "Diagnóstico e estratégia", areas: ["negocio", "mercado", "canais", "vendas"] },
+  { w: "Semana 2", t: "Colocar o plano no ar", areas: ["implementacao"] },
+  { w: "Semana 3", t: "Aprender e ajustar", areas: ["analises"] },
+  { w: "Semana 4", t: "Fechar e ampliar", areas: ["resultados"] }
 ];
 var QS = [
   { k: "nome", type: "text", q: "Qual é o seu nome?", ph: "Seu nome", ac: "name", im: "text" },
@@ -607,15 +606,27 @@ function stepsHtml() {
   return [1, 2, 3].map(function (i) { return '<i class="' + (i <= n ? "on" : "") + '"></i>'; }).join("");
 }
 
-/* ---------- tela 1: preview das seções ---------- */
+/* ---------- mockup 3D de iPad (fica visível da tela 1 até a última pergunta) ---------- */
+function ipadHtml() {
+  var rows = WEEKS.map(function (W, i) {
+    var chips = W.areas.map(function (id) { return '<i>' + esc(area(id).name) + '</i>'; }).join("");
+    return '<li class="ip-w' + (i + 1) + '"><b>' + esc(W.w) + '</b><span>' + chips + '</span></li>';
+  }).join("");
+  return '<div class="ipad-stage" id="gmMock" aria-hidden="true"><div class="ipad"><div class="ipad__body">' +
+    '<span class="ipad__cam"></span><div class="ipad__screen">' +
+    '<div class="ip-top"><span>Guia Growth 30D</span><em>PDF</em></div>' +
+    '<p class="ip-k">Material gratuito</p><p class="ip-h">Seu roadmap de 4 semanas</p>' +
+    '<ol class="ip-list">' + rows + '</ol>' +
+    '<div class="ip-cta">Agendar Sessão Diagnóstico</div></div>' +
+    '<span class="ipad__shine"></span></div></div><span class="ipad-glow"></span></div>';
+}
+
+/* ---------- tela 1: abertura (H1 e H2), avança com clique ou em 3 segundos ---------- */
 function previewHtml() {
-  return '<div class="gm-screen gm-screen--pv"><p class="eyebrow">Material gratuito · 100% online</p>' +
-    '<h2 class="gj-title" tabindex="-1">Guia Growth 30D</h2>' +
-    '<p class="gj-lead">O roadmap de 4 semanas para vender mais com o seu serviço high-ticket e a sua consultoria/mentoria. Veja o que está dentro:</p>' +
-    '<ol class="pv-list">' + AREAS.map(function (a, i) {
-      return '<li><span>' + pad(i + 1) + '</span><b>' + esc(a.name) + '</b><small>' + esc(a.sub) + '</small></li>';
-    }).join("") + '</ol>' +
-    '<button type="button" class="btn btn--primary pv-go" data-pv-next>Quero acessar o guia</button>' +
+  return '<div class="gm-screen gm-screen--intro"><p class="eyebrow">Guia Growth 30D</p>' +
+    '<h2 class="gm-h1" tabindex="-1">Posts e leads não pagam a sua conta. <span class="text-orange">Venda mais serviços high-ticket em 30 dias</span> com o Guia&nbsp;Growth&nbsp;30D.</h2>' +
+    '<p class="gm-h2">Confira erros comuns para evitar e ações de growth para escalar vendas do seu serviço high-ticket e/ou consultoria em 4 semanas!</p>' +
+    '<button type="button" class="btn btn--primary pv-go" data-pv-next>Acessar guia gratuito</button>' +
     '<div class="pv-bar" aria-hidden="true"><i></i></div></div>';
 }
 
@@ -651,16 +662,31 @@ function qHtml() {
 
 function validateQ(k, v) {
   if (k === "nome") return v.length < 2 ? "Informe seu nome." : "";
-  if (k === "whatsapp") { var dg = v.replace(/[^0-9]/g, ""); return (dg.length < 10 || dg.length > 11) ? "Informe um WhatsApp com DDD." : ""; }
+  if (k === "whatsapp") { return phoneOk(v) ? "" : "Informe um WhatsApp com DDD (aceita +55)."; }
   if (k === "email") return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? "" : "Informe um e-mail válido.";
   return "";
 }
-function maskPhone(v) {
-  var d = String(v).replace(/[^0-9]/g, "").slice(0, 11);
+function maskBr(d) {
+  d = d.slice(0, 11);
   if (d.length > 6) return "(" + d.slice(0, 2) + ") " + d.slice(2, d.length > 10 ? 7 : 6) + "-" + d.slice(d.length > 10 ? 7 : 6);
   if (d.length > 2) return "(" + d.slice(0, 2) + ") " + d.slice(2);
   if (d.length > 0) return "(" + d;
   return "";
+}
+/* Aceita número nacional ("(19) 99887-8022") e com código do país ("+55 (19) 99887-8022") */
+function maskPhone(v) {
+  v = String(v);
+  var d = v.replace(/[^0-9]/g, "");
+  if (v.trim().charAt(0) === "+") {
+    if (d.slice(0, 2) === "55") return "+55" + (d.length > 2 ? " " + maskBr(d.slice(2)) : "");
+    return "+" + d.slice(0, 15);   // outros países: só dígitos
+  }
+  return maskBr(d);
+}
+function phoneOk(v) {
+  var d = String(v).replace(/[^0-9]/g, "");
+  if (String(v).trim().charAt(0) === "+") return d.slice(0, 2) === "55" ? (d.length === 12 || d.length === 13) : (d.length >= 8 && d.length <= 15);
+  return d.length === 10 || d.length === 11;
 }
 function showErr(msg) { var e = $("q-err"); if (e) e.textContent = msg || ""; }
 
@@ -700,20 +726,32 @@ function shell() {
   clearTimeout(ui.timer);
   var pb = ui.screen === "pb";
   document.body.classList.toggle("gm-s3", pb && current === "guia");
+  var main = $("gmMain");
+  if (!pb && main && $("gmMock")) {   // o mockup se mantém: só o conteúdo ao lado dele muda
+    main.innerHTML = screenHtml();
+    views.guia.querySelector(".gm-steps").innerHTML = stepsHtml();
+    $("gmScroll").scrollTop = 0;
+    afterShell();
+    return;
+  }
   views.guia.innerHTML =
     '<div class="gm-backdrop" data-gm-close></div>' +
     '<div class="gm" role="dialog" aria-modal="true" aria-label="Guia Growth 30D">' +
     '<div class="gm-bar"><div class="gm-steps" aria-hidden="true">' + stepsHtml() + '</div>' +
     '<div class="gm-actions">' + (state.lead ? '<button type="button" class="gj-reset" data-reset>Recomeçar</button>' : "") +
     '<button type="button" class="gm-x" data-gm-close aria-label="Fechar o guia">×</button></div></div>' +
-    '<div class="gm-scroll" id="gmScroll">' + screenHtml() + '</div>' +
+    '<div class="gm-scroll" id="gmScroll">' + (pb ? screenHtml() : '<div class="gm-split">' + ipadHtml() + '<div class="gm-main" id="gmMain">' + screenHtml() + '</div></div>') + '</div>' +
     (pb ? '<div class="gm-foot"><a class="btn btn--primary" id="ctaWa" href="' + esc(waUrl()) + '" target="_blank" rel="noopener">Agendar Sessão Diagnóstico</a></div>' : "") +
     '</div>';
+  afterShell();
+}
+
+function afterShell() {
   updateWaLinks();
   var inp = $("q-in");
   if (inp) setTimeout(function () { inp.focus({ preventScroll: true }); }, 60);
   else { var h = views.guia.querySelector(".gj-title"); if (h) h.focus({ preventScroll: true }); }
-  if (ui.screen === "preview") ui.timer = setTimeout(function () { if (ui.screen === "preview" && current === "guia") goScreen("lead"); }, 2000);
+  if (ui.screen === "preview") ui.timer = setTimeout(function () { if (ui.screen === "preview" && current === "guia") goScreen("lead"); }, 3000);
 }
 
 function updateWaLinks() {
@@ -743,7 +781,7 @@ document.addEventListener("click", function (e) {
   if (e.target.closest("[data-gm-close]")) { closeGuide(); return; }
   if (e.target.closest("[data-reset]")) { resetAll(); return; }
 
-  if (e.target.closest(".gm-screen--pv")) { goScreen("lead"); return; }
+  if (e.target.closest(".gm-screen--intro")) { goScreen("lead"); return; }
 
   if (e.target.closest("[data-qback]")) {
     if (ui.q > 0) { ui.q--; shell(); } else goScreen("preview");
