@@ -463,6 +463,11 @@ td small{color:var(--ink-3);font-weight:400;font-size:12px;margin-left:6px}
 .payback .label{color:#CFCDC6}
 .pb-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
 .pb-head .v{font-family:var(--f-display);font-size:clamp(34px,4vw,52px);line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
+.roi{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.roi-c{border:1px solid rgba(245,243,239,.18);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.roi-c.hot{border-color:var(--accent);background:rgba(255,107,0,.12)}
+.roi-c strong{font-family:var(--f-display);font-size:clamp(30px,3.4vw,44px);line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
+.roi-c small{font-size:12px;color:#CFCDC6}
 .payback .chip{color:#F5F3EF;border-color:rgba(245,243,239,.35)}
 .payback .chip.good{color:#7BD3A4;border-color:#7BD3A4}
 .payback .chip.warn{color:#F0B860;border-color:#F0B860}
@@ -886,6 +891,10 @@ td small{color:var(--ink-3);font-weight:400;font-size:12px;margin-left:6px}
             <div><span class="label">Payback estimado</span><div class="v" id="pbDays">–</div></div>
             <span class="chip" id="pbChip">–</span>
           </div>
+          <div class="roi">
+            <div class="roi-c"><span class="label">ROI em 30 dias</span><strong id="roi1">–</strong><small id="roi1s">–</small></div>
+            <div class="roi-c hot"><span class="label">ROI em 12 meses</span><strong id="roi12">–</strong><small id="roi12s">–</small></div>
+          </div>
           <div class="pb-track" id="pbTrack"></div>
           <p class="pb-note" id="pbNote">–</p>
         </div>
@@ -1251,6 +1260,11 @@ function renderInv(){
   $("#objFunil").innerHTML=rows.map(([n,v,a,f],i)=>{
     const w=i<3?Math.max(4,Math.sqrt(v/mx)*100):100;
     return `<div class="of-row"><span>${n}</span><div class="bar"><i style="width:${isFinite(w)?w:0}%;opacity:${i===3?1:.45+i*.18}"></i></div><span class="val">${f(v)}<small>${a?`+${pct(v/a-1)} vs. hoje`:""}</small></span></div>`}).join("");
+  /* ROI = receita incremental ÷ investimento (30 dias: incremento do mês; 12 meses: mesma conta do gráfico e do badge) */
+  const inc12=m.R*(Array.from({length:12},(_,k)=>Math.pow(1.05,k+1)).reduce((a,x)=>a+x,0)-12);
+  const rx=v=>isFinite(v)&&v>0?v.toLocaleString("pt-BR",{minimumFractionDigits:1,maximumFractionDigits:1})+"x":"–";
+  $("#roi1").textContent=rx(m.inc/PRICE);$("#roi1s").textContent=m.inc>0?`${short(m.inc)} de receita incremental`:"preencha a calculadora";
+  $("#roi12").textContent=rx(inc12/PRICE);$("#roi12s").textContent=m.R>0?`${short(inc12)} de receita incremental`:"preencha a calculadora";
   const days=m.inc>0?Math.ceil(PRICE/(m.inc/30)):NaN, track=$("#pbTrack"), chip=$("#pbChip");
   if(isFinite(days)){
     $("#pbDays").textContent=`${days} dias`;
