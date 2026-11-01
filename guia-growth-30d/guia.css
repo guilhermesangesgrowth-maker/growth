@@ -567,9 +567,9 @@ body.gm-s3 .wa-float { bottom: 88px; }
 .pv-list b { font-size: 15px; }
 .pv-list small { font-size: 12.5px; color: var(--gray-on-light); line-height: 1.35; }
 .pv-bar { height: 4px; border-radius: 2px; background: rgba(10, 10, 10, 0.1); margin-top: 18px; overflow: hidden; }
-.pv-bar i { display: block; height: 100%; width: 100%; background: var(--orange); transform-origin: left; animation: pvFill 2s linear forwards; }
+.pv-bar i { display: block; height: 100%; width: 100%; background: var(--orange); transform-origin: left; animation: pvFill 6s linear forwards; }
 @keyframes pvFill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-@media (prefers-reduced-motion: reduce) { .pv-bar i { animation-duration: 2s; } }
+@media (prefers-reduced-motion: reduce) { .pv-bar i { animation-duration: 6s; } }
 /* tela 2: uma pergunta por vez */
 .gm-screen--q { max-width: 560px; }
 .q-prog { height: 4px; border-radius: 2px; background: rgba(10, 10, 10, 0.1); margin: 0 0 22px; overflow: hidden; }
@@ -614,10 +614,11 @@ body.gm-s3 .wa-float { bottom: 88px; }
 .ipad__body { position: relative; border-radius: 1.8em; padding: 0.85em; background: linear-gradient(145deg, #3a3a40, #121214 55%, #26262b); box-shadow: inset 0 0 0 0.08em rgba(255, 255, 255, 0.18), 0 0 0 0.08em #050505; overflow: hidden; }
 .ipad__cam { position: absolute; top: 0.38em; left: 50%; width: 0.34em; height: 0.34em; margin-left: -0.17em; border-radius: 50%; background: #0b0b0d; box-shadow: inset 0 0 0 0.08em #2a2a30; z-index: 2; }
 .ipad__screen { position: relative; aspect-ratio: 3 / 4; border-radius: 1em; background: var(--off-white); padding: 1.5em 1.4em; overflow: hidden; color: var(--black); display: flex; flex-direction: column; gap: 0.5em; }
+.ip-tag { background: var(--orange); color: var(--black); font-weight: 600; border-radius: 999px; padding: 0.3em 0.9em; }
 .ip-top { display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 0.78em; letter-spacing: 0.08em; text-transform: uppercase; color: var(--orange-ink); }
 .ip-top em { font-style: normal; background: var(--black); color: var(--off-white); border-radius: 999px; padding: 0.15em 0.7em; }
 .ip-k { margin: 0.4em 0 0; font-family: var(--font-mono); font-size: 0.7em; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-on-light); }
-.ip-h { margin: 0 0 0.3em; font-family: var(--font-display); font-weight: 700; font-size: 1.9em; line-height: 1.05; }
+.ip-h { margin: 0 0 0.3em; font-family: var(--font-display); font-weight: 700; font-size: 1.45em; line-height: 1.05; }
 .ip-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5em; }
 .ip-list li { background: #fff; border: 1px solid var(--dark-line); border-left: 0.3em solid var(--orange); border-radius: 0.6em; padding: 0.55em 0.7em; display: grid; gap: 0.3em; }
 .ip-list b { font-family: var(--font-mono); font-weight: 500; font-size: 0.72em; letter-spacing: 0.08em; text-transform: uppercase; color: var(--orange-ink); }
@@ -641,3 +642,11 @@ body.gm-s3 .wa-float { bottom: 88px; }
 .pv-go { margin-bottom: 4px; }
 .gm-screen--pb { padding-bottom: 70px; }
 @media (min-width: 760px) { .gm-screen--pb { padding-bottom: 8px; } }
+
+/* faixa rolante (auto-roll) de segmentos na abertura */
+.pv-tag { margin: 0 0 14px; }
+.pv-marquee { overflow: hidden; margin: 0 -4px 22px; padding: 4px 0; -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+.pv-marquee__t { display: flex; gap: 8px; width: max-content; animation: pvMarq 18s linear infinite; will-change: transform; }
+.pv-marquee__t span { flex: none; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; padding: 9px 16px; background: var(--black); color: var(--off-white); border-radius: 999px; }
+@keyframes pvMarq { to { transform: translateX(calc(-50% - 4px)); } }
+@media (prefers-reduced-motion: reduce) { .pv-marquee__t { animation-duration: 40s; } }

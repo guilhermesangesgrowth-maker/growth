@@ -607,18 +607,20 @@ function ipadHtml() {
   }).join("");
   return '<div class="ipad-stage" id="gmMock" aria-hidden="true"><div class="ipad"><div class="ipad__body">' +
     '<span class="ipad__cam"></span><div class="ipad__screen">' +
-    '<div class="ip-top"><span>Guia Growth 30D</span><em>PDF</em></div>' +
-    '<p class="ip-k">Material gratuito</p><p class="ip-h">Seu roadmap de 4 semanas</p>' +
+    '<div class="ip-top"><span class="ip-tag">Guia Growth 30D</span><em>PDF</em></div>' +
+    '<p class="ip-k">Material gratuito</p><p class="ip-h">Playbook Para Mais Vendas Em 4 Semanas</p>' +
     '<ol class="ip-list">' + rows + '</ol>' +
     '<div class="ip-cta">Agendar Sessão Diagnóstico</div></div>' +
     '<span class="ipad__shine"></span></div></div><span class="ipad-glow"></span></div>';
 }
 
-/* ---------- tela 1: abertura (H1 e H2), avança com clique ou em 3 segundos ---------- */
+/* ---------- tela 1: abertura (H1 e H2), avança com clique ou em 6 segundos ---------- */
+var MARQ = ["Consultoria", "Odontologia", "Medicina", "Arquitetura", "Engenharia", "Educação", "Estética"].map(function (s) { return "<span>" + s + "</span>"; }).join("");
 function previewHtml() {
-  return '<div class="gm-screen gm-screen--intro"><p class="eyebrow">Guia Growth 30D</p>' +
-    '<h2 class="gm-h1" tabindex="-1">Posts e leads não pagam a sua conta. <span class="text-orange">Venda mais serviços high-ticket em 30 dias</span> com o Guia&nbsp;Growth&nbsp;30D.</h2>' +
-    '<p class="gm-h2">Confira erros comuns para evitar e ações de growth para escalar vendas do seu serviço high-ticket e/ou consultoria em 4 semanas!</p>' +
+  return '<div class="gm-screen gm-screen--intro">' +
+    '<h2 class="gm-h1" tabindex="-1">Se você fatura mais do que <span class="text-orange">R$50 mil por mês</span> e vende serviços de pelo menos R$3 mil, o <span class="text-orange">playbook Growth 30D</span> acelera a sua aquisição de clientes em 4 semanas!</h2>' +
+    '<p class="eyebrow pv-tag">Para profissionais que vendem serviços de alto valor agregado:</p>' +
+    '<div class="pv-marquee" role="img" aria-label="Consultoria, Odontologia, Medicina, Arquitetura, Engenharia, Educação, Estética"><div class="pv-marquee__t" aria-hidden="true">' + MARQ + MARQ + '</div></div>' +
     '<button type="button" class="btn btn--primary pv-go" data-pv-next>Acessar guia gratuito</button>' +
     '<div class="pv-bar" aria-hidden="true"><i></i></div></div>';
 }
@@ -744,7 +746,7 @@ function afterShell() {
   var inp = $("q-in");
   if (inp) setTimeout(function () { inp.focus({ preventScroll: true }); }, 60);
   else { var h = views.guia.querySelector(".gj-title"); if (h) h.focus({ preventScroll: true }); }
-  if (ui.screen === "preview") ui.timer = setTimeout(function () { if (ui.screen === "preview" && current === "guia") goScreen("lead"); }, 3000);
+  if (ui.screen === "preview") ui.timer = setTimeout(function () { if (ui.screen === "preview" && current === "guia") goScreen("lead"); }, 6000);
 }
 
 function updateWaLinks() {
