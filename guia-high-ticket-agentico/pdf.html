@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>Guia High Ticket Agêntico</title>
+<link rel="stylesheet" href="../css/fonts.css" />
+<link rel="stylesheet" href="../css/styles.css" />
+<link rel="stylesheet" href="agentico.css" />
+<style>
+/* Versão do guia para PDF (A4). Gerado por navegador headless a partir desta página. */
+@page { size: A4; margin: 14mm 14mm 16mm; }
+body.gha-pdf { background: #fff; color: #0a0a0a; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.gha-pdf main { max-width: 760px; margin: 0 auto; }
+.pdf-cover { padding: 6mm 0 8mm; break-after: page; }
+.pdf-cover h1 { font-family: var(--font-display); font-size: 46px; line-height: 1.05; margin: 10px 0 14px; }
+.pdf-lead { font-size: 15px; line-height: 1.6; color: #444; margin: 0 0 22px; }
+.pdf-idx { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.pdf-idx li { border: 1px solid var(--dark-line); border-radius: 12px; padding: 12px 14px; }
+.pdf-idx b { font-family: var(--font-display); font-size: 18px; color: var(--orange-ink); display: block; margin-bottom: 4px; }
+.pdf-idx span { font-size: 13.5px; color: #444; }
+.pdf-by { margin: 24px 0 0; font-family: var(--font-mono); font-size: 12px; color: #444; }
+.gha-pdf .gha-setup, .gha-pdf .gha-fr, .gha-pdf .gha-week { box-shadow: none !important; border-color: var(--dark-line) !important; }
+.gha-pdf .gha-fr { break-before: page; }
+.gha-pdf .gha-ag { break-inside: auto; background: #fff; margin-bottom: 4mm; }
+.gha-pdf .gha-ag__head { cursor: default; break-after: avoid; }
+.gha-pdf .gha-chev, .gha-pdf .gha-tag, .gha-pdf .gha-copy__btn { display: none !important; }
+.gha-pdf .gha-ag__body { display: block !important; }
+.gha-pdf .gha-copy pre { max-height: none; overflow: visible; }
+.gha-pdf .gha-copy, .gha-pdf .gha-cmd, .gha-pdf .gha-errors, .gha-pdf .gha-steps li, .gha-pdf .gha-week li { break-inside: avoid; }
+.gha-pdf .gha-sub { break-after: avoid; }
+.pdf-end { break-inside: avoid; margin-top: 8mm; padding: 6mm 8mm; background: #0a0a0a; color: #f5f3ef; border-radius: 10px; }
+.pdf-end h2 { font-family: var(--font-display); font-size: 24px; margin: 0 0 6px; }
+.pdf-end p { margin: 0 0 8px; }
+.pdf-end a { color: #FF6B00; font-weight: 700; }
+</style>
+</head>
+<body class="gha-pdf">
+<main id="pdfRoot"></main>
+<script src="agentico-data.js"></script>
+<script src="agentico.js"></script>
+<script>
+(function () {
+  var D = window.GHA_DATA;
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+  var cover = '<section class="pdf-cover"><p class="eyebrow">Guia High Ticket Agêntico · Material gratuito</p>' +
+    '<h1>' + GHA.total() + ' agentes no Claude para o seu negócio high-ticket</h1>' +
+    '<p class="pdf-lead">Guia plug-and-play para quem vende serviços de alto valor: instruções prontas para copiar e colar em Projetos do Claude, comandos do dia a dia, erros comuns e a rotina da semana, em 3 frentes.</p>' +
+    '<ol class="pdf-idx"><li><b>Passo 0 · Montagem</b><span>Conta, Cérebro do Negócio, Projetos e conectores em 15 minutos.</span></li>' +
+    D.FRENTES.map(function (f, i) { return '<li><b>Frente ' + (i + 1) + ' · ' + esc(f.nome) + '</b><span>' + f.agentes.map(function (a) { return esc(a.nome); }).join(", ") + '.</span></li>'; }).join("") +
+    '<li><b>Rotina agêntica</b><span>O que cada agente faz em cada dia da semana.</span></li></ol>' +
+    '<p class="pdf-by">Guilherme Sanges · Especialista em Growth · guilhermesangesgrowth-maker.github.io/growth</p></section>';
+  var end = '<section class="pdf-end"><h2>Quer os agentes rodando no seu negócio?</h2><p>Na Sessão Diagnóstico eu avalio o seu momento e monto o plano de marketing, vendas e gestão para o seu caso.</p>' +
+    '<p><a href="' + esc(GHA.waUrl()) + '">Agendar Sessão Diagnóstico pelo WhatsApp</a></p></section>';
+  document.getElementById("pdfRoot").innerHTML = cover + GHA.guideBody() + end;
+  document.querySelectorAll(".gha-ag__body").forEach(function (b) { b.hidden = false; });
+  document.querySelectorAll(".gha-ag").forEach(function (a) { a.classList.add("is-open"); });
+})();
+</script>
+</body>
+</html>
