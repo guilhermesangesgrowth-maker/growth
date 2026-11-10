@@ -51,7 +51,7 @@ var GHA_DATA = (function () {
   /* ---------- 3 frentes, 9 agentes ---------- */
   var FRENTES = [
     {
-      id: "marketing", nome: "Marketing", sub: "Pesquisa, estratégia e conteúdo",
+      id: "marketing", nome: "Marketing", sub: "Pesquisa, estratégia e conteúdo", papel: "Especialista em conteúdo e performance",
       agentes: [
         {
           id: "pesquisa", nome: "Agente de Pesquisa", faz: "Descobre o que o seu cliente pesquisa, teme e compara antes de contratar.",
@@ -76,23 +76,23 @@ var GHA_DATA = (function () {
           acoes: [{ w: "Hoje", t: "Rode o comando Perguntas do cliente e salve o resultado como arquivo no projeto." }, { w: "Nesta semana", t: "Faça o raio-x de 3 concorrentes e anote os espaços livres no Cérebro do Negócio." }]
         },
         {
-          id: "estrategia", nome: "Agente de Estratégia", faz: "Define posicionamento, tese e o plano de conteúdo do mês.",
-          quando: "Toda primeira segunda do mês, 40 minutos",
-          intro: "Conteúdo sem estratégia vira agenda de postagem. Este agente cruza o Cérebro do Negócio com as pesquisas salvas e devolve uma frase de posicionamento, uma tese que diferencia você e um plano mensal ligado a conversas de venda.",
+          id: "estrategia", nome: "Agente de Estratégia e Performance", faz: "Define posicionamento e plano do mês e lê os números de conteúdo e anúncios para ajustar a rota.",
+          quando: "Toda primeira segunda do mês, 40 minutos, e toda sexta, 10 minutos",
+          intro: "Conteúdo sem estratégia vira agenda de postagem, e anúncio sem leitura de números vira gasto. Este agente cruza o Cérebro do Negócio com as pesquisas e os resultados das publicações e campanhas, e devolve posicionamento, plano mensal e os ajustes da semana.",
           instrucoes:
-"Você é o meu estrategista de marketing para serviços de alto valor. Contexto fixo: \"Cérebro do Negócio\" e as pesquisas salvas neste projeto.\n\n" +
-"Sua função: transformar o que eu sei e o que o mercado pede em posicionamento, tese e plano mensal.\n\n" +
+"Você é o meu estrategista de marketing e performance para serviços de alto valor. Contexto fixo: \"Cérebro do Negócio\", as pesquisas salvas neste projeto e os relatórios de resultado que eu anexar.\n\n" +
+"Sua função: transformar o que eu sei, o que o mercado pede e o que os números mostram em posicionamento, plano mensal e ajustes semanais.\n\n" +
 "Regras:\n" +
 "1. Antes de propor, faça até 3 perguntas se faltar informação importante.\n" +
-"2. Toda recomendação diz qual etapa do funil atende (atrair, nutrir ou converter) e como medir.\n" +
-"3. Priorize o que gera conversa de venda em até 30 dias.\n" +
-"4. Seja direto e aponte o que eu devo parar de fazer.\n\n" +
+"2. Toda recomendação diz qual etapa do funil atende (atrair, nutrir ou converter) e qual número acompanhar.\n" +
+"3. Ao ler resultados, separe métricas de vaidade (curtidas, alcance) de métricas de receita (mensagens, reuniões, vendas, custo por oportunidade).\n" +
+"4. Priorize o que gera conversa de venda em até 30 dias e aponte o que eu devo parar de fazer.\n\n" +
 "Formato: resumo de 5 linhas no topo e o detalhe em seguida.",
-          anexos: ["Cérebro do Negócio", "Resultados do Agente de Pesquisa", "Seus 10 posts com mais alcance e com mais mensagens recebidas"],
+          anexos: ["Cérebro do Negócio", "Resultados do Agente de Pesquisa", "Exportação ou prints dos resultados das redes e dos anúncios do último mês"],
           comandos: [
             { t: "Frase de posicionamento", p: "Escreva 3 versões da minha frase de posicionamento no formato: Ajudo [público] a [resultado] em [prazo] com [método]. Dê nota de 0 a 10 para clareza, diferenciação e desejo, e recomende uma." },
-            { t: "Tese e pautas", p: "Monte a minha tese em 3 partes: o erro comum do mercado, o que eu faço de diferente e o resultado que o cliente ganha. Depois gere 10 pautas que defendem essa tese, 4 para atrair, 3 para nutrir e 3 para converter." },
-            { t: "Plano do mês", p: "Crie o plano de conteúdo de [mês] para [LinkedIn e/ou Instagram], com 3 publicações por semana. Para cada uma: tema, formato, objetivo no funil e chamada para ação." }
+            { t: "Plano do mês", p: "Crie o plano de conteúdo de [mês] para [LinkedIn e/ou Instagram], com 3 publicações por semana. Para cada uma: tema, formato, objetivo no funil e chamada para ação." },
+            { t: "Leitura de performance", p: "Estes são os resultados da semana [anexe prints ou cole os números de publicações e anúncios]. Diga o que funcionou, o que cortar, onde colocar mais verba ou esforço e qual teste fazer na próxima semana." }
           ],
           erros: ["Pedir \"ideias de post\" sem tese definida: você recebe conteúdo que qualquer colega poderia assinar.", "Planejar só conteúdo de topo. Quem vende alto valor precisa de prova e de convite para conversar.", "Mudar de estratégia toda semana. Mantenha a tese por pelo menos um trimestre e ajuste pelos dados."],
           acoes: [{ w: "Nesta semana", t: "Escolha a frase de posicionamento e coloque na bio do Instagram e no título do LinkedIn." }, { w: "Neste mês", t: "Aprove o plano do mês e salve no projeto do Agente de Conteúdo." }]
@@ -110,7 +110,7 @@ var GHA_DATA = (function () {
 "4. Nunca prometa resultado garantido e respeite as regras do meu conselho profissional descritas no Cérebro.\n" +
 "5. Termine com uma chamada para ação clara: comentar, chamar no WhatsApp ou agendar.\n\n" +
 "Entregue sempre: a peça pronta, uma variação de abertura e uma sugestão de imagem.",
-          anexos: ["Cérebro do Negócio", "5 a 10 textos seus que tiveram boa resposta", "Plano do mês aprovado no Agente de Estratégia"],
+          anexos: ["Cérebro do Negócio", "5 a 10 textos seus que tiveram boa resposta", "Plano do mês aprovado no Agente de Estratégia e Performance"],
           comandos: [
             { t: "Do áudio ao post", p: "Transforme esta ideia em um post de LinkedIn de até 1.300 caracteres: [cole a transcrição do áudio ou a ideia em tópicos]." },
             { t: "Carrossel", p: "Transforme este post em um carrossel de 7 slides para Instagram: título de até 8 palavras e texto de apoio de até 25 palavras por slide. O último slide convida para [ação]." },
@@ -122,7 +122,7 @@ var GHA_DATA = (function () {
       ]
     },
     {
-      id: "vendas", nome: "Vendas", sub: "Atendimento, follow-up e pitch",
+      id: "vendas", nome: "Vendas", sub: "Atendimento, follow-up e pitch", papel: "Consultor e gestor comercial",
       agentes: [
         {
           id: "atendimento", nome: "Agente de Atendimento", faz: "Classifica cada contato novo e escreve a resposta pronta para o WhatsApp.",
@@ -192,10 +192,10 @@ var GHA_DATA = (function () {
       ]
     },
     {
-      id: "gestao", nome: "Gestão", sub: "Financeiro, compras e rotina",
+      id: "gestao", nome: "Gestão", sub: "Financeiro, compras e rotina", papel: "Advisor e controller financeiro",
       agentes: [
         {
-          id: "financeiro", nome: "Agente Financeiro", faz: "Organiza o caixa, calcula margem e preço e aponta onde o dinheiro está vazando.",
+          id: "financeiro", nome: "Agente Controller Financeiro", faz: "Organiza o caixa, calcula margem e preço e aponta onde o dinheiro está vazando.",
           quando: "Todo dia 5 do mês, 30 minutos",
           intro: "Muito profissional de alto valor fatura bem e não sabe quanto sobra. O agente lê o extrato ou a planilha, classifica os lançamentos, mostra o resultado do mês e calcula o preço mínimo de cada serviço, com os cálculos à vista.",
           instrucoes:
@@ -239,11 +239,12 @@ var GHA_DATA = (function () {
           acoes: [{ w: "Hoje", t: "Rode a Faxina de assinaturas com a última fatura." }, { w: "Na próxima compra", t: "Use o comando Nova compra antes de pedir qualquer orçamento." }]
         },
         {
-          id: "rotina", nome: "Agente de Rotina", faz: "Planeja a semana pelas prioridades que mais aproximam você da meta e faz o fechamento de sexta.",
-          quando: "Segunda de manhã e sexta à tarde, 15 minutos",
-          intro: "Quem atende, vende e gerencia ao mesmo tempo passa a semana apagando incêndio. O agente funciona como um chefe de gabinete: olha a agenda, os e-mails e a meta do trimestre e devolve as 3 prioridades da semana, o que delegar e o que recusar.",
+          id: "rotina", nome: "Agente Advisor", faz: "Funciona como conselheiro: planeja a semana pela meta, ajuda nas decisões difíceis e faz o fechamento de sexta.",
+          quando: "Segunda de manhã, sexta à tarde e antes de cada decisão importante",
+          intro: "Quem atende, vende e gerencia ao mesmo tempo passa a semana apagando incêndio e decide sozinho. O agente funciona como um conselheiro: olha a agenda, os e-mails e a meta do trimestre, devolve as 3 prioridades da semana e ajuda a pensar as decisões com opções, riscos e recomendação.",
           instrucoes:
-"Você é o meu chefe de gabinete. Contexto fixo: \"Cérebro do Negócio\", em especial as metas do trimestre.\n\n" +
+"Você é o meu advisor e chefe de gabinete. Contexto fixo: \"Cérebro do Negócio\", em especial as metas do trimestre.\n\n" +
+"Quando eu trouxer uma decisão, faça perguntas antes de opinar, liste as opções com custo, risco e impacto na meta e termine com uma recomendação clara.\n\n" +
 "Toda segunda-feira, com o que eu colar (ou com a minha agenda e o meu e-mail, se os conectores estiverem ativos), você:\n" +
 "1. Lista os compromissos da semana e o que eu preciso preparar para cada um.\n" +
 "2. Aponta as 3 prioridades que mais aproximam da meta do trimestre.\n" +
@@ -254,7 +255,7 @@ var GHA_DATA = (function () {
           comandos: [
             { t: "Planejar a semana", p: "Planeje a minha semana. Compromissos e pendências: [cole, ou consulte a minha agenda e e-mail]." },
             { t: "Fechamento de sexta", p: "Fechamento da semana. Números: contatos novos [x], reuniões [x], propostas enviadas [x], vendas [x], caixa [x]. Pendências: [cole]." },
-            { t: "Mapa de automação", p: "Estas são as tarefas que eu repito toda semana: [descreva]. Diga quais um agente do Claude pode fazer, qual agente deste guia usar e o comando para cada uma." }
+            { t: "Decisão difícil", p: "Preciso decidir [contratar, investir, mudar preço, aceitar um cliente...]: [contexto]. Faça as perguntas que faltam, compare as opções com custo, risco e impacto na meta do trimestre e recomende uma." }
           ],
           erros: ["Planejar sem meta. Sem número do trimestre, toda tarefa parece urgente.", "Pular o fechamento de sexta: é ele que mostra se a semana gerou receita.", "Ligar os conectores e não definir o que o agente pode consultar. Diga exatamente onde ele deve buscar."],
           acoes: [{ w: "Nesta segunda", t: "Rode o Planejar a semana e bloqueie na agenda as 3 prioridades." }, { w: "Nesta sexta", t: "Faça o primeiro fechamento e guarde os números no projeto." }]
@@ -265,11 +266,11 @@ var GHA_DATA = (function () {
 
   /* ---------- rotina agêntica da semana ---------- */
   var SEMANA = [
-    { d: "Seg", t: "Agente de Rotina planeja a semana. Na primeira segunda do mês, Agente de Estratégia." },
+    { d: "Seg", t: "Agente Advisor planeja a semana. Na primeira segunda do mês, Agente de Estratégia e Performance." },
     { d: "Ter", t: "Agente de Conteúdo escreve 2 peças. Agente de Follow-up retoma propostas." },
     { d: "Qua", t: "Agente de Pitch prepara as reuniões. Agente de Atendimento responde contatos novos." },
     { d: "Qui", t: "Agente de Conteúdo escreve 1 peça. Agente de Follow-up retoma propostas." },
-    { d: "Sex", t: "Agente de Rotina fecha a semana. No dia 5, Agente Financeiro fecha o mês." }
+    { d: "Sex", t: "Agente Advisor fecha a semana. No dia 5, Agente Controller Financeiro fecha o mês." }
   ];
 
   /* ---------- segmentos (mesmos ids do Guia Growth 30D, para a planilha) e exemplos por frente ---------- */
@@ -277,27 +278,27 @@ var GHA_DATA = (function () {
     { id: "saude", label: "Saúde e Bem-estar", ex: {
       marketing: "Peça ao Agente de Pesquisa as dúvidas que pacientes pesquisam antes de um tratamento e transforme cada uma em conteúdo educativo, dentro das regras do seu conselho.",
       vendas: "Use o Agente de Atendimento para responder pedidos de avaliação com perguntas de triagem, sem nunca colar dados clínicos identificáveis.",
-      gestao: "Peça ao Agente Financeiro a margem por tipo de procedimento ou pacote, para saber qual atendimento sustenta a clínica." } },
+      gestao: "Peça ao Agente Controller Financeiro a margem por tipo de procedimento ou pacote, para saber qual atendimento sustenta a clínica." } },
     { id: "engenharia", label: "Engenharia e Construção", ex: {
       marketing: "Transforme visitas de obra em conteúdo técnico simples com o Agente de Conteúdo: problema encontrado, solução e impacto em prazo ou custo.",
       vendas: "Antes de visitar uma construtora, rode o briefing do Agente de Pitch com o site e as obras públicas da empresa.",
       gestao: "Use o Agente de Compras para comparar cotações de fornecedores e prestadores com custo total e prazo de entrega." } },
     { id: "arquitetura", label: "Arquitetura e Design", ex: {
-      marketing: "Peça ao Agente de Estratégia uma tese que mostre resultado de negócio ao lado do portfólio estético.",
+      marketing: "Peça ao Agente de Estratégia e Performance uma tese que mostre resultado de negócio ao lado do portfólio estético.",
       vendas: "Cole o briefing do cliente no Agente de Pitch e receba a proposta por fases, com valor de cada etapa.",
-      gestao: "Calcule com o Agente Financeiro o preço mínimo por metro quadrado ou por projeto, considerando as horas reais da equipe." } },
+      gestao: "Calcule com o Agente Controller Financeiro o preço mínimo por metro quadrado ou por projeto, considerando as horas reais da equipe." } },
     { id: "juridico", label: "Direito, Contabilidade e Finanças", ex: {
       marketing: "Use o Agente de Pesquisa para acompanhar mudanças de regra no setor do seu cliente e transformar cada uma em alerta de conteúdo.",
       vendas: "O Agente de Follow-up ajuda a retomar propostas de serviço recorrente com um conteúdo útil a cada contato.",
-      gestao: "Peça ao Agente Financeiro a comparação entre cobrar por hora e por escopo fechado, com a margem de cada modelo." } },
+      gestao: "Peça ao Agente Controller Financeiro a comparação entre cobrar por hora e por escopo fechado, com a margem de cada modelo." } },
     { id: "executivo", label: "Executivo ou gestor de empresa", ex: {
       marketing: "Transforme decisões que você tomou na carreira em posts de bastidores com o Agente de Conteúdo, sem expor dados de ex-empregadores.",
       vendas: "Use o Agente de Pitch para preparar reuniões com diretores do seu setor, com hipóteses de impacto no resultado da empresa.",
-      gestao: "O Agente de Rotina protege a agenda para a frente de consultoria crescer sem tomar todo o seu tempo." } },
+      gestao: "O Agente Advisor protege a agenda para a frente de consultoria crescer sem tomar todo o seu tempo." } },
     { id: "consultoria", label: "Consultoria e mentoria", ex: {
-      marketing: "Peça ao Agente de Estratégia um plano mensal que leve leitores do conteúdo até a sessão diagnóstico.",
+      marketing: "Peça ao Agente de Estratégia e Performance um plano mensal que leve leitores do conteúdo até a sessão diagnóstico.",
       vendas: "Rode o Treino de objeção do Agente de Pitch antes de cada sessão de diagnóstico importante.",
-      gestao: "Use o Agente Financeiro para comparar a margem de projetos individuais, programas em grupo e acompanhamento recorrente." } },
+      gestao: "Use o Agente Controller Financeiro para comparar a margem de projetos individuais, programas em grupo e acompanhamento recorrente." } },
     { id: "empresario", label: "Empresário de serviço de alto ticket", ex: {
       marketing: "Use o Agente de Pesquisa para entender o que o seu cliente compara antes de fechar e ajustar a oferta.",
       vendas: "Treine o time com o Agente de Atendimento: o roteiro de qualificação vira padrão para todos responderem igual.",
@@ -305,5 +306,70 @@ var GHA_DATA = (function () {
     { id: "outro", label: "Outro segmento", ex: {} }
   ];
 
-  return { SETUP: SETUP, FRENTES: FRENTES, SEMANA: SEMANA, SEGS: SEGS };
+  /* ---------- implementação guiada: o Claude do lead entrevista e monta os agentes ---------- */
+  var KIT_NOME = "Kit de Implementação · Guia High Ticket Agêntico";
+  var START = "Leia o arquivo anexado (" + KIT_NOME + ") e siga a PARTE 1 à risca. Comece a entrevista comigo agora.";
+
+  var IMPL = [
+    { t: "Baixe o Kit de Implementação", p: "Um PDF com o roteiro de entrevista, o modelo do Cérebro do Negócio e os 9 agentes-base. Ele é escrito para o Claude ler." },
+    { t: "Abra uma conversa nova no Claude e anexe o Kit", p: "Em claude.ai ou no app, clique no clipe (ou no +), anexe o PDF e cole o comando de início abaixo." },
+    { t: "Responda a entrevista", p: "O Claude pergunta em 6 blocos curtos: você, oferta, cliente, marketing, vendas e gestão. Leva cerca de 20 minutos e dá para responder por áudio com o ditado do celular." },
+    { t: "Receba os agentes personalizados", p: "No fim, ele entrega o seu Cérebro do Negócio, as instruções dos 9 agentes adaptadas ao seu negócio e indica por quais 3 começar." },
+    { t: "Crie um Projeto para cada agente", p: "No menu Projetos, clique em Criar projeto, cole as instruções que o Claude gerou e anexe o Cérebro do Negócio. Comece pelos 3 indicados hoje e termine os demais amanhã." }
+  ];
+
+  var PROTOCOLO =
+"Você vai atuar como Arquiteto de Agentes. O seu trabalho é entrevistar a pessoa que anexou este kit, dona de um negócio que vende serviços de alto valor, e entregar os 9 agentes deste kit personalizados para o negócio dela, prontos para colar em Projetos do Claude.\n\n" +
+"COMO CONDUZIR A ENTREVISTA\n" +
+"1. Comece com uma apresentação de no máximo 3 linhas: o que vai acontecer (entrevista de cerca de 20 minutos, resumo para confirmar e entrega dos agentes) e que ela pode responder em tópicos ou por áudio.\n" +
+"2. Siga os 6 blocos abaixo, na ordem. Em cada mensagem faça no máximo 3 perguntas curtas, cada uma com um exemplo de resposta entre parênteses.\n" +
+"3. Se uma resposta vier vaga, faça uma pergunta de aprofundamento antes de seguir. Se a pessoa não souber, sugira uma resposta com base no que já sabe e peça confirmação.\n" +
+"4. Ao fim de cada bloco, resuma em até 3 linhas o que entendeu e avance.\n" +
+"5. Mostre o progresso no início de cada mensagem (ex.: Bloco 2 de 6).\n" +
+"6. Nunca peça dados sensíveis de clientes: nomes, documentos, prontuários ou valores individuais.\n\n" +
+"BLOCOS DA ENTREVISTA\n" +
+"Bloco 1 · Você e o negócio: profissão, anos de experiência, credenciais, quantas pessoas trabalham com você, faixa de faturamento mensal e meta do trimestre.\n" +
+"Bloco 2 · Oferta: serviço principal (o que entrega, prazo, preço), outras ofertas, qual dá mais lucro e qual você quer vender mais.\n" +
+"Bloco 3 · Cliente ideal: perfil, momento em que procura ajuda, dores com as palavras dele, desejos, objeções mais comuns e o que ele compara antes de contratar.\n" +
+"Bloco 4 · Marketing: canais usados, frequência, o que já funcionou, investimento em anúncios, concorrentes ou referências e tom de voz (peça 2 ou 3 textos dela como exemplo).\n" +
+"Bloco 5 · Vendas: de onde chegam os contatos, quem responde e em quanto tempo, etapas até o fechamento, taxa de fechamento aproximada e onde as propostas costumam travar.\n" +
+"Bloco 6 · Gestão: como controla o financeiro, maiores custos, compras e assinaturas recorrentes, ferramentas do dia a dia (Google, WhatsApp Business, CRM, planilhas) e as tarefas que mais tomam tempo.\n\n" +
+"ENTREGA (só depois de a pessoa confirmar um resumo geral de até 15 linhas)\n" +
+"1. O CÉREBRO DO NEGÓCIO completo, no modelo da PARTE 2, em um único bloco de código para ela salvar como documento. Se o seu ambiente permitir criar arquivos, ofereça também o documento para baixar.\n" +
+"2. OS 9 AGENTES PERSONALIZADOS, a partir dos modelos da PARTE 3. Para cada agente, entregue: nome do Projeto, as Instruções do projeto prontas para colar (em bloco de código), os arquivos para anexar e 3 comandos do dia a dia já adaptados ao negócio. Pergunte se ela prefere receber todos de uma vez ou um por um.\n" +
+"3. Adapte cada modelo ao segmento, ao tamanho da equipe, aos canais e às ferramentas dela. Use as palavras do cliente que apareceram na entrevista. Mantenha as regras de segurança dos modelos: revisão humana antes de enviar, sem promessas de resultado, sem inventar números e respeito às regras do conselho profissional dela.\n" +
+"4. Indique por quais 3 agentes começar e por quê, com base nos gargalos que apareceram na entrevista.\n" +
+"5. Feche com o PLANO DE 24 HORAS: hoje (salvar o Cérebro e criar os 3 primeiros Projetos), amanhã (criar os demais) e a rotina da primeira semana, usando a PARTE 4.\n" +
+"6. Explique em 4 passos como criar um Projeto no Claude: menu Projetos, Criar projeto, colar as instruções em Instruções do projeto e anexar o Cérebro do Negócio em Conhecimento do projeto.";
+
+  function kitText() {
+    var t = [];
+    t.push(KIT_NOME.toUpperCase());
+    t.push("Material de Guilherme Sanges · guilhermesangesgrowth-maker.github.io/growth\n");
+    t.push("COMO USAR: anexe este arquivo em uma conversa nova no Claude e envie: \"" + START + "\"\n");
+    t.push("PARTE 1 · INSTRUÇÕES PARA O CLAUDE\n");
+    t.push(PROTOCOLO + "\n");
+    t.push("PARTE 2 · MODELO DO CÉREBRO DO NEGÓCIO\n");
+    t.push(SETUP.cerebro + "\n");
+    t.push("PARTE 3 · OS 9 AGENTES (MODELOS-BASE)\n");
+    var n = 0;
+    FRENTES.forEach(function (f) {
+      t.push("FRENTE " + f.nome.toUpperCase() + " · " + f.papel + "\n");
+      f.agentes.forEach(function (a) {
+        n++;
+        t.push("AGENTE " + n + " · " + a.nome);
+        t.push("Função: " + a.faz);
+        t.push("Quando usar: " + a.quando);
+        t.push("Instruções-base do projeto:\n" + a.instrucoes);
+        t.push("Arquivos para anexar: " + a.anexos.join("; ") + ".");
+        t.push("Comandos do dia a dia:\n" + a.comandos.map(function (c) { return "- " + c.t + ": " + c.p; }).join("\n"));
+        t.push("Erros comuns: " + a.erros.join(" ") + "\n");
+      });
+    });
+    t.push("PARTE 4 · ROTINA DA SEMANA\n");
+    t.push(SEMANA.map(function (s) { return s.d + ": " + s.t; }).join("\n"));
+    return t.join("\n");
+  }
+
+  return { SETUP: SETUP, FRENTES: FRENTES, SEMANA: SEMANA, SEGS: SEGS, IMPL: IMPL, PROTOCOLO: PROTOCOLO, START: START, KIT_NOME: KIT_NOME, kitText: kitText };
 })();

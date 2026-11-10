@@ -4,36 +4,48 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="noindex" />
-<title>Guia High Ticket Agêntico</title>
+<title>Kit de Implementação · Guia High Ticket Agêntico</title>
 <link rel="stylesheet" href="../css/fonts.css" />
 <link rel="stylesheet" href="../css/styles.css" />
 <link rel="stylesheet" href="agentico.css" />
 <style>
-/* Versão do guia para PDF (A4). Gerado por navegador headless a partir desta página. */
+/* Kit de Implementação (A4). Escrito para a pessoa ler e para o Claude seguir.
+   O PDF kit-guia-high-ticket-agentico.pdf é gerado por Chrome headless (--print-to-pdf) a partir desta página. */
 @page { size: A4; margin: 14mm 14mm 16mm; }
 body.gha-pdf { background: #fff; color: #0a0a0a; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 .gha-pdf main { max-width: 760px; margin: 0 auto; }
-.pdf-cover { padding: 6mm 0 8mm; break-after: page; }
-.pdf-cover h1 { font-family: var(--font-display); font-size: 46px; line-height: 1.05; margin: 10px 0 14px; }
-.pdf-lead { font-size: 15px; line-height: 1.6; color: #444; margin: 0 0 22px; }
-.pdf-idx { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-.pdf-idx li { border: 1px solid var(--dark-line); border-radius: 12px; padding: 12px 14px; }
-.pdf-idx b { font-family: var(--font-display); font-size: 18px; color: var(--orange-ink); display: block; margin-bottom: 4px; }
-.pdf-idx span { font-size: 13.5px; color: #444; }
-.pdf-by { margin: 24px 0 0; font-family: var(--font-mono); font-size: 12px; color: #444; }
-.gha-pdf .gha-setup, .gha-pdf .gha-fr, .gha-pdf .gha-week { box-shadow: none !important; border-color: var(--dark-line) !important; }
-.gha-pdf .gha-fr { break-before: page; }
-.gha-pdf .gha-ag { break-inside: auto; background: #fff; margin-bottom: 4mm; }
-.gha-pdf .gha-ag__head { cursor: default; break-after: avoid; }
-.gha-pdf .gha-chev, .gha-pdf .gha-tag, .gha-pdf .gha-copy__btn { display: none !important; }
-.gha-pdf .gha-ag__body { display: block !important; }
-.gha-pdf .gha-copy pre { max-height: none; overflow: visible; }
-.gha-pdf .gha-copy, .gha-pdf .gha-cmd, .gha-pdf .gha-errors, .gha-pdf .gha-steps li, .gha-pdf .gha-week li { break-inside: avoid; }
-.gha-pdf .gha-sub { break-after: avoid; }
-.pdf-end { break-inside: avoid; margin-top: 8mm; padding: 6mm 8mm; background: #0a0a0a; color: #f5f3ef; border-radius: 10px; }
-.pdf-end h2 { font-family: var(--font-display); font-size: 24px; margin: 0 0 6px; }
-.pdf-end p { margin: 0 0 8px; }
-.pdf-end a { color: #FF6B00; font-weight: 700; }
+.k-cover { padding: 4mm 0 6mm; break-after: page; }
+.k-cover h1 { font-family: var(--font-display); font-size: 40px; line-height: 1.05; margin: 10px 0 12px; }
+.k-lead { font-size: 15px; line-height: 1.6; color: #444; margin: 0 0 14px; }
+.k-cover .gha-dg { max-width: 380px; margin: 8px auto 14px; }
+.k-how { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.k-how li { display: flex; gap: 12px; border: 1px solid var(--dark-line); border-radius: 12px; padding: 10px 14px; font-size: 13.5px; line-height: 1.5; }
+.k-how li i { flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--orange); font-style: normal; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.k-start { margin: 14px 0 0; padding: 12px 14px; border-radius: 12px; background: #0a0a0a; color: #f5f3ef; font-family: var(--font-mono); font-size: 12.5px; line-height: 1.55; }
+.k-start b { color: #ff6b00; display: block; margin-bottom: 4px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.k-by { margin: 16px 0 0; font-family: var(--font-mono); font-size: 11.5px; color: #444; }
+.k-part { break-before: page; }
+.k-part h2 { font-family: var(--font-display); font-size: 30px; line-height: 1.1; margin: 4px 0 10px; }
+.k-kick { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange-ink); margin: 0; }
+.k-pre { white-space: pre-wrap; font-family: var(--font-body); font-size: 13.5px; line-height: 1.6; margin: 0; padding: 14px 16px; border: 1px solid var(--dark-line); border-radius: 12px; background: #faf9f6; }
+.k-area { margin: 18px 0 8px; padding: 10px 14px; border-radius: 12px; background: #0a0a0a; color: #f5f3ef; break-after: avoid; }
+.k-area b { font-family: var(--font-display); font-size: 20px; }
+.k-area span { color: #ff6b00; font-weight: 600; font-size: 13px; margin-left: 8px; }
+.k-ag { border: 1px solid var(--dark-line); border-radius: 12px; padding: 14px 16px; margin: 0 0 10px; }
+.k-ag h3 { font-family: var(--font-display); font-size: 20px; margin: 0 0 4px; break-after: avoid; }
+.k-ag p { margin: 0 0 6px; font-size: 13px; line-height: 1.5; }
+.k-ag h4 { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--orange-ink); margin: 10px 0 5px; break-after: avoid; }
+.k-ag .k-pre { font-size: 12.5px; padding: 10px 12px; break-inside: avoid; }
+.k-ag ul { margin: 0; padding-left: 18px; font-size: 12.5px; line-height: 1.5; }
+.k-ag li { margin-bottom: 3px; }
+.k-week { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.k-week li { border: 1px solid var(--dark-line); border-radius: 12px; padding: 10px 14px; font-size: 13.5px; }
+.k-week b { font-family: var(--font-display); color: var(--orange-ink); margin-right: 8px; }
+.k-end { break-inside: avoid; margin-top: 8mm; padding: 6mm 8mm; background: #0a0a0a; color: #f5f3ef; border-radius: 10px; }
+.k-end h2 { font-family: var(--font-display); font-size: 22px; margin: 0 0 6px; }
+.k-end p { margin: 0 0 6px; font-size: 13.5px; }
+.k-end a { color: #ff6b00; font-weight: 700; }
+.dg-pulse, .dg-orbit { display: none; }
 </style>
 </head>
 <body class="gha-pdf">
@@ -44,18 +56,35 @@ body.gha-pdf { background: #fff; color: #0a0a0a; -webkit-print-color-adjust: exa
 (function () {
   var D = window.GHA_DATA;
   function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
-  var cover = '<section class="pdf-cover"><p class="eyebrow">Guia High Ticket Agêntico · Material gratuito</p>' +
-    '<h1>' + GHA.total() + ' agentes no Claude para o seu negócio high-ticket</h1>' +
-    '<p class="pdf-lead">Guia plug-and-play para quem vende serviços de alto valor: instruções prontas para copiar e colar em Projetos do Claude, comandos do dia a dia, erros comuns e a rotina da semana, em 3 frentes.</p>' +
-    '<ol class="pdf-idx"><li><b>Passo 0 · Montagem</b><span>Conta, Cérebro do Negócio, Projetos e conectores em 15 minutos.</span></li>' +
-    D.FRENTES.map(function (f, i) { return '<li><b>Frente ' + (i + 1) + ' · ' + esc(f.nome) + '</b><span>' + f.agentes.map(function (a) { return esc(a.nome); }).join(", ") + '.</span></li>'; }).join("") +
-    '<li><b>Rotina agêntica</b><span>O que cada agente faz em cada dia da semana.</span></li></ol>' +
-    '<p class="pdf-by">Guilherme Sanges · Especialista em Growth · guilhermesangesgrowth-maker.github.io/growth</p></section>';
-  var end = '<section class="pdf-end"><h2>Quer os agentes rodando no seu negócio?</h2><p>Na Sessão Diagnóstico eu avalio o seu momento e monto o plano de marketing, vendas e gestão para o seu caso.</p>' +
-    '<p><a href="' + esc(GHA.waUrl()) + '">Agendar Sessão Diagnóstico pelo WhatsApp</a></p></section>';
-  document.getElementById("pdfRoot").innerHTML = cover + GHA.guideBody() + end;
-  document.querySelectorAll(".gha-ag__body").forEach(function (b) { b.hidden = false; });
-  document.querySelectorAll(".gha-ag").forEach(function (a) { a.classList.add("is-open"); });
+  var n = 0;
+  var cover = '<section class="k-cover"><p class="eyebrow">Guia High Ticket Agêntico · Kit de Implementação</p>' +
+    '<h1>O seu Claude entrevista você e monta ' + GHA.total() + ' agentes para o seu negócio</h1>' +
+    '<p class="k-lead">Este arquivo foi escrito para o Claude ler. Ele traz o roteiro da entrevista, o modelo do Cérebro do Negócio e os modelos-base dos agentes de marketing, vendas e gestão.</p>' +
+    GHA.diagram() +
+    '<ol class="k-how">' + D.IMPL.map(function (p, i) { return '<li><i>' + (i + 1) + '</i><span><b>' + esc(p.t) + '.</b> ' + esc(p.p) + '</span></li>'; }).join("") + '</ol>' +
+    '<div class="k-start"><b>Comando de início (cole junto com este arquivo)</b>' + esc(D.START) + '</div>' +
+    '<p class="k-by">Guilherme Sanges · Especialista em Growth · guilhermesangesgrowth-maker.github.io/growth</p></section>';
+  var p1 = '<section class="k-part"><p class="k-kick">Parte 1</p><h2>Instruções para o Claude</h2><div class="k-pre">' + esc(D.PROTOCOLO) + '</div></section>';
+  var p2 = '<section class="k-part"><p class="k-kick">Parte 2</p><h2>Modelo do Cérebro do Negócio</h2><div class="k-pre">' + esc(D.SETUP.cerebro) + '</div></section>';
+  var p3 = '<section class="k-part"><p class="k-kick">Parte 3</p><h2>Os ' + GHA.total() + ' agentes (modelos-base)</h2>' +
+    D.FRENTES.map(function (f) {
+      return '<div class="k-area"><b>' + esc(f.nome) + '</b><span>' + esc(f.papel) + '</span></div>' +
+        f.agentes.map(function (a) {
+          n++;
+          return '<article class="k-ag"><h3>Agente ' + n + ' · ' + esc(a.nome) + '</h3>' +
+            '<p><b>Função:</b> ' + esc(a.faz) + '</p><p><b>Quando usar:</b> ' + esc(a.quando) + '</p>' +
+            '<h4>Instruções-base do projeto</h4><div class="k-pre">' + esc(a.instrucoes) + '</div>' +
+            '<h4>Arquivos para anexar</h4><ul>' + a.anexos.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join("") + '</ul>' +
+            '<h4>Comandos do dia a dia</h4><ul>' + a.comandos.map(function (c) { return '<li><b>' + esc(c.t) + ':</b> ' + esc(c.p) + '</li>'; }).join("") + '</ul>' +
+            '<h4>Erros comuns</h4><ul>' + a.erros.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join("") + '</ul></article>';
+        }).join("");
+    }).join("") + '</section>';
+  var p4 = '<section class="k-part"><p class="k-kick">Parte 4</p><h2>Rotina da semana</h2><ol class="k-week">' +
+    D.SEMANA.map(function (s) { return '<li><b>' + esc(s.d) + '</b>' + esc(s.t) + '</li>'; }).join("") + '</ol>' +
+    '<p class="k-lead" style="margin-top:12px">Cuidado com dados: não cole documentos, prontuários ou números de clientes identificáveis. Troque nomes por iniciais e revise tudo antes de enviar.</p>' +
+    '<div class="k-end"><h2>Quer os agentes rodando com acompanhamento?</h2><p>Na Sessão Diagnóstico eu avalio o seu momento e monto o plano de marketing, vendas e gestão para o seu caso.</p>' +
+    '<p><a href="' + esc(GHA.waUrl()) + '">Agendar Sessão Diagnóstico pelo WhatsApp</a></p></div></section>';
+  document.getElementById("pdfRoot").innerHTML = cover + p1 + p2 + p3 + p4;
 })();
 </script>
 </body>
