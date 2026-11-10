@@ -409,6 +409,7 @@
   document.addEventListener("click", function (e) {
     var t = e.target;
     if (t.closest("[data-gha-open]")) { e.preventDefault(); dl("gha_cta", { local: t.closest("[data-gha-open]").getAttribute("data-gha-open") || "" }); startFlow(); return; }
+    if (t.closest(".wa-float")) { if (state.lead) sendLead("whatsapp-flutuante"); dl("whatsapp_flutuante", { com_popup: ui.open ? "sim" : "nao" }); return; }
     if (!ui.open || !root.contains(t)) return;
     if (t.closest("[data-gha-close]")) { closeAndClean(); return; }
     if (t.closest("[data-gha-reset]")) { resetAll(); return; }

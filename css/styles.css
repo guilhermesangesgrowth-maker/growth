@@ -1385,3 +1385,11 @@ h1, h2, h3, h4, .stat__value, .method__hook, .hub__core, .market-take__mark, .ca
 .roadmap ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
 .roadmap ul li { position: relative; padding-left: 18px; font-size: 14.5px; line-height: 1.5; }
 .roadmap ul li::before { content: "→"; position: absolute; left: 0; color: var(--orange-ink); font-weight: 700; }
+
+/* ---------- botão flutuante do WhatsApp (fica acima do pop-up do guia) ---------- */
+.wa-float { position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); z-index: 195; width: 48px; height: 48px; border-radius: 50%; background: #25D366; color: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3); transition: transform .15s, box-shadow .15s; }
+.wa-float:hover { transform: scale(1.07); box-shadow: 0 8px 22px rgba(0, 0, 0, 0.38); }
+.wa-float:focus-visible { outline: 3px solid var(--black); outline-offset: 3px; }
+.wa-float svg { width: 27px; height: 27px; }
+body.gha-s3 .wa-float { bottom: calc(92px + env(safe-area-inset-bottom)); }
+@media (min-width: 900px) { body.gha-s3 .wa-float { bottom: 16px; } }
