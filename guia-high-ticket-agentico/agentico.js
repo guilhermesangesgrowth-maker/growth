@@ -4,11 +4,11 @@
  *   1) abertura (avança com clique ou em 8 segundos)
  *   2) cadastro, uma pergunta por tela (o diagrama das 3 áreas fica no topo)
  *   3) entrega: implementação guiada (o Claude do lead entrevista e monta
- *      os agentes), visão dos 9 agentes e rotina da semana
+ *      o Gestor Executivo), visão das 9 funções do Gestor Executivo e rotina da semana
  * Abre por: botões com [data-gha-open], link direto #guia-agentico,
  * ou sozinho (uma vez por visita) depois de tempo/rolagem na página.
- * Depois do cadastro a URL vira #guia-agentico-1 (equipe de 2 ou mais pessoas)
- * ou #guia-agentico-2 (autônomo), para gatilhos de remarketing no GTM.
+ * Depois do cadastro a URL vira #guia-agentico-1 (MQL: investe mais de R$20 mil/mês)
+ * ou #guia-agentico-2 (pré-qualificação), para gatilhos de remarketing no GTM.
  * Depende de agentico-data.js (GHA_DATA).
  * ===================================================================== */
 (function () {
@@ -41,14 +41,21 @@
   if (!D) return;
   var FRENTES = D.FRENTES, SEGS = D.SEGS;
 
-  /* Pergunta de qualificação: tamanho da equipe. "Somente eu" = não qualificado */
-  var PORTES = ["Somente eu (autônomo)", "2-30 pessoas", "31-99 pessoas", "+100 pessoas"];
+  /* Pergunta de qualificação: momento do negócio. Só a opção 3 (investe mais de R$20 mil/mês) é MQL;
+   * as demais vão para pré-qualificação. A resposta vai para a coluna "investe" da planilha. */
+  var MOMENTOS = [
+    "Nunca investi em marketing/vendas e quero saber mais",
+    "Invisto até R$20mil/mês em marketing/vendas e quero otimizar resultados",
+    "Invisto mais do que R$20mil/mês em marketing/vendas e quero otimizar resultados",
+    "Invisto em marketing/vendas e estou satisfeito com o resultado"
+  ];
+  var MQL = MOMENTOS[2];
   var QS = [
     { k: "nome", type: "text", q: "Qual é o seu nome?", ph: "Seu nome", ac: "name", im: "text" },
     { k: "whatsapp", type: "tel", q: "Qual é o seu WhatsApp?", ph: "(00) 00000-0000", ac: "tel", im: "tel" },
     { k: "email", type: "email", q: "Qual é o seu melhor e-mail?", ph: "voce@email.com", ac: "email", im: "email" },
     { k: "segmento", type: "opts", q: "Qual é o seu segmento?" },
-    { k: "porte", type: "final", q: "Quantas pessoas trabalham com você?" }
+    { k: "momento", type: "final", q: "Qual é o momento do seu negócio?" }
   ];
   var SCREENS = ["intro", "lead", "pb"];
 
@@ -95,25 +102,26 @@
     var f = CONFIG.formFields, b = new URLSearchParams();
     b.append(f.etapa, stage); b.append(f.origem, CONFIG.origem);
     b.append(f.nome, state.lead.nome); b.append(f.email, state.lead.email); b.append(f.whatsapp, state.lead.whatsapp);
-    b.append(f.segmento, segLabel()); b.append(f.porte, state.lead.porte || "");
-    b.append(f.estagio, ""); b.append(f.jornada, "");
-    b.append(f.consentimento, state.lead.consent ? "sim" : "nao"); b.append(f.investe, "");
+    b.append(f.segmento, segLabel()); b.append(f.porte, "");
+    b.append(f.jornada, "");
+    b.append(f.consentimento, state.lead.consent ? "sim" : "nao"); b.append(f.investe, state.lead.momento || "");
+    b.append(f.estagio, qualKey() === "mql" ? "MQL" : "pré-qualificação");
     b.append(f.pagina, location.href.split("#")[0]);
     try { fetch(CONFIG.leadEndpoint, { method: "POST", mode: "no-cors", body: b, keepalive: true }).catch(function () {}); } catch (e) {}
   }
   function qualKey() {
-    var v = state.lead && state.lead.porte;
+    var v = state.lead && state.lead.momento;
     if (!v) return "";
-    return v === PORTES[0] ? "nao-qualificado" : "qualificado";
+    return v === MQL ? "mql" : "pre-qualificacao";
   }
   function guideHash() {
     var k = qualKey();
-    if (k === "nao-qualificado") return CONFIG.hash + "-2";
+    if (k === "pre-qualificacao") return CONFIG.hash + "-2";
     return k ? CONFIG.hash + "-1" : CONFIG.hash;
   }
   window.dataLayer = window.dataLayer || [];
   function dl(event, extra) {
-    var o = { event: event, guia: CONFIG.origem, qualificacao: qualKey() || "sem-cadastro", segmento: segLabel(), porte: (state.lead && state.lead.porte) || "" };
+    var o = { event: event, guia: CONFIG.origem, qualificacao: qualKey() || "sem-cadastro", segmento: segLabel(), momento: (state.lead && state.lead.momento) || "" };
     for (var k in (extra || {})) o[k] = extra[k];
     window.dataLayer.push(o);
   }
@@ -142,7 +150,7 @@
         '<text class="dg-role" x="' + n.lx + '" y="' + n.ly2 + '" text-anchor="middle">' + esc(n.f.papel) + '</text>';
     }).join("");
     var aria = FRENTES.map(function (f) { return f.nome + ": " + f.papel; }).join("; ");
-    return '<div class="gha-dg ' + (cls || "") + '"><svg viewBox="0 0 420 276" role="img" aria-label="Seu negócio no centro, com 3 áreas de agentes. ' + esc(aria) + '">' +
+    return '<div class="gha-dg ' + (cls || "") + '"><svg viewBox="0 0 420 276" role="img" aria-label="Seu negócio no centro, com o Gestor Executivo cuidando de 3 áreas. ' + esc(aria) + '">' +
       '<circle class="dg-ring" cx="210" cy="150" r="100"/>' + spokes +
       '<circle class="dg-orbit" r="4.5"><animateMotion dur="9s" repeatCount="indefinite" path="M210,50 a100,100 0 1,1 -0.1,0"/></circle>' +
       '<circle class="dg-core" cx="210" cy="150" r="48"/><text class="dg-core-t" x="210" y="146" text-anchor="middle">Seu negócio</text><text class="dg-core-s" x="210" y="164" text-anchor="middle">high-ticket</text>' +
@@ -152,8 +160,8 @@
   var MARQ = ["Médicos", "Dentistas", "Arquitetos", "Engenheiros", "Advogados", "Consultores", "Executivos", "Empresários"].map(function (s) { return "<span>" + s + "</span>"; }).join("");
   function introHtml() {
     return '<div class="gha-screen gha-screen--intro">' +
-      '<h2 class="gha-h1" tabindex="-1">Se você fatura mais do que <span class="text-orange">R$50 mil por mês</span> e vende serviços de pelo menos R$3 mil, o <span class="text-orange">guia high ticket agêntico</span> acelera as principais áreas do seu negócio em menos de 24h!</h2>' +
-      '<p class="gha-h2">Implemente agentes e sistemas automáticos que serão seus copilotos para voar mais alto.</p>' +
+      '<h2 class="gha-h1" tabindex="-1">Se você fatura mais do que <span class="text-orange">R$50 mil por mês</span> e vende serviços de pelo menos R$3 mil, o <span class="text-orange">guia high ticket agêntico</span> otimiza a sua máquina de vendas em 24h!</h2>' +
+      '<p class="gha-h2">Ative um agente que opera como gestor executivo para o seu negócio decolar.</p>' +
       '<p class="eyebrow gha-for">Para quem vende serviços de alto valor:</p>' +
       '<div class="gha-marquee" role="img" aria-label="Médicos, dentistas, arquitetos, engenheiros, advogados, consultores, executivos e empresários"><div class="gha-marquee__t" aria-hidden="true">' + MARQ + MARQ + '</div></div>' +
       '<button type="button" class="btn btn--primary gha-go" data-gha-next>Acessar guia gratuito</button>' +
@@ -172,8 +180,8 @@
         return '<button type="button" role="radio" aria-checked="' + (d.segmento === s.id) + '" class="gha-opt' + (d.segmento === s.id ? " here" : "") + '" data-gha-opt="' + esc(s.id) + '">' + esc(s.label) + '</button>';
       }).join("") + '</div><span class="gha-err" id="gha-err" role="alert"></span>';
     } else if (q.type === "final") {
-      body = '<form id="ghaForm" novalidate><div class="gha-radios">' + PORTES.map(function (t) {
-        return '<label class="gha-radio"><input type="radio" name="gha-porte" value="' + esc(t) + '"' + (d.porte === t ? " checked" : "") + '><span class="gha-dot"></span><span>' + esc(t) + '</span></label>';
+      body = '<form id="ghaForm" novalidate><div class="gha-radios">' + MOMENTOS.map(function (t) {
+        return '<label class="gha-radio"><input type="radio" name="gha-momento" value="' + esc(t) + '"' + (d.momento === t ? " checked" : "") + '><span class="gha-dot"></span><span>' + esc(t) + '</span></label>';
       }).join("") + '</div>' +
         '<label class="gha-consent" for="gha-consent"><input id="gha-consent" type="checkbox"><span>Concordo em receber o guia e contatos sobre growth, conforme a LGPD.</span></label>' +
         '<span class="gha-err" id="gha-err" role="alert"></span>' +
@@ -217,8 +225,8 @@
       '<h6 class="gha-sub">Comandos do dia a dia</h6><ul class="gha-cmds">' + cmds + '</ul>' +
       '<h6 class="gha-sub">Faça nesta semana</h6><ul class="gha-acts">' + acts + '</ul>' +
       '<div class="gha-errors"><b>Erros comuns</b><ul>' + a.erros.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join("") + '</ul></div>' +
-      '<details class="gha-more"><summary>Ver as instruções-base deste agente</summary><p class="gha-note">Na implementação guiada o Claude personaliza estas instruções para você. Use direto só se preferir montar à mão.</p>' + copyBlock(a.instrucoes, "Instruções-base do projeto") +
-      '<p class="gha-files-k">Anexe no projeto:</p><ul class="gha-files">' + a.anexos.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join("") + '</ul></details>' +
+      '<div class="gha-more gha-more--flat">' +
+      '<p class="gha-files-k">Anexe no projeto Gestor Executivo para esta função:</p><ul class="gha-files">' + a.anexos.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join("") + '</ul></div>' +
       '</div></article>';
   }
 
@@ -233,10 +241,10 @@
     var S = D.SETUP;
     var manual = '<details class="gha-more"><summary>Prefere montar à mão, sem entrevista?</summary>' +
       '<ol class="gha-mini-steps">' + S.passos.map(function (p) { return '<li><b>' + esc(p.t) + '.</b> ' + esc(p.p) + '</li>'; }).join("") + '</ol>' +
-      copyBlock(S.cerebro, "Modelo do Cérebro do Negócio") + '<p class="gha-note">Depois, abra cada agente abaixo e use as instruções-base.</p></details>';
+      copyBlock(S.cerebro, "Modelo do Cérebro do Negócio") + '<h6 class="gha-sub">Instruções do Projeto Gestor Executivo</h6>' + copyBlock(D.gestorInstrucoes(), "Instruções do projeto") + '</details>';
     return '<section class="gha-impl" id="gha-impl"><p class="gha-fr__k">Implementação guiada · menos de 24h</p>' +
-      '<h3 class="gha-fr__h">O seu Claude entrevista você e monta os agentes</h3>' +
-      '<p class="gha-intro">Você conversa e o Claude monta. O Kit ensina o Claude a fazer as perguntas certas e a entregar os 9 agentes com as suas ofertas, o seu cliente e o seu jeito de falar.</p>' +
+      '<h3 class="gha-fr__h">O seu Claude entrevista você e monta o seu Gestor Executivo</h3>' +
+      '<p class="gha-intro">Você conversa e o Claude monta. O Kit ensina o Claude a fazer as perguntas certas e a entregar o seu Gestor Executivo, com as 9 funções adaptadas às suas ofertas, o seu cliente e o seu jeito de falar.</p>' +
       '<ol class="gha-impl__steps">' + steps + '</ol>' + manual + '</section>';
   }
 
@@ -248,13 +256,13 @@
       return '<div class="gha-area" id="gha-fr-' + f.id + '"><div class="gha-area__h"><span class="gha-area__n">' + (i + 1) + '</span><div><h4>' + esc(f.nome) + '</h4><p>' + esc(f.papel) + '</p></div></div>' + ex +
         '<div class="gha-ag-list">' + ags + '</div></div>';
     }).join("");
-    return '<section class="gha-team" id="gha-agentes"><p class="gha-fr__k">Sua equipe de agentes</p><h3 class="gha-fr__h">' + totalAgentes() + ' agentes, 3 áreas</h3>' +
-      '<p class="gha-intro">Veja o que cada agente faz e quando usar. Abra um agente para ver os comandos prontos, a checklist e os erros comuns.</p>' +
+    return '<section class="gha-team" id="gha-agentes"><p class="gha-fr__k">Seu Gestor Executivo</p><h3 class="gha-fr__h">1 agente, ' + totalAgentes() + ' funções em 3 áreas</h3>' +
+      '<p class="gha-intro">Um único Projeto no Claude cuida de tudo. Veja o que cada função faz e quando usar. Abra uma função para ver os comandos prontos, a checklist e os erros comuns.</p>' +
       diagramHtml("gha-dg--sm") + cols + '</section>';
   }
 
   function weekHtml() {
-    return '<section class="gha-week" id="gha-rotina"><p class="gha-fr__k">Rotina agêntica</p><h3 class="gha-fr__h">A sua semana com os agentes</h3><ol>' +
+    return '<section class="gha-week" id="gha-rotina"><p class="gha-fr__k">Rotina agêntica</p><h3 class="gha-fr__h">A sua semana com o Gestor Executivo</h3><ol>' +
       D.SEMANA.map(function (s) { return '<li><b>' + esc(s.d) + '</b><span>' + esc(s.t) + '</span></li>'; }).join("") + '</ol>' +
       '<p class="gha-note">Cuidado com dados: não cole documentos, prontuários ou números de clientes identificáveis. Troque nomes por iniciais e revise tudo antes de enviar.</p></section>';
   }
@@ -263,8 +271,8 @@
     ui.copies = [];
     var sg = seg(state.segmento), nm = firstName();
     return '<div class="gha-screen gha-screen--pb"><p class="eyebrow">Guia High Ticket Agêntico' + (sg ? " · " + esc(sg.label) : "") + '</p>' +
-      '<h2 class="gha-title" tabindex="-1">' + (nm ? esc(nm) + ", seus " : "Seus ") + totalAgentes() + ' agentes estão prontos para implementar</h2>' +
-      '<nav class="gha-toc" aria-label="Seções do guia"><a href="#gha-impl" data-gha-jump="gha-impl">1. Implementar</a><a href="#gha-agentes" data-gha-jump="gha-agentes">2. Agentes</a><a href="#gha-rotina" data-gha-jump="gha-rotina">3. Rotina</a>' +
+      '<h2 class="gha-title" tabindex="-1">' + (nm ? esc(nm) + ", seu " : "Seu ") + 'Gestor Executivo está pronto para implementar</h2>' +
+      '<nav class="gha-toc" aria-label="Seções do guia"><a href="#gha-impl" data-gha-jump="gha-impl">1. Implementar</a><a href="#gha-agentes" data-gha-jump="gha-agentes">2. Funções</a><a href="#gha-rotina" data-gha-jump="gha-rotina">3. Rotina</a>' +
       '<a class="gha-dl" href="' + CONFIG.base + CONFIG.pdf + '" download data-gha-dl>Baixar Kit</a></nav>' +
       implHtml() + teamHtml() + weekHtml() + '</div>';
   }
@@ -291,7 +299,7 @@
       '<button type="button" class="gha-x" data-gha-close aria-label="Fechar o guia">×</button></div></div>' +
       '<div class="gha-scroll" id="ghaScroll">' + (pb ? screenHtml() :
         '<div class="gha-flow"><div class="gha-flow__dg' + (ui.screen === "lead" ? " is-compact" : "") + '" id="ghaTopDg">' + diagramHtml() + '</div><div class="gha-main" id="ghaMain">' + screenHtml() + '</div></div>') + '</div>' +
-      (pb ? '<div class="gha-foot"><p>Quer os agentes rodando no seu negócio com acompanhamento?</p><a class="btn btn--primary" id="ghaWa" href="' + esc(waUrl()) + '" target="_blank" rel="noopener">Agendar Sessão Diagnóstico</a></div>' : "") +
+      (pb ? '<div class="gha-foot"><p>Quer o Gestor Executivo rodando no seu negócio com acompanhamento?</p><a class="btn btn--primary" id="ghaWa" href="' + esc(waUrl()) + '" target="_blank" rel="noopener">Agendar Sessão Diagnóstico</a></div>' : "") +
       '</div>';
     after();
   }
@@ -373,12 +381,12 @@
   function err(msg) { var e = $("gha-err"); if (e) e.textContent = msg || ""; }
   function finishLead() {
     var d = ui.draft;
-    state.lead = { nome: d.nome, email: d.email, whatsapp: d.whatsapp, porte: d.porte, consent: true };
+    state.lead = { nome: d.nome, email: d.email, whatsapp: d.whatsapp, momento: d.momento, consent: true };
     state.segmento = d.segmento; save();
     try { localStorage.removeItem(CONFIG.dismissKey); } catch (e) {}
     sendLead("cadastro");
     dl("gha_cadastro");
-    if (qualKey() === "qualificado") dl("lead_qualificado");
+    if (qualKey() === "mql") dl("lead_qualificado");   // MQL: investe mais de R$20 mil/mês
     history.replaceState(null, "", location.pathname + location.search + guideHash());
     go("pb");
   }
@@ -435,10 +443,10 @@
     e.preventDefault();
     var q = QS[ui.q];
     if (q.type === "final") {
-      var r = root.querySelector('input[name="gha-porte"]:checked');
+      var r = root.querySelector('input[name="gha-momento"]:checked');
       if (!r) { err("Escolha uma opção."); return; }
       if (!$("gha-consent").checked) { err("Marque para continuar."); return; }
-      ui.draft.porte = r.value; finishLead(); return;
+      ui.draft.momento = r.value; finishLead(); return;
     }
     var el = $("gha-in"), v = el.value.trim(), m = validate(q.k, v);
     if (m) { err(m); el.focus(); return; }

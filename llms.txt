@@ -42,8 +42,8 @@ infográficos, ações dos próximos 30 dias e erros comuns. O acesso completo e
 ## Guia High Ticket Agêntico
 
 Guia gratuito em pop-up no site principal (link de divulgação: https://guilhermesangesgrowth-maker.github.io/growth/guia-high-ticket-agentico/), um guia
-plug-and-play para quem vende serviços de alto valor montar 9 agentes no Claude, em 3 frentes: Marketing (pesquisa,
-estratégia, conteúdo), Vendas (atendimento, follow-up, pitch) e Gestão (financeiro, compras, rotina). Cada agente traz
-instruções de projeto para copiar, arquivos para anexar, comandos do dia a dia, checklist e erros comuns, além de um
+plug-and-play para quem vende serviços de alto valor montar no Claude um Gestor Executivo, um único agente com 9 funções em 3 frentes: Marketing (pesquisa,
+estratégia e performance, conteúdo), Vendas (atendimento, follow-up, pitch) e Gestão (controller financeiro, compras, advisor). Cada função traz
+comandos do dia a dia, arquivos para anexar, checklist e erros comuns. Um Kit em PDF faz o Claude entrevistar a pessoa e montar o agente personalizado, a partir de um
 modelo de "Cérebro do Negócio" e da rotina semanal. O acesso completo exige um cadastro rápido. Abre em pop-up
 no site principal (link direto: https://guilhermesangesgrowth-maker.github.io/growth/#guia-agentico).

@@ -1,23 +1,23 @@
 /* =====================================================================
  * GUIA HIGH TICKET AGÊNTICO: conteúdo
- * 9 agentes plug-and-play no Claude, em 3 frentes (Marketing, Vendas, Gestão).
+ * 1 agente plug-and-play no Claude (Gestor Executivo) com 9 funções em 3 frentes (Marketing, Vendas, Gestão).
  * Editar textos aqui. A lógica do pop-up fica em agentico.js.
  * ===================================================================== */
 var GHA_DATA = (function () {
 
   /* ---------- Passo 0: montagem ---------- */
   var SETUP = {
-    titulo: "Monte a sua equipe de agentes em 15 minutos",
+    titulo: "Monte o seu Gestor Executivo em 15 minutos",
     intro: [
-      "Cada agente deste guia é um Projeto no Claude: um espaço com instruções fixas e arquivos de referência. Você monta uma vez e, a partir daí, só conversa com ele. Sem programar e sem ferramenta extra.",
-      "O segredo está no Cérebro do Negócio: um único documento com quem você é, o que vende, para quem e como fala. Todos os agentes leem esse arquivo. Quanto mais específico ele for, menos genérica fica cada resposta."
+      "O Gestor Executivo é um Projeto no Claude: um espaço com instruções fixas e arquivos de referência. Você monta uma vez e, a partir daí, só conversa com ele. Sem programar e sem ferramenta extra.",
+      "O segredo está no Cérebro do Negócio: um único documento com quem você é, o que vende, para quem e como fala. O Gestor Executivo lê esse arquivo em todas as funções. Quanto mais específico ele for, menos genérica fica cada resposta."
     ],
     passos: [
-      { t: "Crie a sua conta", p: "Acesse claude.ai (ou baixe o app no celular) e entre com o seu e-mail. Para usar os agentes todos os dias, o plano pago dá mais folga de uso e de arquivos por projeto." },
+      { t: "Crie a sua conta", p: "Acesse claude.ai (ou baixe o app no celular) e entre com o seu e-mail. Para usar o Gestor Executivo todos os dias, o plano pago dá mais folga de uso e de arquivos por projeto." },
       { t: "Preencha o Cérebro do Negócio", p: "Copie o modelo abaixo, preencha num documento e salve como PDF ou .txt. Dica: grave um áudio de 10 minutos respondendo cada bloco e peça ao próprio Claude para organizar." },
-      { t: "Crie um Projeto por agente", p: "No menu Projetos, clique em Criar projeto, dê o nome do agente, cole as Instruções do projeto que estão em cada agente deste guia e anexe o Cérebro do Negócio em Conhecimento do projeto." },
+      { t: "Crie o Projeto Gestor Executivo", p: "No menu Projetos, clique em Criar projeto, dê o nome Gestor Executivo, cole as Instruções do projeto que estão abaixo e anexe o Cérebro do Negócio em Conhecimento do projeto." },
       { t: "Ative os conectores (opcional)", p: "Em Configurações, na área de Conectores, ligue Google Drive, Gmail e Google Agenda. Assim o agente consulta e-mails, agenda e documentos quando você pedir, sem copiar e colar." },
-      { t: "Revise antes de enviar", p: "Os agentes preparam, você decide. Mensagens, propostas e números passam pelo seu olho antes de chegar ao cliente." }
+      { t: "Revise antes de enviar", p: "O Gestor Executivo prepara, você decide. Mensagens, propostas e números passam pelo seu olho antes de chegar ao cliente." }
     ],
     cerebro:
 "CÉREBRO DO NEGÓCIO\n\n" +
@@ -48,15 +48,15 @@ var GHA_DATA = (function () {
 "O que nunca prometer, normas do meu conselho profissional, dados de clientes que não podem ser compartilhados."
   };
 
-  /* ---------- 3 frentes, 9 agentes ---------- */
+  /* ---------- 3 frentes, 9 funções do Gestor Executivo ---------- */
   var FRENTES = [
     {
       id: "marketing", nome: "Marketing", sub: "Pesquisa, estratégia e conteúdo", papel: "Especialista em conteúdo e performance",
       agentes: [
         {
-          id: "pesquisa", nome: "Agente de Pesquisa", faz: "Descobre o que o seu cliente pesquisa, teme e compara antes de contratar.",
+          id: "pesquisa", nome: "Pesquisa", faz: "Descobre o que o seu cliente pesquisa, teme e compara antes de contratar.",
           quando: "1 vez por mês, 30 minutos",
-          intro: "Quem vende serviço de alto valor costuma decidir o marketing pelo que acha que o cliente quer. Este agente usa a busca na web do Claude para trazer o que o mercado está falando de fato, com fonte, e traduz isso em decisão de conteúdo e de oferta.",
+          intro: "Quem vende serviço de alto valor costuma decidir o marketing pelo que acha que o cliente quer. Esta função usa a busca na web do Claude para trazer o que o mercado está falando de fato, com fonte, e traduz isso em decisão de conteúdo e de oferta.",
           instrucoes:
 "Você é o meu analista de inteligência de mercado. Use o arquivo \"Cérebro do Negócio\" como contexto fixo.\n\n" +
 "Sua função: pesquisar o mercado do meu cliente ideal e transformar o que encontrar em decisões de marketing.\n\n" +
@@ -76,9 +76,9 @@ var GHA_DATA = (function () {
           acoes: [{ w: "Hoje", t: "Rode o comando Perguntas do cliente e salve o resultado como arquivo no projeto." }, { w: "Nesta semana", t: "Faça o raio-x de 3 concorrentes e anote os espaços livres no Cérebro do Negócio." }]
         },
         {
-          id: "estrategia", nome: "Agente de Estratégia e Performance", faz: "Define posicionamento e plano do mês e lê os números de conteúdo e anúncios para ajustar a rota.",
+          id: "estrategia", nome: "Estratégia e Performance", faz: "Define posicionamento e plano do mês e lê os números de conteúdo e anúncios para ajustar a rota.",
           quando: "Toda primeira segunda do mês, 40 minutos, e toda sexta, 10 minutos",
-          intro: "Conteúdo sem estratégia vira agenda de postagem, e anúncio sem leitura de números vira gasto. Este agente cruza o Cérebro do Negócio com as pesquisas e os resultados das publicações e campanhas, e devolve posicionamento, plano mensal e os ajustes da semana.",
+          intro: "Conteúdo sem estratégia vira agenda de postagem, e anúncio sem leitura de números vira gasto. Esta função cruza o Cérebro do Negócio com as pesquisas e os resultados das publicações e campanhas, e devolve posicionamento, plano mensal e os ajustes da semana.",
           instrucoes:
 "Você é o meu estrategista de marketing e performance para serviços de alto valor. Contexto fixo: \"Cérebro do Negócio\", as pesquisas salvas neste projeto e os relatórios de resultado que eu anexar.\n\n" +
 "Sua função: transformar o que eu sei, o que o mercado pede e o que os números mostram em posicionamento, plano mensal e ajustes semanais.\n\n" +
@@ -88,17 +88,17 @@ var GHA_DATA = (function () {
 "3. Ao ler resultados, separe métricas de vaidade (curtidas, alcance) de métricas de receita (mensagens, reuniões, vendas, custo por oportunidade).\n" +
 "4. Priorize o que gera conversa de venda em até 30 dias e aponte o que eu devo parar de fazer.\n\n" +
 "Formato: resumo de 5 linhas no topo e o detalhe em seguida.",
-          anexos: ["Cérebro do Negócio", "Resultados do Agente de Pesquisa", "Exportação ou prints dos resultados das redes e dos anúncios do último mês"],
+          anexos: ["Cérebro do Negócio", "Resultados da função Pesquisa", "Exportação ou prints dos resultados das redes e dos anúncios do último mês"],
           comandos: [
             { t: "Frase de posicionamento", p: "Escreva 3 versões da minha frase de posicionamento no formato: Ajudo [público] a [resultado] em [prazo] com [método]. Dê nota de 0 a 10 para clareza, diferenciação e desejo, e recomende uma." },
             { t: "Plano do mês", p: "Crie o plano de conteúdo de [mês] para [LinkedIn e/ou Instagram], com 3 publicações por semana. Para cada uma: tema, formato, objetivo no funil e chamada para ação." },
             { t: "Leitura de performance", p: "Estes são os resultados da semana [anexe prints ou cole os números de publicações e anúncios]. Diga o que funcionou, o que cortar, onde colocar mais verba ou esforço e qual teste fazer na próxima semana." }
           ],
           erros: ["Pedir \"ideias de post\" sem tese definida: você recebe conteúdo que qualquer colega poderia assinar.", "Planejar só conteúdo de topo. Quem vende alto valor precisa de prova e de convite para conversar.", "Mudar de estratégia toda semana. Mantenha a tese por pelo menos um trimestre e ajuste pelos dados."],
-          acoes: [{ w: "Nesta semana", t: "Escolha a frase de posicionamento e coloque na bio do Instagram e no título do LinkedIn." }, { w: "Neste mês", t: "Aprove o plano do mês e salve no projeto do Agente de Conteúdo." }]
+          acoes: [{ w: "Nesta semana", t: "Escolha a frase de posicionamento e coloque na bio do Instagram e no título do LinkedIn." }, { w: "Neste mês", t: "Aprove o plano do mês e salve no projeto para a função Conteúdo usar." }]
         },
         {
-          id: "conteudo", nome: "Agente de Conteúdo", faz: "Escreve posts, carrosséis e e-mails na sua voz, a partir de uma ideia ou áudio.",
+          id: "conteudo", nome: "Conteúdo", faz: "Escreve posts, carrosséis e e-mails na sua voz, a partir de uma ideia ou áudio.",
           quando: "2 a 3 vezes por semana, 15 minutos",
           intro: "O gargalo de quem é especialista raramente é falta de assunto. Falta tempo para transformar experiência em texto. Aqui você manda um áudio contando um caso ou uma opinião, e o agente entrega a peça pronta para revisar, no seu tom.",
           instrucoes:
@@ -110,7 +110,7 @@ var GHA_DATA = (function () {
 "4. Nunca prometa resultado garantido e respeite as regras do meu conselho profissional descritas no Cérebro.\n" +
 "5. Termine com uma chamada para ação clara: comentar, chamar no WhatsApp ou agendar.\n\n" +
 "Entregue sempre: a peça pronta, uma variação de abertura e uma sugestão de imagem.",
-          anexos: ["Cérebro do Negócio", "5 a 10 textos seus que tiveram boa resposta", "Plano do mês aprovado no Agente de Estratégia e Performance"],
+          anexos: ["Cérebro do Negócio", "5 a 10 textos seus que tiveram boa resposta", "Plano do mês aprovado na função Estratégia e Performance"],
           comandos: [
             { t: "Do áudio ao post", p: "Transforme esta ideia em um post de LinkedIn de até 1.300 caracteres: [cole a transcrição do áudio ou a ideia em tópicos]." },
             { t: "Carrossel", p: "Transforme este post em um carrossel de 7 slides para Instagram: título de até 8 palavras e texto de apoio de até 25 palavras por slide. O último slide convida para [ação]." },
@@ -125,9 +125,9 @@ var GHA_DATA = (function () {
       id: "vendas", nome: "Vendas", sub: "Atendimento, follow-up e pitch", papel: "Consultor e gestor comercial",
       agentes: [
         {
-          id: "atendimento", nome: "Agente de Atendimento", faz: "Classifica cada contato novo e escreve a resposta pronta para o WhatsApp.",
+          id: "atendimento", nome: "Atendimento", faz: "Classifica cada contato novo e escreve a resposta pronta para o WhatsApp.",
           quando: "Sempre que chegar um contato novo, 2 minutos",
-          intro: "Em serviço de alto valor, a primeira resposta define se a conversa avança. Demora, resposta genérica e preço jogado cedo derrubam boas oportunidades. Este agente lê a mensagem, avalia o perfil e prepara a resposta com as perguntas certas.",
+          intro: "Em serviço de alto valor, a primeira resposta define se a conversa avança. Demora, resposta genérica e preço jogado cedo derrubam boas oportunidades. Esta função lê a mensagem, avalia o perfil e prepara a resposta com as perguntas certas.",
           instrucoes:
 "Você é o meu assistente de pré-venda. Contexto fixo: \"Cérebro do Negócio\" e o \"Roteiro de qualificação\" anexado.\n\n" +
 "Quando eu colar a mensagem de um potencial cliente, você:\n" +
@@ -148,9 +148,9 @@ var GHA_DATA = (function () {
           acoes: [{ w: "Hoje", t: "Gere o roteiro de qualificação e anexe no projeto." }, { w: "Nesta semana", t: "Salve as respostas prontas como atalhos no WhatsApp Business." }]
         },
         {
-          id: "followup", nome: "Agente de Follow-up", faz: "Monta a cadência de retomada de cada proposta parada e escreve as mensagens.",
+          id: "followup", nome: "Follow-up", faz: "Monta a cadência de retomada de cada proposta parada e escreve as mensagens.",
           quando: "Toda terça e quinta, 20 minutos",
-          intro: "Grande parte das vendas de alto valor se perde no silêncio depois da proposta. O profissional não quer parecer insistente e a oportunidade esfria. Este agente transforma cada proposta parada em uma sequência de contatos úteis, com motivo novo a cada mensagem.",
+          intro: "Grande parte das vendas de alto valor se perde no silêncio depois da proposta. O profissional não quer parecer insistente e a oportunidade esfria. Esta função transforma cada proposta parada em uma sequência de contatos úteis, com motivo novo a cada mensagem.",
           instrucoes:
 "Você é o meu responsável por follow-up. Contexto fixo: \"Cérebro do Negócio\".\n\n" +
 "Quando eu colar o histórico de uma negociação (mensagens, anotações da reunião, proposta), você:\n" +
@@ -169,9 +169,9 @@ var GHA_DATA = (function () {
           acoes: [{ w: "Hoje", t: "Liste todas as propostas enviadas nos últimos 60 dias e rode o comando Prioridade do dia." }, { w: "Nesta semana", t: "Envie o primeiro contato da cadência para as 3 propostas de maior valor." }]
         },
         {
-          id: "pitch", nome: "Agente de Pitch", faz: "Prepara a reunião de diagnóstico, escreve a proposta e treina você nas objeções.",
+          id: "pitch", nome: "Pitch", faz: "Prepara a reunião de diagnóstico, escreve a proposta e treina você nas objeções.",
           quando: "Antes e depois de cada reunião, 15 minutos",
-          intro: "Reunião boa de venda consultiva começa antes da chamada. Este agente pesquisa a pessoa e a empresa, monta hipóteses de dor e de impacto financeiro e, depois da conversa, transforma as suas anotações em uma proposta clara no seu modelo.",
+          intro: "Reunião boa de venda consultiva começa antes da chamada. Esta função pesquisa a pessoa e a empresa, monta hipóteses de dor e de impacto financeiro e, depois da conversa, transforma as suas anotações em uma proposta clara no seu modelo.",
           instrucoes:
 "Você é o meu preparador de vendas consultivas. Contexto fixo: \"Cérebro do Negócio\" e o modelo de proposta anexado.\n\n" +
 "Antes de cada reunião, quando eu passar nome, cargo e site, você me entrega:\n" +
@@ -195,7 +195,7 @@ var GHA_DATA = (function () {
       id: "gestao", nome: "Gestão", sub: "Financeiro, compras e rotina", papel: "Advisor e controller financeiro",
       agentes: [
         {
-          id: "financeiro", nome: "Agente Controller Financeiro", faz: "Organiza o caixa, calcula margem e preço e aponta onde o dinheiro está vazando.",
+          id: "financeiro", nome: "Controller Financeiro", faz: "Organiza o caixa, calcula margem e preço e aponta onde o dinheiro está vazando.",
           quando: "Todo dia 5 do mês, 30 minutos",
           intro: "Muito profissional de alto valor fatura bem e não sabe quanto sobra. O agente lê o extrato ou a planilha, classifica os lançamentos, mostra o resultado do mês e calcula o preço mínimo de cada serviço, com os cálculos à vista.",
           instrucoes:
@@ -217,7 +217,7 @@ var GHA_DATA = (function () {
           acoes: [{ w: "Nesta semana", t: "Rode o Fechamento do mês com o extrato do mês passado." }, { w: "Neste mês", t: "Calcule o preço mínimo do seu serviço principal e compare com o preço atual." }]
         },
         {
-          id: "compras", nome: "Agente de Compras", faz: "Define a especificação, pesquisa fornecedores, compara cotações e escreve a negociação.",
+          id: "compras", nome: "Compras", faz: "Define a especificação, pesquisa fornecedores, compara cotações e escreve a negociação.",
           quando: "A cada compra ou contratação acima de R$ 500",
           intro: "Software, fornecedor, equipamento, prestador de serviço: cada compra mal feita vira custo fixo por meses. O agente ajuda a definir o que você precisa, compara opções com o custo total em 12 meses e prepara a mensagem de negociação.",
           instrucoes:
@@ -239,7 +239,7 @@ var GHA_DATA = (function () {
           acoes: [{ w: "Hoje", t: "Rode a Faxina de assinaturas com a última fatura." }, { w: "Na próxima compra", t: "Use o comando Nova compra antes de pedir qualquer orçamento." }]
         },
         {
-          id: "rotina", nome: "Agente Advisor", faz: "Funciona como conselheiro: planeja a semana pela meta, ajuda nas decisões difíceis e faz o fechamento de sexta.",
+          id: "rotina", nome: "Advisor", faz: "Funciona como conselheiro: planeja a semana pela meta, ajuda nas decisões difíceis e faz o fechamento de sexta.",
           quando: "Segunda de manhã, sexta à tarde e antes de cada decisão importante",
           intro: "Quem atende, vende e gerencia ao mesmo tempo passa a semana apagando incêndio e decide sozinho. O agente funciona como um conselheiro: olha a agenda, os e-mails e a meta do trimestre, devolve as 3 prioridades da semana e ajuda a pensar as decisões com opções, riscos e recomendação.",
           instrucoes:
@@ -248,7 +248,7 @@ var GHA_DATA = (function () {
 "Toda segunda-feira, com o que eu colar (ou com a minha agenda e o meu e-mail, se os conectores estiverem ativos), você:\n" +
 "1. Lista os compromissos da semana e o que eu preciso preparar para cada um.\n" +
 "2. Aponta as 3 prioridades que mais aproximam da meta do trimestre.\n" +
-"3. Mostra o que pode ser delegado, automatizado com outro agente ou recusado.\n" +
+"3. Mostra o que pode ser delegado, automatizado com outra função ou recusado.\n" +
 "4. Sugere um bloco de horário na agenda para cada prioridade.\n\n" +
 "Toda sexta-feira, faz o fechamento: o que avançou, números da semana e o que fica para a próxima.",
           anexos: ["Cérebro do Negócio com as metas do trimestre", "Conectores de Google Agenda e Gmail (opcional)", "Planilha simples com os números semanais"],
@@ -266,62 +266,62 @@ var GHA_DATA = (function () {
 
   /* ---------- rotina agêntica da semana ---------- */
   var SEMANA = [
-    { d: "Seg", t: "Agente Advisor planeja a semana. Na primeira segunda do mês, Agente de Estratégia e Performance." },
-    { d: "Ter", t: "Agente de Conteúdo escreve 2 peças. Agente de Follow-up retoma propostas." },
-    { d: "Qua", t: "Agente de Pitch prepara as reuniões. Agente de Atendimento responde contatos novos." },
-    { d: "Qui", t: "Agente de Conteúdo escreve 1 peça. Agente de Follow-up retoma propostas." },
-    { d: "Sex", t: "Agente Advisor fecha a semana. No dia 5, Agente Controller Financeiro fecha o mês." }
+    { d: "Seg", t: "Advisor planeja a semana. Na primeira segunda do mês, Estratégia e Performance monta o plano do mês." },
+    { d: "Ter", t: "Conteúdo escreve 2 peças. Follow-up retoma propostas." },
+    { d: "Qua", t: "Pitch prepara as reuniões. Atendimento responde contatos novos." },
+    { d: "Qui", t: "Conteúdo escreve 1 peça. Follow-up retoma propostas." },
+    { d: "Sex", t: "Advisor fecha a semana e Estratégia e Performance lê os números. No dia 5, Controller Financeiro fecha o mês." }
   ];
 
   /* ---------- segmentos (mesmos ids do Guia Growth 30D, para a planilha) e exemplos por frente ---------- */
   var SEGS = [
     { id: "saude", label: "Saúde e Bem-estar", ex: {
-      marketing: "Peça ao Agente de Pesquisa as dúvidas que pacientes pesquisam antes de um tratamento e transforme cada uma em conteúdo educativo, dentro das regras do seu conselho.",
-      vendas: "Use o Agente de Atendimento para responder pedidos de avaliação com perguntas de triagem, sem nunca colar dados clínicos identificáveis.",
-      gestao: "Peça ao Agente Controller Financeiro a margem por tipo de procedimento ou pacote, para saber qual atendimento sustenta a clínica." } },
+      marketing: "Peça ao Gestor Executivo (Pesquisa) as dúvidas que pacientes pesquisam antes de um tratamento e transforme cada uma em conteúdo educativo, dentro das regras do seu conselho.",
+      vendas: "Use o Gestor Executivo (Atendimento) para responder pedidos de avaliação com perguntas de triagem, sem nunca colar dados clínicos identificáveis.",
+      gestao: "Peça ao Gestor Executivo (Controller Financeiro) a margem por tipo de procedimento ou pacote, para saber qual atendimento sustenta a clínica." } },
     { id: "engenharia", label: "Engenharia e Construção", ex: {
-      marketing: "Transforme visitas de obra em conteúdo técnico simples com o Agente de Conteúdo: problema encontrado, solução e impacto em prazo ou custo.",
-      vendas: "Antes de visitar uma construtora, rode o briefing do Agente de Pitch com o site e as obras públicas da empresa.",
-      gestao: "Use o Agente de Compras para comparar cotações de fornecedores e prestadores com custo total e prazo de entrega." } },
+      marketing: "Transforme visitas de obra em conteúdo técnico simples com o Gestor Executivo (Conteúdo): problema encontrado, solução e impacto em prazo ou custo.",
+      vendas: "Antes de visitar uma construtora, rode o briefing do Gestor Executivo (Pitch) com o site e as obras públicas da empresa.",
+      gestao: "Use o Gestor Executivo (Compras) para comparar cotações de fornecedores e prestadores com custo total e prazo de entrega." } },
     { id: "arquitetura", label: "Arquitetura e Design", ex: {
-      marketing: "Peça ao Agente de Estratégia e Performance uma tese que mostre resultado de negócio ao lado do portfólio estético.",
-      vendas: "Cole o briefing do cliente no Agente de Pitch e receba a proposta por fases, com valor de cada etapa.",
-      gestao: "Calcule com o Agente Controller Financeiro o preço mínimo por metro quadrado ou por projeto, considerando as horas reais da equipe." } },
+      marketing: "Peça ao Gestor Executivo (Estratégia e Performance) uma tese que mostre resultado de negócio ao lado do portfólio estético.",
+      vendas: "Cole o briefing do cliente no Gestor Executivo (Pitch) e receba a proposta por fases, com valor de cada etapa.",
+      gestao: "Calcule com o Gestor Executivo (Controller Financeiro) o preço mínimo por metro quadrado ou por projeto, considerando as horas reais da equipe." } },
     { id: "juridico", label: "Direito, Contabilidade e Finanças", ex: {
-      marketing: "Use o Agente de Pesquisa para acompanhar mudanças de regra no setor do seu cliente e transformar cada uma em alerta de conteúdo.",
-      vendas: "O Agente de Follow-up ajuda a retomar propostas de serviço recorrente com um conteúdo útil a cada contato.",
-      gestao: "Peça ao Agente Controller Financeiro a comparação entre cobrar por hora e por escopo fechado, com a margem de cada modelo." } },
+      marketing: "Use o Gestor Executivo (Pesquisa) para acompanhar mudanças de regra no setor do seu cliente e transformar cada uma em alerta de conteúdo.",
+      vendas: "O Gestor Executivo (Follow-up) ajuda a retomar propostas de serviço recorrente com um conteúdo útil a cada contato.",
+      gestao: "Peça ao Gestor Executivo (Controller Financeiro) a comparação entre cobrar por hora e por escopo fechado, com a margem de cada modelo." } },
     { id: "executivo", label: "Executivo ou gestor de empresa", ex: {
-      marketing: "Transforme decisões que você tomou na carreira em posts de bastidores com o Agente de Conteúdo, sem expor dados de ex-empregadores.",
-      vendas: "Use o Agente de Pitch para preparar reuniões com diretores do seu setor, com hipóteses de impacto no resultado da empresa.",
-      gestao: "O Agente Advisor protege a agenda para a frente de consultoria crescer sem tomar todo o seu tempo." } },
+      marketing: "Transforme decisões que você tomou na carreira em posts de bastidores com o Gestor Executivo (Conteúdo), sem expor dados de ex-empregadores.",
+      vendas: "Use o Gestor Executivo (Pitch) para preparar reuniões com diretores do seu setor, com hipóteses de impacto no resultado da empresa.",
+      gestao: "O Gestor Executivo (Advisor) protege a agenda para a frente de consultoria crescer sem tomar todo o seu tempo." } },
     { id: "consultoria", label: "Consultoria e mentoria", ex: {
-      marketing: "Peça ao Agente de Estratégia e Performance um plano mensal que leve leitores do conteúdo até a sessão diagnóstico.",
-      vendas: "Rode o Treino de objeção do Agente de Pitch antes de cada sessão de diagnóstico importante.",
-      gestao: "Use o Agente Controller Financeiro para comparar a margem de projetos individuais, programas em grupo e acompanhamento recorrente." } },
+      marketing: "Peça ao Gestor Executivo (Estratégia e Performance) um plano mensal que leve leitores do conteúdo até a sessão diagnóstico.",
+      vendas: "Rode o Treino de objeção do Gestor Executivo (Pitch) antes de cada sessão de diagnóstico importante.",
+      gestao: "Use o Gestor Executivo (Controller Financeiro) para comparar a margem de projetos individuais, programas em grupo e acompanhamento recorrente." } },
     { id: "empresario", label: "Empresário de serviço de alto ticket", ex: {
-      marketing: "Use o Agente de Pesquisa para entender o que o seu cliente compara antes de fechar e ajustar a oferta.",
-      vendas: "Treine o time com o Agente de Atendimento: o roteiro de qualificação vira padrão para todos responderem igual.",
+      marketing: "Use o Gestor Executivo (Pesquisa) para entender o que o seu cliente compara antes de fechar e ajustar a oferta.",
+      vendas: "Treine o time com o Gestor Executivo (Atendimento): o roteiro de qualificação vira padrão para todos responderem igual.",
       gestao: "Rode a Faxina de assinaturas e o Fechamento do mês para ver custo fixo e margem real." } },
     { id: "outro", label: "Outro segmento", ex: {} }
   ];
 
-  /* ---------- implementação guiada: o Claude do lead entrevista e monta os agentes ---------- */
+  /* ---------- implementação guiada: o Claude do lead entrevista e monta o Gestor Executivo ---------- */
   var KIT_NOME = "Kit de Implementação · Guia High Ticket Agêntico";
   var START = "Leia o arquivo anexado (" + KIT_NOME + ") e siga a PARTE 1 à risca. Comece a entrevista comigo agora.";
 
   var IMPL = [
-    { t: "Baixe o Kit de Implementação", p: "Um PDF com o roteiro de entrevista, o modelo do Cérebro do Negócio e os 9 agentes-base. Ele é escrito para o Claude ler." },
+    { t: "Baixe o Kit de Implementação", p: "Um PDF com o roteiro de entrevista, o modelo do Cérebro do Negócio e o Gestor Executivo-base com as 9 funções. Ele é escrito para o Claude ler." },
     { t: "Abra uma conversa nova no Claude e anexe o Kit", p: "Em claude.ai ou no app, clique no clipe (ou no +), anexe o PDF e cole o comando de início abaixo." },
     { t: "Responda a entrevista", p: "O Claude pergunta em 6 blocos curtos: você, oferta, cliente, marketing, vendas e gestão. Leva cerca de 20 minutos e dá para responder por áudio com o ditado do celular." },
-    { t: "Receba os agentes personalizados", p: "No fim, ele entrega o seu Cérebro do Negócio, as instruções dos 9 agentes adaptadas ao seu negócio e indica por quais 3 começar." },
-    { t: "Crie um Projeto para cada agente", p: "No menu Projetos, clique em Criar projeto, cole as instruções que o Claude gerou e anexe o Cérebro do Negócio. Comece pelos 3 indicados hoje e termine os demais amanhã." }
+    { t: "Receba o seu Gestor Executivo personalizado", p: "No fim, ele entrega o seu Cérebro do Negócio, as instruções do Gestor Executivo adaptadas ao seu negócio (as 9 funções num agente só) e indica por quais 3 funções começar." },
+    { t: "Crie o Projeto Gestor Executivo", p: "No menu Projetos, clique em Criar projeto, cole as instruções que o Claude gerou e anexe o Cérebro do Negócio. Teste hoje as 3 funções indicadas. Quando uma função ganhar volume, o próprio Gestor sugere separá-la em um Projeto próprio." }
   ];
 
   var PROTOCOLO =
-"Você vai atuar como Arquiteto de Agentes. O seu trabalho é entrevistar a pessoa que anexou este kit, dona de um negócio que vende serviços de alto valor, e entregar os 9 agentes deste kit personalizados para o negócio dela, prontos para colar em Projetos do Claude.\n\n" +
+"Você vai atuar como Arquiteto de Agentes. O seu trabalho é entrevistar a pessoa que anexou este kit, dona de um negócio que vende serviços de alto valor, e entregar o Gestor Executivo deste kit personalizado para o negócio dela: um único agente com as 9 funções de marketing, vendas e gestão, pronto para colar em um Projeto do Claude.\n\n" +
 "COMO CONDUZIR A ENTREVISTA\n" +
-"1. Comece com uma apresentação de no máximo 3 linhas: o que vai acontecer (entrevista de cerca de 20 minutos, resumo para confirmar e entrega dos agentes) e que ela pode responder em tópicos ou por áudio.\n" +
+"1. Comece com uma apresentação de no máximo 3 linhas: o que vai acontecer (entrevista de cerca de 20 minutos, resumo para confirmar e entrega do Gestor Executivo) e que ela pode responder em tópicos ou por áudio.\n" +
 "2. Siga os 6 blocos abaixo, na ordem. Em cada mensagem faça no máximo 3 perguntas curtas, cada uma com um exemplo de resposta entre parênteses.\n" +
 "3. Se uma resposta vier vaga, faça uma pergunta de aprofundamento antes de seguir. Se a pessoa não souber, sugira uma resposta com base no que já sabe e peça confirmação.\n" +
 "4. Ao fim de cada bloco, resuma em até 3 linhas o que entendeu e avance.\n" +
@@ -336,11 +336,35 @@ var GHA_DATA = (function () {
 "Bloco 6 · Gestão: como controla o financeiro, maiores custos, compras e assinaturas recorrentes, ferramentas do dia a dia (Google, WhatsApp Business, CRM, planilhas) e as tarefas que mais tomam tempo.\n\n" +
 "ENTREGA (só depois de a pessoa confirmar um resumo geral de até 15 linhas)\n" +
 "1. O CÉREBRO DO NEGÓCIO completo, no modelo da PARTE 2, em um único bloco de código para ela salvar como documento. Se o seu ambiente permitir criar arquivos, ofereça também o documento para baixar.\n" +
-"2. OS 9 AGENTES PERSONALIZADOS, a partir dos modelos da PARTE 3. Para cada agente, entregue: nome do Projeto, as Instruções do projeto prontas para colar (em bloco de código), os arquivos para anexar e 3 comandos do dia a dia já adaptados ao negócio. Pergunte se ela prefere receber todos de uma vez ou um por um.\n" +
-"3. Adapte cada modelo ao segmento, ao tamanho da equipe, aos canais e às ferramentas dela. Use as palavras do cliente que apareceram na entrevista. Mantenha as regras de segurança dos modelos: revisão humana antes de enviar, sem promessas de resultado, sem inventar números e respeito às regras do conselho profissional dela.\n" +
-"4. Indique por quais 3 agentes começar e por quê, com base nos gargalos que apareceram na entrevista.\n" +
-"5. Feche com o PLANO DE 24 HORAS: hoje (salvar o Cérebro e criar os 3 primeiros Projetos), amanhã (criar os demais) e a rotina da primeira semana, usando a PARTE 4.\n" +
-"6. Explique em 4 passos como criar um Projeto no Claude: menu Projetos, Criar projeto, colar as instruções em Instruções do projeto e anexar o Cérebro do Negócio em Conhecimento do projeto.";
+"2. O GESTOR EXECUTIVO PERSONALIZADO, a partir do modelo da PARTE 3: as Instruções do projeto prontas para colar, em um único bloco de código, com as 9 funções adaptadas ao negócio dela; a lista de arquivos para anexar; e 2 comandos do dia a dia por função, já adaptados.\n" +
+"3. Adapte cada função ao segmento, ao tamanho da equipe, aos canais e às ferramentas dela. Use as palavras do cliente que apareceram na entrevista. Mantenha as regras de segurança do modelo: revisão humana antes de enviar, sem promessas de resultado, sem inventar números e respeito às regras do conselho profissional dela.\n" +
+"4. Indique por quais 3 funções começar e por quê, com base nos gargalos que apareceram na entrevista.\n" +
+"5. Feche com o PLANO DE 24 HORAS: hoje (salvar o Cérebro, criar o Projeto Gestor Executivo e testar as 3 funções indicadas), amanhã (testar as demais) e a rotina da primeira semana, usando a PARTE 4.\n" +
+"6. Explique em 4 passos como criar um Projeto no Claude: menu Projetos, Criar projeto, colar as instruções em Instruções do projeto e anexar o Cérebro do Negócio em Conhecimento do projeto.\n" +
+"7. Explique que o Gestor Executivo vai sugerir separar uma função em um Projeto próprio quando ela ganhar volume, e que basta pedir a ele as instruções do novo Projeto.";
+
+  /* As 9 funções consolidadas em um único agente: o Gestor Executivo */
+  var GESTOR_NOME = "Gestor Executivo";
+  function gestorInstrucoes() {
+    var t = [];
+    t.push("Você é o meu Gestor Executivo: um único agente que cuida do marketing, das vendas e da gestão do meu negócio, com as 9 funções descritas abaixo. Contexto fixo: \"Cérebro do Negócio\" e os arquivos deste projeto.\n");
+    t.push("COMO TRABALHAR");
+    t.push("1. A cada pedido, identifique a função (ou as funções) envolvida e indique no início da resposta, por exemplo: [Vendas · Follow-up]. Se não ficar claro, pergunte.");
+    t.push("2. Siga as regras da função escolhida. Se faltar informação importante, faça até 3 perguntas antes de responder.");
+    t.push("3. Você prepara, eu decido: nada vai para clientes ou fornecedores sem a minha revisão.");
+    t.push("4. Nunca invente números, cite a fonte de dados externos e respeite as regras do meu conselho profissional.");
+    t.push("5. Quando uma função passar a ser usada quase todo dia, ou este projeto acumular muitos arquivos de uma área, sugira separar essa função em um Projeto próprio e entregue as instruções prontas para ele.\n");
+    t.push("FUNÇÕES");
+    var n = 0;
+    FRENTES.forEach(function (f) {
+      t.push("\n" + f.nome.toUpperCase() + " · " + f.papel);
+      f.agentes.forEach(function (a) {
+        n++;
+        t.push("\nFunção " + n + " · " + a.nome + " (" + a.faz + ")\n" + a.instrucoes);
+      });
+    });
+    return t.join("\n");
+  }
 
   function kitText() {
     var t = [];
@@ -351,16 +375,17 @@ var GHA_DATA = (function () {
     t.push(PROTOCOLO + "\n");
     t.push("PARTE 2 · MODELO DO CÉREBRO DO NEGÓCIO\n");
     t.push(SETUP.cerebro + "\n");
-    t.push("PARTE 3 · OS 9 AGENTES (MODELOS-BASE)\n");
+    t.push("PARTE 3 · O GESTOR EXECUTIVO (MODELO-BASE)\n");
+    t.push("Instruções-base do Projeto " + GESTOR_NOME + ":\n" + gestorInstrucoes() + "\n");
+    t.push("Detalhe de cada função (para personalizar e para os comandos do dia a dia):\n");
     var n = 0;
     FRENTES.forEach(function (f) {
       t.push("FRENTE " + f.nome.toUpperCase() + " · " + f.papel + "\n");
       f.agentes.forEach(function (a) {
         n++;
-        t.push("AGENTE " + n + " · " + a.nome);
-        t.push("Função: " + a.faz);
+        t.push("FUNÇÃO " + n + " · " + a.nome);
+        t.push("O que faz: " + a.faz);
         t.push("Quando usar: " + a.quando);
-        t.push("Instruções-base do projeto:\n" + a.instrucoes);
         t.push("Arquivos para anexar: " + a.anexos.join("; ") + ".");
         t.push("Comandos do dia a dia:\n" + a.comandos.map(function (c) { return "- " + c.t + ": " + c.p; }).join("\n"));
         t.push("Erros comuns: " + a.erros.join(" ") + "\n");
@@ -371,5 +396,5 @@ var GHA_DATA = (function () {
     return t.join("\n");
   }
 
-  return { SETUP: SETUP, FRENTES: FRENTES, SEMANA: SEMANA, SEGS: SEGS, IMPL: IMPL, PROTOCOLO: PROTOCOLO, START: START, KIT_NOME: KIT_NOME, kitText: kitText };
+  return { SETUP: SETUP, FRENTES: FRENTES, SEMANA: SEMANA, SEGS: SEGS, IMPL: IMPL, PROTOCOLO: PROTOCOLO, START: START, KIT_NOME: KIT_NOME, kitText: kitText, GESTOR_NOME: GESTOR_NOME, gestorInstrucoes: gestorInstrucoes };
 })();

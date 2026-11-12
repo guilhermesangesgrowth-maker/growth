@@ -58,22 +58,21 @@ body.gha-pdf { background: #fff; color: #0a0a0a; -webkit-print-color-adjust: exa
   function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
   var n = 0;
   var cover = '<section class="k-cover"><p class="eyebrow">Guia High Ticket Agêntico · Kit de Implementação</p>' +
-    '<h1>O seu Claude entrevista você e monta ' + GHA.total() + ' agentes para o seu negócio</h1>' +
-    '<p class="k-lead">Este arquivo foi escrito para o Claude ler. Ele traz o roteiro da entrevista, o modelo do Cérebro do Negócio e os modelos-base dos agentes de marketing, vendas e gestão.</p>' +
+    '<h1>O seu Claude entrevista você e monta o seu Gestor Executivo</h1>' +
+    '<p class="k-lead">Este arquivo foi escrito para o Claude ler. Ele traz o roteiro da entrevista, o modelo do Cérebro do Negócio e o Gestor Executivo-base: um único agente com ' + GHA.total() + ' funções de marketing, vendas e gestão.</p>' +
     GHA.diagram() +
     '<ol class="k-how">' + D.IMPL.map(function (p, i) { return '<li><i>' + (i + 1) + '</i><span><b>' + esc(p.t) + '.</b> ' + esc(p.p) + '</span></li>'; }).join("") + '</ol>' +
     '<div class="k-start"><b>Comando de início (cole junto com este arquivo)</b>' + esc(D.START) + '</div>' +
     '<p class="k-by">Guilherme Sanges · Especialista em Growth · guilhermesangesgrowth-maker.github.io/growth</p></section>';
   var p1 = '<section class="k-part"><p class="k-kick">Parte 1</p><h2>Instruções para o Claude</h2><div class="k-pre">' + esc(D.PROTOCOLO) + '</div></section>';
   var p2 = '<section class="k-part"><p class="k-kick">Parte 2</p><h2>Modelo do Cérebro do Negócio</h2><div class="k-pre">' + esc(D.SETUP.cerebro) + '</div></section>';
-  var p3 = '<section class="k-part"><p class="k-kick">Parte 3</p><h2>Os ' + GHA.total() + ' agentes (modelos-base)</h2>' +
+  var p3 = '<section class="k-part"><p class="k-kick">Parte 3</p><h2>O Gestor Executivo (modelo-base)</h2><h4 class="k-kick" style="margin:10px 0 6px">Instruções-base do Projeto Gestor Executivo</h4><div class="k-pre" style="font-size:12px">' + esc(D.gestorInstrucoes()) + '</div><h4 class="k-kick" style="margin:16px 0 6px">Detalhe de cada função</h4>' +
     D.FRENTES.map(function (f) {
       return '<div class="k-area"><b>' + esc(f.nome) + '</b><span>' + esc(f.papel) + '</span></div>' +
         f.agentes.map(function (a) {
           n++;
-          return '<article class="k-ag"><h3>Agente ' + n + ' · ' + esc(a.nome) + '</h3>' +
-            '<p><b>Função:</b> ' + esc(a.faz) + '</p><p><b>Quando usar:</b> ' + esc(a.quando) + '</p>' +
-            '<h4>Instruções-base do projeto</h4><div class="k-pre">' + esc(a.instrucoes) + '</div>' +
+          return '<article class="k-ag"><h3>Função ' + n + ' · ' + esc(a.nome) + '</h3>' +
+            '<p><b>O que faz:</b> ' + esc(a.faz) + '</p><p><b>Quando usar:</b> ' + esc(a.quando) + '</p>' +
             '<h4>Arquivos para anexar</h4><ul>' + a.anexos.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join("") + '</ul>' +
             '<h4>Comandos do dia a dia</h4><ul>' + a.comandos.map(function (c) { return '<li><b>' + esc(c.t) + ':</b> ' + esc(c.p) + '</li>'; }).join("") + '</ul>' +
             '<h4>Erros comuns</h4><ul>' + a.erros.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join("") + '</ul></article>';
@@ -82,7 +81,7 @@ body.gha-pdf { background: #fff; color: #0a0a0a; -webkit-print-color-adjust: exa
   var p4 = '<section class="k-part"><p class="k-kick">Parte 4</p><h2>Rotina da semana</h2><ol class="k-week">' +
     D.SEMANA.map(function (s) { return '<li><b>' + esc(s.d) + '</b>' + esc(s.t) + '</li>'; }).join("") + '</ol>' +
     '<p class="k-lead" style="margin-top:12px">Cuidado com dados: não cole documentos, prontuários ou números de clientes identificáveis. Troque nomes por iniciais e revise tudo antes de enviar.</p>' +
-    '<div class="k-end"><h2>Quer os agentes rodando com acompanhamento?</h2><p>Na Sessão Diagnóstico eu avalio o seu momento e monto o plano de marketing, vendas e gestão para o seu caso.</p>' +
+    '<div class="k-end"><h2>Quer o Gestor Executivo rodando com acompanhamento?</h2><p>Na Sessão Diagnóstico eu avalio o seu momento e monto o plano de marketing, vendas e gestão para o seu caso.</p>' +
     '<p><a href="' + esc(GHA.waUrl()) + '">Agendar Sessão Diagnóstico pelo WhatsApp</a></p></div></section>';
   document.getElementById("pdfRoot").innerHTML = cover + p1 + p2 + p3 + p4;
 })();
