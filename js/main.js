@@ -11,7 +11,7 @@ const CONFIG = {
 document.getElementById("year").textContent = new Date().getFullYear();
 
 document.getElementById("scrollCue").addEventListener("click", () => {
-  document.getElementById("mercado").scrollIntoView({ behavior: "smooth" });
+  document.getElementById("cases").scrollIntoView({ behavior: "smooth" });
 });
 
 /* ============ MÉTODO: DIAGRAMA DE VENN (destaque ao passar o mouse) ============ */
