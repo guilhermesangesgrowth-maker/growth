@@ -1,4 +1,4 @@
-# Growth Hub — Portal de Material Rico
+# GS Growth: site gsgrowthdigital.com.br
 
 Site estático (HTML/CSS/JS puro, sem build) para captura de leads via frameworks,
 ferramentas e análises voltados a quem lidera receita em negócios de qualquer porte.
@@ -39,10 +39,10 @@ Cada envio do formulário:
 
 ### Passo a passo para conectar ao Google Sheets
 
-1. Crie uma planilha nova em [sheets.new](https://sheets.new). Dê um nome, ex: "Leads — Growth Hub".
+1. Crie uma planilha nova em [sheets.new](https://sheets.new). Dê um nome, ex: "Leads — GS Growth".
 2. Menu **Extensões → Apps Script**.
 3. Apague o código de exemplo e cole o conteúdo de `google-apps-script.gs` (deste repositório).
-4. Salve o projeto (ícone de disquete). Dê um nome, ex: "Growth Hub Leads".
+4. Salve o projeto (ícone de disquete). Dê um nome, ex: "GS Growth Leads".
 5. Clique em **Implantar → Nova implantação**.
 6. No ícone de engrenagem, escolha o tipo **App da Web**.
 7. Configure: "Executar como" = **Eu (sua conta)**; "Quem pode acessar" = **Qualquer pessoa**.
