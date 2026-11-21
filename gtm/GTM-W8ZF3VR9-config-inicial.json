@@ -1,0 +1,130 @@
+{
+  "exportFormatVersion": 2,
+  "exportTime": "2026-11-21 17:00:00",
+  "containerVersion": {
+    "path": "accounts/6407013769/containers/288109149/versions/0",
+    "accountId": "6407013769",
+    "containerId": "288109149",
+    "containerVersionId": "0",
+    "container": {
+      "path": "accounts/6407013769/containers/288109149",
+      "accountId": "6407013769",
+      "containerId": "288109149",
+      "name": "gsgrowthdigital.com.br",
+      "publicId": "GTM-W8ZF3VR9",
+      "usageContext": ["WEB"]
+    },
+    "tag": [
+      {
+        "accountId": "6407013769",
+        "containerId": "288109149",
+        "tagId": "1",
+        "name": "Google Tag - GA4 (G-ZGTZBZZG7J)",
+        "type": "googtag",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "tagId", "value": "{{Const - GA4 ID}}" }
+        ],
+        "firingTriggerId": ["2147479573"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "6407013769",
+        "containerId": "288109149",
+        "tagId": "2",
+        "name": "GA4 - Eventos do site (dataLayer)",
+        "type": "gaawe",
+        "parameter": [
+          { "type": "BOOLEAN", "key": "sendEcommerceData", "value": "false" },
+          { "type": "TEMPLATE", "key": "eventName", "value": "{{Event}}" },
+          { "type": "TEMPLATE", "key": "measurementIdOverride", "value": "{{Const - GA4 ID}}" },
+          {
+            "type": "LIST",
+            "key": "eventSettingsTable",
+            "list": [
+              { "type": "MAP", "map": [ { "type": "TEMPLATE", "key": "parameter", "value": "qualificacao" }, { "type": "TEMPLATE", "key": "parameterValue", "value": "{{DLV - qualificacao}}" } ] },
+              { "type": "MAP", "map": [ { "type": "TEMPLATE", "key": "parameter", "value": "segmento" }, { "type": "TEMPLATE", "key": "parameterValue", "value": "{{DLV - segmento}}" } ] },
+              { "type": "MAP", "map": [ { "type": "TEMPLATE", "key": "parameter", "value": "guia" }, { "type": "TEMPLATE", "key": "parameterValue", "value": "{{DLV - guia}}" } ] },
+              { "type": "MAP", "map": [ { "type": "TEMPLATE", "key": "parameter", "value": "material" }, { "type": "TEMPLATE", "key": "parameterValue", "value": "{{DLV - material}}" } ] },
+              { "type": "MAP", "map": [ { "type": "TEMPLATE", "key": "parameter", "value": "momento" }, { "type": "TEMPLATE", "key": "parameterValue", "value": "{{DLV - momento}}" } ] },
+              { "type": "MAP", "map": [ { "type": "TEMPLATE", "key": "parameter", "value": "local" }, { "type": "TEMPLATE", "key": "parameterValue", "value": "{{DLV - local}}" } ] }
+            ]
+          }
+        ],
+        "firingTriggerId": ["3"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "6407013769",
+        "containerId": "288109149",
+        "tagId": "3",
+        "name": "GA4 - generate_lead (cadastros)",
+        "type": "gaawe",
+        "parameter": [
+          { "type": "BOOLEAN", "key": "sendEcommerceData", "value": "false" },
+          { "type": "TEMPLATE", "key": "eventName", "value": "generate_lead" },
+          { "type": "TEMPLATE", "key": "measurementIdOverride", "value": "{{Const - GA4 ID}}" },
+          {
+            "type": "LIST",
+            "key": "eventSettingsTable",
+            "list": [
+              { "type": "MAP", "map": [ { "type": "TEMPLATE", "key": "parameter", "value": "lead_source" }, { "type": "TEMPLATE", "key": "parameterValue", "value": "{{Event}}" } ] },
+              { "type": "MAP", "map": [ { "type": "TEMPLATE", "key": "parameter", "value": "qualificacao" }, { "type": "TEMPLATE", "key": "parameterValue", "value": "{{DLV - qualificacao}}" } ] },
+              { "type": "MAP", "map": [ { "type": "TEMPLATE", "key": "parameter", "value": "segmento" }, { "type": "TEMPLATE", "key": "parameterValue", "value": "{{DLV - segmento}}" } ] }
+            ]
+          }
+        ],
+        "firingTriggerId": ["4"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      }
+    ],
+    "trigger": [
+      {
+        "accountId": "6407013769",
+        "containerId": "288109149",
+        "triggerId": "3",
+        "name": "CE - Eventos do site",
+        "type": "CUSTOM_EVENT",
+        "customEventFilter": [
+          {
+            "type": "MATCH_REGEX",
+            "parameter": [
+              { "type": "TEMPLATE", "key": "arg0", "value": "{{_event}}" },
+              { "type": "TEMPLATE", "key": "arg1", "value": "^(guia_cadastro|gha_cadastro|material_cadastro|lead_qualificado|guia_cta_whatsapp|gha_cta_whatsapp|whatsapp_flutuante|guia_download_pdf|gha_download_kit|gha_abrir|gha_cta|gha_agente|gha_copiar|guia_tela|gha_tela)$" }
+            ]
+          }
+        ]
+      },
+      {
+        "accountId": "6407013769",
+        "containerId": "288109149",
+        "triggerId": "4",
+        "name": "CE - Cadastros (lead)",
+        "type": "CUSTOM_EVENT",
+        "customEventFilter": [
+          {
+            "type": "MATCH_REGEX",
+            "parameter": [
+              { "type": "TEMPLATE", "key": "arg0", "value": "{{_event}}" },
+              { "type": "TEMPLATE", "key": "arg1", "value": "^(guia_cadastro|gha_cadastro|material_cadastro)$" }
+            ]
+          }
+        ]
+      }
+    ],
+    "variable": [
+      { "accountId": "6407013769", "containerId": "288109149", "variableId": "1", "name": "Const - GA4 ID", "type": "c", "parameter": [ { "type": "TEMPLATE", "key": "value", "value": "G-ZGTZBZZG7J" } ] },
+      { "accountId": "6407013769", "containerId": "288109149", "variableId": "2", "name": "DLV - qualificacao", "type": "v", "parameter": [ { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" }, { "type": "BOOLEAN", "key": "setDefaultValue", "value": "false" }, { "type": "TEMPLATE", "key": "name", "value": "qualificacao" } ] },
+      { "accountId": "6407013769", "containerId": "288109149", "variableId": "3", "name": "DLV - segmento", "type": "v", "parameter": [ { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" }, { "type": "BOOLEAN", "key": "setDefaultValue", "value": "false" }, { "type": "TEMPLATE", "key": "name", "value": "segmento" } ] },
+      { "accountId": "6407013769", "containerId": "288109149", "variableId": "4", "name": "DLV - guia", "type": "v", "parameter": [ { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" }, { "type": "BOOLEAN", "key": "setDefaultValue", "value": "false" }, { "type": "TEMPLATE", "key": "name", "value": "guia" } ] },
+      { "accountId": "6407013769", "containerId": "288109149", "variableId": "5", "name": "DLV - material", "type": "v", "parameter": [ { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" }, { "type": "BOOLEAN", "key": "setDefaultValue", "value": "false" }, { "type": "TEMPLATE", "key": "name", "value": "material" } ] },
+      { "accountId": "6407013769", "containerId": "288109149", "variableId": "6", "name": "DLV - momento", "type": "v", "parameter": [ { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" }, { "type": "BOOLEAN", "key": "setDefaultValue", "value": "false" }, { "type": "TEMPLATE", "key": "name", "value": "momento" } ] },
+      { "accountId": "6407013769", "containerId": "288109149", "variableId": "7", "name": "DLV - local", "type": "v", "parameter": [ { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" }, { "type": "BOOLEAN", "key": "setDefaultValue", "value": "false" }, { "type": "TEMPLATE", "key": "name", "value": "local" } ] }
+    ],
+    "builtInVariable": [
+      { "accountId": "6407013769", "containerId": "288109149", "type": "EVENT", "name": "Event" },
+      { "accountId": "6407013769", "containerId": "288109149", "type": "PAGE_URL", "name": "Page URL" },
+      { "accountId": "6407013769", "containerId": "288109149", "type": "PAGE_PATH", "name": "Page Path" },
+      { "accountId": "6407013769", "containerId": "288109149", "type": "REFERRER", "name": "Referrer" }
+    ]
+  }
+}

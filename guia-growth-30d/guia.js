@@ -275,7 +275,7 @@ var PLAYBOOK = {
 var CONFIG = {
   whatsapp: "5519998878022",
   // Google Forms (respostas gravadas na planilha "[GS GROWTH] leads-guia-growth-30D"). Vazio = não envia
-  gtmId: "",               // ID do contêiner do Google Tag Manager (ex.: "GTM-XXXXXXX"). Vazio = não carrega
+  gtmId: "GTM-W8ZF3VR9",               // ID do contêiner do Google Tag Manager (ex.: "GTM-XXXXXXX"). Vazio = não carrega
   leadEndpoint: "https://docs.google.com/forms/d/e/1FAIpQLSf7K-fnfHxo8OGYD715wdvWaF0r1p61pyV3kAbxDS8_Pd_n6w/formResponse",
   formFields: { etapa: "entry.176202070", origem: "entry.1587842509", nome: "entry.598034783", email: "entry.362575635", whatsapp: "entry.745510118", pagina: "entry.722341163", segmento: "entry.1739758473", porte: "entry.1257151820", estagio: "entry.1229289482", jornada: "entry.1355015536", consentimento: "entry.748315144", investe: "entry.1475592940" },
   origem: "guia-growth-30d",

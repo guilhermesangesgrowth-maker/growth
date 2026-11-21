@@ -212,6 +212,16 @@ leadForm.addEventListener("submit", async (e) => {
 
   await saveLead(lead);
 
+  // GTM/GA4: evento de cadastro sem dados pessoais (nome, e-mail e telefone não vão para o dataLayer)
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: "material_cadastro",
+    material: lead.materialId || lead.material,
+    segmento: lead.segmento || "",
+    tamanho: lead.tamanho || "",
+    optin: lead.optin ? "sim" : "nao",
+  });
+
   submitBtn.disabled = false;
   submitBtn.textContent = "Acessar material grátis";
 
