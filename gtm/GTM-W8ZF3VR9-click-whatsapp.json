@@ -1,0 +1,71 @@
+{
+  "exportFormatVersion": 2,
+  "exportTime": "2026-11-21 17:40:00",
+  "containerVersion": {
+    "path": "accounts/6407013769/containers/288109149/versions/0",
+    "accountId": "6407013769",
+    "containerId": "288109149",
+    "containerVersionId": "0",
+    "container": {
+      "path": "accounts/6407013769/containers/288109149",
+      "accountId": "6407013769",
+      "containerId": "288109149",
+      "name": "gsgrowthdigital.com.br",
+      "publicId": "GTM-W8ZF3VR9",
+      "usageContext": ["WEB"]
+    },
+    "tag": [
+      {
+        "accountId": "6407013769",
+        "containerId": "288109149",
+        "tagId": "10",
+        "name": "GA4 - click_whatsapp",
+        "type": "gaawe",
+        "parameter": [
+          { "type": "BOOLEAN", "key": "sendEcommerceData", "value": "false" },
+          { "type": "TEMPLATE", "key": "eventName", "value": "click_whatsapp" },
+          { "type": "TEMPLATE", "key": "measurementIdOverride", "value": "G-ZGTZBZZG7J" },
+          {
+            "type": "LIST",
+            "key": "eventSettingsTable",
+            "list": [
+              { "type": "MAP", "map": [ { "type": "TEMPLATE", "key": "parameter", "value": "link_url" }, { "type": "TEMPLATE", "key": "parameterValue", "value": "{{Click URL}}" } ] },
+              { "type": "MAP", "map": [ { "type": "TEMPLATE", "key": "parameter", "value": "link_text" }, { "type": "TEMPLATE", "key": "parameterValue", "value": "{{Click Text}}" } ] },
+              { "type": "MAP", "map": [ { "type": "TEMPLATE", "key": "parameter", "value": "link_classes" }, { "type": "TEMPLATE", "key": "parameterValue", "value": "{{Click Classes}}" } ] },
+              { "type": "MAP", "map": [ { "type": "TEMPLATE", "key": "parameter", "value": "page_path" }, { "type": "TEMPLATE", "key": "parameterValue", "value": "{{Page Path}}" } ] }
+            ]
+          }
+        ],
+        "firingTriggerId": ["10"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      }
+    ],
+    "trigger": [
+      {
+        "accountId": "6407013769",
+        "containerId": "288109149",
+        "triggerId": "10",
+        "name": "Clique - Link WhatsApp",
+        "type": "LINK_CLICK",
+        "filter": [
+          {
+            "type": "MATCH_REGEX",
+            "parameter": [
+              { "type": "TEMPLATE", "key": "arg0", "value": "{{Click URL}}" },
+              { "type": "TEMPLATE", "key": "arg1", "value": "(api\\.whatsapp\\.com|wa\\.me|web\\.whatsapp\\.com)" }
+            ]
+          }
+        ],
+        "waitForTags": { "type": "BOOLEAN", "value": "false" },
+        "checkValidation": { "type": "BOOLEAN", "value": "false" }
+      }
+    ],
+    "builtInVariable": [
+      { "accountId": "6407013769", "containerId": "288109149", "type": "CLICK_URL", "name": "Click URL" },
+      { "accountId": "6407013769", "containerId": "288109149", "type": "CLICK_TEXT", "name": "Click Text" },
+      { "accountId": "6407013769", "containerId": "288109149", "type": "CLICK_CLASSES", "name": "Click Classes" },
+      { "accountId": "6407013769", "containerId": "288109149", "type": "CLICK_ELEMENT", "name": "Click Element" },
+      { "accountId": "6407013769", "containerId": "288109149", "type": "PAGE_PATH", "name": "Page Path" }
+    ]
+  }
+}

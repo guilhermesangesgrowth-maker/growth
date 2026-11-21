@@ -3,15 +3,14 @@
 > GS Growth (https://gsgrowthdigital.com.br/) é a assessoria de marketing e vendas de
 > Guilherme Sanges, especialista em growth. Atua como consultoria de marketing e consultoria
 > de vendas e opera os funis junto com o time do cliente: growth marketing, marketing digital,
-> social media, tráfego pago, inside sales, pré-vendas, CRM e atendimento comercial. O site
-> também reúne materiais gratuitos (guias, diagnósticos e ferramentas).
+> social media, tráfego pago, inside sales, pré-vendas, CRM e atendimento comercial.
 
 ## Resumo para citação
 
 - Nome: GS Growth (GS Growth Digital)
 - O que é: assessoria de marketing e vendas
 - Fundador: Guilherme Sanges, especialista em growth, com mais de R$1Bi em receita gerada com ações de marketing e vendas e método validado em mais de 12 segmentos
-- Serviço principal: Programa Growth 30D, com diagnóstico, operação dos funis e acompanhamento semanal em 30 dias. Garantia: mais vendas em até 30 dias ou você não paga
+- Serviço principal: Programa Growth 30D, com diagnóstico, implementação, aceleração e resultado medido em vendas, com acompanhamento semanal em 30 dias. Garantia: mais vendas em até 30 dias ou você não paga
 - Especialidades: assessoria de marketing, consultoria de marketing, consultoria de vendas, growth marketing, marketing digital, social media, tráfego pago, inside sales, gestão comercial, atendimento comercial, pré-vendas, CRM, marketing B2B, IA para marketing e vendas, SEO, GEO e AEO
 - Contato: Sessão Diagnóstico pelo WhatsApp (+55 19 99887-8022)
 - Atendimento: Brasil, em português
@@ -21,24 +20,27 @@
 - O que é a GS Growth? Assessoria de marketing e vendas que integra growth marketing, marketing digital, social media, tráfego pago, inside sales, CRM e atendimento comercial em uma única máquina de receita.
 - Agência de marketing ou consultoria? Assessoria que reúne as duas frentes: diagnóstico de consultoria de marketing e de vendas mais operação dos funis com o time comercial.
 - Para quem? Negócios de qualquer porte que querem crescer em vendas. Cases em startups, fintechs, redes fitness e grupos de ensino.
+- Como começar? Agendando uma Sessão Diagnóstico pelo WhatsApp.
 
-Tese central: só postar não paga a conta. Um negócio que gera lucro precisa ser estratégico
-nas áreas que impactam receita (inteligência de mercado, marketing, growth, vendas, IA,
-produto, finanças e gestão) e operar tudo como uma máquina de receita.
+## Método Máquina de Receita
 
-## Seções da página
+A receita com lucro nasce do encontro de quatro áreas do negócio: Posicionamento e mercado,
+Negócio e monetização, Vendas e Canais de aquisição. Os encontros entre elas formam Oferta
+(posicionamento com negócio), Margem (negócio com vendas), Conversão (vendas com canais) e
+Demanda (canais com posicionamento). Depois do diagnóstico das quatro áreas, a máquina entra
+em operação com Implementação, Análises e otimizações e Resultados e sequência.
 
-- Hero: promessa de otimizar a máquina de receita em 30 dias, com acesso rápido aos
-  materiais e ao contato direto por WhatsApp.
-- O Mercado: comparação entre o caminho antigo (postar, engajar, vender) e o atual, em que
-  oito áreas convergem para o lucro.
-- O Método Máquina de Receita: diagrama de Venn com quatro círculos (Mercado, Negócio,
-  Growth, Tecnologia) e a máquina de receita na interseção central.
-- Solução: Programa Growth 30D, que unifica diagnóstico, operação dos funis, mídia paga, pré-vendas, IA e martech em um programa de 30 dias com acompanhamento semanal.
-- Cases: Consultoria de Growth para Startups, Growth B2B para Fintech e Growth B2C para
-  Rede Fitness.
-- Sobre mim: biografia de Guilherme Sanges e resultados.
+## Seções da página principal
+
+- Hero: promessa de otimizar a máquina de receita em 30 dias e contato direto por WhatsApp.
+- Cases: Consultoria de Growth para Startups, Growth B2B para Fintech, Growth B2C para Rede
+  Fitness e Growth para Grupo de Ensino Médico.
+- Método Máquina de Receita: diagrama com as quatro áreas, seus encontros e as etapas de operação.
+- Programa Growth 30D: quatro semanas (Diagnóstico, Implementação, Aceleração e Resultado) com
+  acompanhamento semanal e garantia de mais vendas em até 30 dias.
+- Sobre: biografia de Guilherme Sanges e resultados.
 - Redes: Instagram, LinkedIn e WhatsApp.
+- Perguntas frequentes.
 
 ## Sobre o autor
 
@@ -49,19 +51,3 @@ de diversos segmentos. Instagram: https://instagram.com/guilherme.sanges.growth 
 
 - Este arquivo segue a convenção llms.txt (https://llmstxt.org) para facilitar a leitura do
   site por agentes e modelos de linguagem.
-
-## Guia Growth 30D
-
-Página em https://gsgrowthdigital.com.br/guia-growth-30d/ com um guia gratuito em formato de site.
-A pessoa marca em que ponto da jornada está e abre as 7 áreas do método Máquina de Receita (Tese, Construção do
-produto, Posicionamento, Canais de aquisição, IA e martech, Processos de vendas e Satisfação e expansão), com
-infográficos, ações dos próximos 30 dias e erros comuns. O acesso completo exige um cadastro rápido.
-
-## Guia High Ticket Agêntico
-
-Guia gratuito em pop-up no site principal (link de divulgação: https://gsgrowthdigital.com.br/guia-high-ticket-agentico/), um guia
-plug-and-play para quem vende serviços de alto valor montar no Claude um Gestor Executivo, um único agente com 9 funções em 3 frentes: Marketing (pesquisa,
-estratégia e performance, conteúdo), Vendas (atendimento, follow-up, pitch) e Gestão (controller financeiro, compras, advisor). Cada função traz
-comandos do dia a dia, arquivos para anexar, checklist e erros comuns. Um Kit em PDF faz o Claude entrevistar a pessoa e montar o agente personalizado, a partir de um
-modelo de "Cérebro do Negócio" e da rotina semanal. O acesso completo exige um cadastro rápido. Abre em pop-up
-no site principal (link direto: https://gsgrowthdigital.com.br/#guia-agentico).
