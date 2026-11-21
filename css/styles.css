@@ -1393,3 +1393,17 @@ h1, h2, h3, h4, .stat__value, .method__hook, .hub__core, .market-take__mark, .ca
 .wa-float svg { width: 27px; height: 27px; }
 body.gha-s3 .wa-float { bottom: calc(92px + env(safe-area-inset-bottom)); }
 @media (min-width: 900px) { body.gha-s3 .wa-float { bottom: 16px; } }
+
+/* FAQ (SEO/AEO) */
+.faq { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+.faq__item { background: var(--off-white-deep); border: 1px solid var(--dark-line); border-radius: var(--radius); padding: 18px 20px; }
+.faq__item summary { cursor: pointer; font-weight: 600; font-size: 17px; line-height: 1.4; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+.faq__item summary::-webkit-details-marker { display: none; }
+.faq__item summary::after { content: "+"; color: var(--orange-ink); font-family: var(--font-mono); flex-shrink: 0; }
+.faq__item[open] summary::after { content: "–"; }
+.faq__item p { margin-top: 12px; color: var(--gray-on-light); line-height: 1.6; font-size: 15px; }
+.faq__item a { color: var(--orange-ink); text-decoration: underline; }
+
+/* Rodapé: especialidades */
+.footer__tags { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; color: var(--off-white-dim); font-size: 13px; }
+.footer__col--tags { max-width: 260px; }
