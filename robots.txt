@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://guilhermesangesgrowth-maker.github.io/growth/sitemap.xml
+Sitemap: https://gsgrowthdigital.com.br/sitemap.xml

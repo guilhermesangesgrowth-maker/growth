@@ -63,7 +63,7 @@ body.gha-pdf { background: #fff; color: #0a0a0a; -webkit-print-color-adjust: exa
     GHA.diagram() +
     '<ol class="k-how">' + D.IMPL.map(function (p, i) { return '<li><i>' + (i + 1) + '</i><span><b>' + esc(p.t) + '.</b> ' + esc(p.p) + '</span></li>'; }).join("") + '</ol>' +
     '<div class="k-start"><b>Comando de início (cole junto com este arquivo)</b>' + esc(D.START) + '</div>' +
-    '<p class="k-by">Guilherme Sanges · Especialista em Growth · guilhermesangesgrowth-maker.github.io/growth</p></section>';
+    '<p class="k-by">Guilherme Sanges · Especialista em Growth · gsgrowthdigital.com.br</p></section>';
   var p1 = '<section class="k-part"><p class="k-kick">Parte 1</p><h2>Instruções para o Claude</h2><div class="k-pre">' + esc(D.PROTOCOLO) + '</div></section>';
   var p2 = '<section class="k-part"><p class="k-kick">Parte 2</p><h2>Modelo do Cérebro do Negócio</h2><div class="k-pre">' + esc(D.SETUP.cerebro) + '</div></section>';
   var p3 = '<section class="k-part"><p class="k-kick">Parte 3</p><h2>O Gestor Executivo (modelo-base)</h2><h4 class="k-kick" style="margin:10px 0 6px">Instruções-base do Projeto Gestor Executivo</h4><div class="k-pre" style="font-size:12px">' + esc(D.gestorInstrucoes()) + '</div><h4 class="k-kick" style="margin:16px 0 6px">Detalhe de cada função</h4>' +

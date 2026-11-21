@@ -369,7 +369,7 @@ var GHA_DATA = (function () {
   function kitText() {
     var t = [];
     t.push(KIT_NOME.toUpperCase());
-    t.push("Material de Guilherme Sanges · guilhermesangesgrowth-maker.github.io/growth\n");
+    t.push("Material de Guilherme Sanges · gsgrowthdigital.com.br\n");
     t.push("COMO USAR: anexe este arquivo em uma conversa nova no Claude e envie: \"" + START + "\"\n");
     t.push("PARTE 1 · INSTRUÇÕES PARA O CLAUDE\n");
     t.push(PROTOCOLO + "\n");
