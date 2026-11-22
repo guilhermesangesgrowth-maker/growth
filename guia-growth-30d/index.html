@@ -81,32 +81,37 @@
 </script>
 </head>
 <body>
+<style>
+  /* Faixa do guia no hero (mesmo estilo da faixa do Guia Agêntico) */
+  .gha-cta-strip { display: flex; width: fit-content; align-items: center; gap: 10px; margin: 0 0 18px; padding: 7px 14px 7px 8px; border-radius: 999px; border: 1px solid rgba(255, 107, 0, 0.45); background: rgba(255, 107, 0, 0.1); color: inherit; font: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer; text-align: left; }
+  .gha-cta-strip em { font-style: normal; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; background: var(--orange); color: var(--black); border-radius: 999px; padding: 3px 8px; }
+  .gha-cta-strip:hover { border-color: var(--orange); }
+</style>
+<!-- Fundo: cópia da home (index.html da raiz). Ao mudar a home, atualize esta página também. -->
 <!-- NAV -->
 <header class="nav" id="nav">
   <div class="nav__inner">
-    <a href="#playbook" class="author-chip nav__author" data-start aria-label="Acessar Guia Gratuito Growth 30D">
+    <a href="#sobre" class="author-chip nav__author" aria-label="Conheça Guilherme Sanges, especialista em growth">
       <img class="author-chip__photo" src="../assets/guilherme-avatar.jpg" alt="Guilherme Sanges" width="44" height="44" decoding="async" fetchpriority="high" />
       <span class="author-chip__text">
-        <strong>Acessar Guia Gratuito</strong>
-        <small>Growth 30D</small>
+        <strong>Guilherme Sanges</strong>
+        <small>Especialista em Growth</small>
       </span>
     </a>
     <nav class="nav__links" id="navLinksCaptura">
       <a href="#cases">Cases</a>
-      <a href="#guia">Guia</a>
       <a href="#para-quem">Para quem é</a>
-      <a href="#metodo">Método</a>
       <a href="#servicos">Serviços</a>
+      <a href="#metodo">Método</a>
+      <a href="#sobre">Sobre</a>
       <a href="#redes">Redes</a>
     </nav>
     <button type="button" class="btn btn--ghost nav__cta" id="navCta">Acessar guia</button>
     <nav class="nav__mobile" id="navMobile" aria-label="Menu principal">
-      <a href="#guia">Guia</a>
-      <a href="#para-quem">Para quem é</a>
-      <a href="#metodo">Método</a>
-      <a href="#servicos">Soluções</a>
       <a href="#cases">Cases</a>
-      <a href="#redes">Redes</a>
+      <a href="#para-quem">Para quem é</a>
+      <a href="#servicos">Soluções</a>
+      <a href="#metodo">Método</a>
     </nav>
     <button type="button" class="nav__toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navMobile">
       <span></span><span></span><span></span>
@@ -114,10 +119,9 @@
   </div>
 </header>
 
-<main id="top">
-
-<!-- ============ VISTA 1: CAPTURA ============ -->
+<!-- ============ VISTA 1: CAPTURA (fundo = home) ============ -->
 <div id="view-captura">
+<main id="top">
 
   <!-- HERO -->
   <section class="hero" id="hero">
@@ -127,19 +131,19 @@
       <div class="hero__glow"></div>
     </div>
     <div class="hero__content">
-      <p class="eyebrow">guia growth 30d</p>
+      <button type="button" class="gha-cta-strip" data-start><em>Novo</em>Guia Growth 30D: diagnóstico e playbook gratuitos →</button>
+      <p class="eyebrow">método máquina de vendas</p>
       <h1 class="hero__title hero__title--long">
-        Posts e leads não pagam a sua conta.
-        <span class="text-orange">Venda mais serviços high-ticket</span>
-        <span class="hero__outline">em 30 dias</span>
-        com o Guia&nbsp;Growth&nbsp;30D.
+        Assessoria de <span class="text-orange">marketing e vendas</span>
+        para crescimento de negócios
       </h1>
-      <h2 class="hero__subtitle">
-        Confira erros comuns para evitar e ações de growth para escalar vendas do seu serviço high-ticket e/ou consultoria em 4 semanas!
-      </h2>
+      <p class="hero__subtitle">
+        Posts e leads não pagam a sua conta. Implementamos o sistema validado para aumentar
+        as vendas do seu negócio em até 30 dias.
+      </p>
       <div class="hero__actions">
-        <button type="button" class="btn btn--primary" data-start>Acessar Guia Gratuito</button>
-        <a href="#cases" class="btn btn--text">Conferir Cases <span aria-hidden="true">↓</span></a>
+        <a href="https://api.whatsapp.com/send/?phone=5519998878022&amp;text=Ol%C3%A1%2C%20vim%20do%20Guia%20Growth%2030D%20e%20quero%20agendar%20uma%20Sess%C3%A3o%20Diagn%C3%B3stico!" class="btn btn--primary" target="_blank" rel="noopener">Agendar Sessão Diagnóstico</a>
+        <a href="#cases" class="btn btn--text">Ver cases <span aria-hidden="true">↓</span></a>
       </div>
       <div class="hero__stats" id="heroStats">
         <div class="stat">
@@ -292,43 +296,50 @@
         </table>
       </div>
     </div>
-    <div class="guia-cta">
-      <button type="button" class="btn btn--primary" data-start>Acessar Guia Gratuito</button>
-    </div>
   </section>
 
-  <!-- GUIA GROWTH 30D -->
-  <section class="deck deck--light" id="guia">
-    <div class="deck__header deck__header--wide">
-      <p class="eyebrow">Guia Growth 30D</p>
-      <h2 class="deck__title">Diagnóstico e playbook de growth para vender mais serviços high-ticket em 30 dias</h2>
-      <p class="deck__subtitle">
-        Um guia gratuito em formato de site. Você escolhe o estágio do seu negócio e abre as 7 áreas da máquina de receita, com infográficos e o plano dos próximos 30 dias.
-      </p>
+  <!-- DOBRA 4 — SERVIÇOS (vamos crescer?) -->
+  <section class="deck deck--light" id="servicos">
+    <div class="deck__header">
+      <p class="eyebrow">vamos crescer?</p>
+      <h2 class="deck__title">Mais vendas em 30 dias, com acompanhamento semanal</h2>
     </div>
 
-    <div class="guia-grid guia-grid--single">
-      <article class="guia-card">
-        <div class="gq-peek guia-peek" role="img" aria-label="Prévia desfocada do guia">
-          <div class="gq-peek__inner guia-peek__pb" style="filter:blur(6px)" aria-hidden="true">
-            <div class="gjp-map"><i></i><i></i><i class="on"></i><i></i><i></i><i></i><i></i></div>
-            <div class="pbp-head"><span>03</span><div><i></i><b></b></div></div>
-            <div class="pbp-lines"><i></i><i></i><i style="width:70%"></i></div>
-            <div class="pbp-cards"><i></i><i></i><i></i></div>
-          </div>
-          <div class="gq-peek__lock"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><p>Acesso gratuito com um cadastro rápido.</p></div>
-        </div>
-        <span class="guia-card__step">Material gratuito · 100% online</span>
-        <h3 class="guia-card__title">Guia Growth 30D</h3>
-        <p class="guia-card__text">Acesse o roadmap de 4 semanas com as 7 seções do guia: o que fazer, como fazer e os erros mais comuns de cada uma.</p>
-        <ol class="guia-card__areas">
-          <li>Negócio e monetização</li><li>Posicionamento e mercado</li><li>Canais de aquisição</li><li>Vendas</li><li>Implementação</li><li>Análises e otimizações</li><li>Resultados e sequência</li>
+    <div class="offers offers--single">
+      <article class="offer-card offer-card--orange">
+        <span class="offer-card__tag">Garantia: mais vendas em até 30 dias ou você não paga</span>
+        <h3 class="offer-card__title">Programa Growth 30D</h3>
+        <p class="offer-card__desc">
+          Em quatro semanas, sua oferta, seu marketing e seu processo comercial são revisados, as melhorias entram em operação junto com o seu time e o resultado é medido em vendas.
+        </p>
+        <ol class="roadmap">
+          <li>
+            <span class="roadmap__w">Semana 1: Diagnóstico</span>
+            <ul>
+              <li>Raio-x da oferta, dos canais e do funil de vendas, com um plano de ação priorizado.</li>
+            </ul>
+          </li>
+          <li>
+            <span class="roadmap__w">Semana 2: Implementação</span>
+            <ul>
+              <li>Ajustes em páginas, social media, tráfego pago, CRM e abordagem comercial.</li>
+            </ul>
+          </li>
+          <li>
+            <span class="roadmap__w">Semana 3: Aceleração</span>
+            <ul>
+              <li>Testes das alavancas com mais potencial: ofertas de entrada, produtos digitais, CRO e grupo exclusivo.</li>
+            </ul>
+          </li>
+          <li>
+            <span class="roadmap__w">Semana 4: Resultado</span>
+            <ul>
+              <li>Vendas comparadas com o início do programa, relatório final e plano para os próximos passos.</li>
+            </ul>
+          </li>
         </ol>
+        <a class="offer-card__cta" href="https://api.whatsapp.com/send/?phone=5519998878022&amp;text=Ol%C3%A1%2C%20vim%20do%20Guia%20Growth%2030D%20e%20quero%20agendar%20uma%20Sess%C3%A3o%20Diagn%C3%B3stico!" target="_blank" rel="noopener">Agendar Sessão Diagnóstico</a>
       </article>
-    </div>
-
-    <div class="guia-cta">
-      <button type="button" class="btn btn--primary" data-start>Acessar Guia Growth 30D</button>
     </div>
   </section>
 
@@ -420,65 +431,44 @@
         </div>
       </div>
     </figure>
-    <div class="guia-cta">
-      <button type="button" class="btn btn--primary" data-start>Acessar Guia Gratuito</button>
-    </div>
   </section>
 
-
-</div><!-- /view-captura -->
-
-<!-- ============ VISTA 2: DIAGNÓSTICO ============ -->
-<div id="view-guia" hidden></div>
-
-<!-- ============ COMPARTILHADO: SERVIÇOS E REDES (captura e resultado) ============ -->
-<div id="shared-bottom">
-  <!-- SERVIÇOS (vamos crescer?) -->
-  <section class="deck deck--light" id="servicos">
-    <div class="deck__header">
-      <p class="eyebrow">vamos crescer?</p>
-      <h2 class="deck__title">Mais vendas em 30 dias, com acompanhamento semanal</h2>
-    </div>
-
-    <div class="offers offers--single">
-      <article class="offer-card offer-card--orange">
-        <span class="offer-card__tag">Garantia: mais vendas em até 30 dias ou você não paga</span>
-        <h3 class="offer-card__title">Programa Growth 30D</h3>
-        <p class="offer-card__desc">
-          Em quatro semanas, sua oferta, seu marketing e seu processo comercial são revisados, as melhorias entram em operação junto com o seu time e o resultado é medido em vendas.
+  <!-- DOBRA 6 — SOBRE MIM -->
+  <section class="deck deck--light" id="sobre">
+    <div class="about">
+      <div class="about__media">
+        <p class="eyebrow eyebrow--dark">sobre mim</p>
+        <h2 class="deck__title about__name">Guilherme Sanges</h2>
+      </div>
+      <div class="about__content">
+        <p class="about__lead">
+          Guilherme é Especialista em Growth e já gerou mais de R$1Bi com ações de marketing
+          e vendas para empresas. Aficionado por negócios que geram vantagem competitiva na
+          era da IA e tecnologia, é estudioso e produtor de conteúdo sobre o tema.
         </p>
-        <ol class="roadmap">
-          <li>
-            <span class="roadmap__w">Semana 1: Diagnóstico</span>
-            <ul>
-              <li>Raio-x da oferta, dos canais e do funil de vendas, com um plano de ação priorizado.</li>
-            </ul>
-          </li>
-          <li>
-            <span class="roadmap__w">Semana 2: Implementação</span>
-            <ul>
-              <li>Ajustes em páginas, social media, tráfego pago, CRM e abordagem comercial.</li>
-            </ul>
-          </li>
-          <li>
-            <span class="roadmap__w">Semana 3: Aceleração</span>
-            <ul>
-              <li>Testes das alavancas com mais potencial: ofertas de entrada, produtos digitais, CRO e grupo exclusivo.</li>
-            </ul>
-          </li>
-          <li>
-            <span class="roadmap__w">Semana 4: Resultado</span>
-            <ul>
-              <li>Vendas comparadas com o início do programa, relatório final e plano para os próximos passos.</li>
-            </ul>
-          </li>
-        </ol>
-        <a class="offer-card__cta" href="https://api.whatsapp.com/send/?phone=5519998878022&amp;text=Ol%C3%A1,%20vim%20do%20site%20da%20GS%20Growth%20e%20quero%20agendar%20uma%20Sess%C3%A3o%20Diagn%C3%B3stico!" target="_blank" rel="noopener">Agendar Sessão Diagnóstico</a>
-      </article>
+        <p class="about__thesis">
+          Sua tese é simples: <strong>fundamentos sólidos + intensidade tecnológica + cultura de resultado.</strong>
+        </p>
+
+        <div class="about__results">
+          <span class="about__results-label">Resultados</span>
+          <div class="results-grid">
+            <div class="stat">
+              <span class="stat__value">+R$1Bi</span>
+              <span class="stat__label">de receita gerada</span>
+            </div>
+            <div class="stat">
+              <span class="stat__value">+12</span>
+              <span class="stat__label">segmentos validados</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </section>
 
-  <!-- DOBRA 8 — REDES -->
+  <!-- DOBRA 7 — REDES -->
   <section class="deck deck--tone" id="redes">
     <div class="deck__header">
       <p class="eyebrow">Redes</p>
@@ -506,7 +496,7 @@
         </span>
         <span class="social-card__cta">Conectar →</span>
       </a>
-      <a class="social-card social-card--primary" href="https://api.whatsapp.com/send/?phone=5519998878022&amp;text=Ol%C3%A1,%20vim%20do%20site%20da%20GS%20Growth%20e%20quero%20agendar%20uma%20Sess%C3%A3o%20Diagn%C3%B3stico!" target="_blank" rel="noopener">
+      <a class="social-card social-card--primary" href="https://api.whatsapp.com/send/?phone=5519998878022&amp;text=Ol%C3%A1%2C%20vim%20do%20Guia%20Growth%2030D%20e%20quero%20agendar%20uma%20Sess%C3%A3o%20Diagn%C3%B3stico!" target="_blank" rel="noopener">
         <span class="social-card__icon">WA</span>
         <span class="social-card__meta">
           <strong>WhatsApp</strong>
@@ -516,9 +506,43 @@
       </a>
     </div>
   </section>
-</div>
+
+  <!-- DOBRA 8 — FAQ (SEO/AEO: mesmas perguntas do FAQPage no JSON-LD) -->
+  <section class="deck deck--light" id="faq" aria-labelledby="faqTitle">
+    <div class="deck__header">
+      <p class="eyebrow">dúvidas frequentes</p>
+      <h2 class="deck__title" id="faqTitle">Assessoria de marketing e vendas: perguntas frequentes</h2>
+    </div>
+    <div class="faq">
+      <details class="faq__item">
+        <summary>O que é a GS Growth?</summary>
+        <p>A GS Growth é a assessoria de marketing e vendas de Guilherme Sanges, especialista em growth. Ela integra growth marketing, marketing digital, social media, tráfego pago, inside sales, CRM e atendimento comercial em uma única máquina de receita para aumentar as vendas do negócio.</p>
+      </details>
+      <details class="faq__item">
+        <summary>A GS Growth é uma agência de marketing ou uma consultoria?</summary>
+        <p>A GS Growth atua como assessoria e reúne as duas frentes. Faz o diagnóstico de uma consultoria de marketing e de uma consultoria de vendas e opera os funis junto com o time comercial, com acompanhamento semanal.</p>
+      </details>
+      <details class="faq__item">
+        <summary>Como funciona o Programa Growth 30D?</summary>
+        <p>São quatro semanas com acompanhamento semanal. Semana 1, diagnóstico: raio-x da oferta, dos canais e do funil de vendas, com um plano de ação priorizado. Semana 2, implementação: ajustes em páginas, social media, tráfego pago, CRM e abordagem comercial. Semana 3, aceleração: testes de ofertas de entrada, produtos digitais, CRO e grupo exclusivo. Semana 4, resultado: vendas comparadas com o início do programa, relatório final e plano para os próximos passos. A garantia é mais vendas em até 30 dias ou você não paga.</p>
+      </details>
+      <details class="faq__item">
+        <summary>Para quais empresas a assessoria de marketing e vendas é indicada?</summary>
+        <p>Para negócios de qualquer porte que querem crescer em vendas. O método já foi validado em mais de 12 segmentos, incluindo startups, fintechs, redes fitness e grupos de ensino.</p>
+      </details>
+      <details class="faq__item">
+        <summary>Como começar com a GS Growth?</summary>
+        <p>Agende uma Sessão Diagnóstico pelo WhatsApp. Nela, Guilherme Sanges avalia a sua operação de marketing, vendas e atendimento comercial e indica os próximos passos.</p>
+      </details>
+    </div>
+  </section>
 
 </main>
+</div><!-- /view-captura -->
+
+<!-- ============ VISTA 2: GUIA (pop-up) ============ -->
+<div id="view-guia" hidden></div>
+<div id="shared-bottom"></div>
 
 <!-- FOOTER -->
 <footer class="footer">
@@ -527,33 +551,47 @@
       <div class="footer__col">
         <strong>Navegue</strong>
         <a href="#cases">Cases</a>
-        <a href="#guia">Guia</a>
         <a href="#para-quem">Para quem é</a>
-        <a href="#metodo">Método</a>
         <a href="#servicos">Serviços</a>
+        <a href="#metodo">Método</a>
+        <a href="#sobre">Sobre</a>
         <a href="#redes">Redes</a>
-        <a href="https://gsgrowthdigital.com.br/">GS Growth</a>
+        <a href="#faq">Dúvidas</a>
+      </div>
+      <div class="footer__col footer__col--tags">
+        <strong>Especialidades</strong>
+        <ul class="footer__tags">
+          <li>Assessoria e consultoria de marketing e vendas</li>
+          <li>Growth marketing</li>
+          <li>Marketing digital e social media</li>
+          <li>Tráfego pago</li>
+          <li>Inside sales e pré-vendas</li>
+          <li>Gestão e atendimento comercial</li>
+          <li>CRM e automação</li>
+          <li>IA para marketing e vendas</li>
+          <li>SEO, GEO e AEO</li>
+        </ul>
       </div>
       <div class="footer__col">
         <strong>Redes</strong>
         <a href="https://instagram.com/guilherme.sanges.growth" target="_blank" rel="noopener">Instagram</a>
         <a href="https://www.linkedin.com/in/guilhermesanges/" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://api.whatsapp.com/send/?phone=5519998878022&amp;text=Ol%C3%A1,%20vim%20do%20site%20da%20GS%20Growth%20e%20quero%20agendar%20uma%20Sess%C3%A3o%20Diagn%C3%B3stico!" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://api.whatsapp.com/send/?phone=5519998878022&amp;text=Ol%C3%A1%2C%20vim%20do%20Guia%20Growth%2030D%20e%20quero%20agendar%20uma%20Sess%C3%A3o%20Diagn%C3%B3stico!" target="_blank" rel="noopener">WhatsApp</a>
       </div>
     </div>
   </div>
   <div class="footer__bottom">
-    <p>© <span id="year"></span> Guilherme Sanges. Seus dados são usados apenas para enviar o material e conteúdos sobre growth, e não são compartilhados com terceiros.</p>
+    <p>© <span id="year"></span> GS Growth · Guilherme Sanges · Assessoria de marketing e vendas.</p>
   </div>
 </footer>
 
-<!-- BOTÃO FLUTUANTE WHATSAPP -->
 <a class="wa-float" href="https://api.whatsapp.com/send/?phone=5519998878022&amp;text=Ol%C3%A1%2C%20vim%20do%20Guia%20Growth%2030D%20e%20quero%20agendar%20uma%20Sess%C3%A3o%20Diagn%C3%B3stico!" target="_blank" rel="noopener" aria-label="Agendar Sessão Diagnóstico pelo WhatsApp">
   <svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16.04 3C8.84 3 3 8.8 3 15.95c0 2.28.6 4.5 1.74 6.46L3 29l6.78-1.72a13.1 13.1 0 0 0 6.26 1.6h.01C23.2 28.88 29 23.08 29 15.93 29 12.5 27.66 9.27 25.22 6.84A12.97 12.97 0 0 0 16.04 3zm0 23.7h-.01a10.9 10.9 0 0 1-5.55-1.52l-.4-.24-4.02 1.02 1.07-3.92-.26-.4a10.7 10.7 0 0 1-1.65-5.7c0-5.93 4.84-10.76 10.8-10.76 2.88 0 5.58 1.12 7.62 3.15a10.6 10.6 0 0 1 3.16 7.62c0 5.94-4.85 10.75-10.76 10.75zm5.9-8.06c-.32-.16-1.9-.94-2.2-1.05-.3-.1-.51-.16-.73.16-.21.32-.83 1.05-1.02 1.26-.19.22-.37.24-.7.08-.32-.16-1.36-.5-2.59-1.6-.96-.85-1.6-1.9-1.79-2.22-.19-.32-.02-.5.14-.66.14-.14.32-.37.48-.56.16-.19.21-.32.32-.54.1-.21.05-.4-.03-.56-.08-.16-.73-1.76-1-2.4-.26-.63-.53-.54-.73-.55h-.62c-.21 0-.56.08-.85.4-.3.32-1.12 1.1-1.12 2.68s1.15 3.1 1.31 3.32c.16.21 2.26 3.45 5.47 4.84.76.33 1.36.52 1.82.67.77.24 1.46.2 2.01.12.61-.09 1.9-.78 2.17-1.53.27-.75.27-1.4.19-1.53-.08-.13-.3-.21-.62-.37z"/></svg>
 </a>
 
 <script src="guia.js" defer></script>
 <script>/* Método: inicia a animação (balde furado → ikigai) quando a seção aparece na tela */(function () {  var el = document.getElementById("mxAnim");  if (!el) return;  if (!("IntersectionObserver" in window)) { el.classList.add("is-playing"); return; }  var io = new IntersectionObserver(function (entries) {    entries.forEach(function (e) { if (e.isIntersecting) { el.classList.add("is-playing"); io.disconnect(); } });  }, { threshold: 0.35 });  io.observe(el);})();</script>
+<script>document.getElementById("scrollCue") && document.getElementById("scrollCue").addEventListener("click", function () { document.getElementById("cases").scrollIntoView({ behavior: "smooth" }); });</script>
 <script>
 (function () {
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
