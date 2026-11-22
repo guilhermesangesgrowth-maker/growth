@@ -96,12 +96,20 @@
     return "https://api.whatsapp.com/send/?phone=" + CONFIG.whatsapp + "&text=" + encodeURIComponent(msg);
   }
 
-  /* Após a entrega: abre o WhatsApp em nova guia pedindo acompanhamento.
-     Roda dentro do submit do cadastro (gesto do usuário), então o navegador não bloqueia o pop-up. */
+  /* Após a entrega: mantém o pop-up do guia na tela e, 7 s depois, abre o WhatsApp em nova guia.
+     Navegadores costumam bloquear nova guia aberta mais de ~5 s depois do clique; nesse caso a própria guia vai
+     para o WhatsApp (o botão Voltar traz o guia de volta, já na tela de entrega). */
+  var WA_AUTO_DELAY = 7000, waTimer = null;
   function openWaAfterDelivery() {
     var msg = "Olá, acabei de obter meu guia High Ticket Agêntico e gostaria de acompanhamento personalizado para executar.";
-    window.open("https://api.whatsapp.com/send/?phone=" + CONFIG.whatsapp + "&text=" + encodeURIComponent(msg), "_blank", "noopener");
-    dl("gha_whatsapp_auto");
+    var url = "https://api.whatsapp.com/send/?phone=" + CONFIG.whatsapp + "&text=" + encodeURIComponent(msg);
+    clearTimeout(waTimer);
+    waTimer = setTimeout(function () {
+      var w = window.open(url, "_blank");
+      if (w) { try { w.opener = null; } catch (e) {} dl("gha_whatsapp_auto", { aberto: "sim" }); return; }
+      dl("gha_whatsapp_auto", { aberto: "mesma-guia" });
+      setTimeout(function () { location.href = url; }, 150);   // dá tempo do evento sair para o GTM
+    }, WA_AUTO_DELAY);
   }
 
   /* ---------- planilha (Google Forms) e dataLayer ---------- */
