@@ -804,12 +804,12 @@ td small{color:var(--ink-3);font-weight:400;font-size:12px;margin-left:6px}
     <div class="rev chart-card">
       <div class="chart-head">
         <div class="chart-total"><span class="label">Receita incremental acumulada em 12 meses</span><span class="v" id="cTotal">–</span><span class="s" id="cTotalS">–</span></div>
-        <div class="legend"><span><i style="background:var(--bar-base)"></i>Receita flat (As Is)</span><span><i style="background:var(--accent)"></i>Incremento de +5% ao mês</span></div>
+        <div class="legend"><span><i style="background:var(--bar-base)"></i>Receita flat (As Is)</span><span><i style="background:var(--accent)"></i>Growth 30D + 5% ao mês</span></div>
       </div>
       <div class="chart-box" id="chartBox"><div class="tip" id="tip"></div></div>
       <div class="chart-foot">
         <div class="kpi"><span class="label">Receita flat em 12 meses</span><span class="v" id="cFlat">–</span></div>
-        <div class="kpi"><span class="label">Receita com +5% MoM</span><span class="v" id="cGrow">–</span></div>
+        <div class="kpi"><span class="label">Receita com Growth 30D</span><span class="v" id="cGrow">–</span></div>
         <div class="kpi hot"><span class="label">Receita do mês 12</span><span class="v" id="cM12">–</span><span class="s" id="cM12S">–</span></div>
       </div>
     </div>
@@ -1198,10 +1198,10 @@ function renderCalc(m){
   $("#superMetaS").textContent=`+${pct(o.R/(meta||b.R)-1)} vs. ${meta?"meta":"mês anterior"}`;
   $("#kOptS").textContent=`+${pct(o.R/(meta||b.R)-1,0)} sobre a ${meta?"meta":"receita"} · super meta ${short(tgt)}`;
   $("#kInc").textContent=short(o.R-b.R);
-  /* badge: incremento mensal da super meta e incremento acumulado em 12 meses (mesma conta do gráfico: +5% ao mês sobre a receita atual) */
+  /* badge: incremento mensal da super meta e incremento acumulado em 12 meses (mesma conta do gráfico: parte da receita otimizada e cresce +5% ao mês) */
   hasData=b.R>0;if(cur!=null&&secs[cur])$("#goalBadge").hidden=+secs[cur].dataset.g<5||!hasData;
   $("#gbV").textContent=`+${short(o.R-b.R)}`;
-  $("#gbY").textContent=`+${short(b.R*(Array.from({length:12},(_,k)=>Math.pow(1.05,k+1)).reduce((a,x)=>a+x,0)-12))}`;
+  $("#gbY").textContent=`+${short(proj12(b.R,o.R).reduce((a,d)=>a+d.inc,0))}`;
   const top=Math.max(meta,o.R,b.R)*1.08||1;
   $("#mtA").style.width=(b.R/top*100)+"%";
   $("#mtO").style.width=(o.R/top*100)+"%";
@@ -1216,20 +1216,23 @@ function renderCalc(m){
 const MES=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
 let chartAnimated=false;
 function niceStep(raw){const p=Math.pow(10,Math.floor(Math.log10(raw)));const f=raw/p;return(f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*p}
+/* projeção 12 meses: flat = receita realizada (As Is); com Growth 30D o mês 1 parte da receita otimizada (funil 3) e cresce +5% ao mês */
+function proj12(base,opt){const now=new Date(),start=opt>0?opt:base;
+  return Array.from({length:12},(_,i)=>{const d=new Date(now.getFullYear(),now.getMonth()+i+1,1);return{lb:MES[d.getMonth()]+"/"+String(d.getFullYear()).slice(2),base,inc:Math.max(0,start*Math.pow(1.05,i)-base)}})}
 function renderChart(m){
-  const base=m.R, box=$("#chartBox"), now=new Date();
-  const data=Array.from({length:12},(_,i)=>{const d=new Date(now.getFullYear(),now.getMonth()+i+1,1);return{lb:MES[d.getMonth()]+"/"+String(d.getFullYear()).slice(2),base,inc:base*(Math.pow(1.05,i+1)-1)}});
+  const base=m.R, box=$("#chartBox");
+  const data=proj12(base,m.R2), last=data[11].base+data[11].inc;
   const totInc=data.reduce((a,d)=>a+d.inc,0), flat=base*12;
   $("#cTotal").textContent=brl(totInc);
   $("#cTotalS").textContent=base>0?`É o que fica na mesa em 12 meses mantendo a receita flat em ${short(base)}/mês.`:"Preencha a calculadora para ver a projeção.";
   $("#cFlat").textContent=short(flat);
   $("#cGrow").textContent=short(flat+totInc);
-  $("#cM12").textContent=short(base*Math.pow(1.05,12));
-  $("#cM12S").textContent=base>0?`+${pct(Math.pow(1.05,12)-1,0)} sobre a receita atual`:"";
+  $("#cM12").textContent=short(last);
+  $("#cM12S").textContent=base>0?`+${pct(last/base-1,0)} sobre a receita atual`:"";
   const W=960,H=360,ml=72,mr=16,mt=28,mb=36,iw=W-ml-mr,ih=H-mt-mb;
-  const max=base*Math.pow(1.05,12)||1, st=niceStep(max/4), ymax=Math.ceil(max/st)*st;
+  const max=last||1, st=niceStep(max/4), ymax=Math.ceil(max/st)*st;
   const y=v=>mt+ih-(v/ymax)*ih, band=iw/12, bw=Math.min(44,band*.56);
-  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Projeção de 12 meses: receita flat contra incremento de 5% ao mês">`;
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Projeção de 12 meses: receita flat contra Growth 30D com +5% ao mês">`;
   for(let v=0;v<=ymax+1e-6;v+=st)s+=`<line class="gl" x1="${ml}" x2="${W-mr}" y1="${y(v)}" y2="${y(v)}"></line><text x="${ml-10}" y="${y(v)+4}" text-anchor="end">${short(v).replace("R$ ","")}</text>`;
   data.forEach((d,i)=>{
     const x=ml+band*i+(band-bw)/2, yb=y(d.base), hb=y(0)-yb, yi=y(d.base+d.inc), hi=Math.max(0,yb-2-yi), r=Math.min(4,hi/2);
