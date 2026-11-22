@@ -103,7 +103,7 @@
      a guia original continua com o guia aberto. Se a nova guia for bloqueada, a própria guia vai para a thank-you page. */
   var IS_THANK_YOU = location.pathname.indexOf(CONFIG.thankYou) === 0;
   function openThankYou() {
-    var url = CONFIG.thankYou + guideHash();
+    var url = CONFIG.thankYou;   // URL limpa, sem #, para públicos de remarketing por URL
     var w = window.open(url, "_blank");
     if (w) { try { w.opener = null; } catch (e) {} dl("gha_thank_you_aberta", { aberto: "nova-guia" }); return; }
     dl("gha_thank_you_aberta", { aberto: "mesma-guia" });
@@ -121,17 +121,30 @@
   /* Mantém a entrega na tela e, 7 s depois, abre o WhatsApp em nova guia.
      Sem clique recente o navegador costuma bloquear a nova guia; nesse caso a própria guia vai
      para o WhatsApp (o botão Voltar traz a entrega de volta). */
-  var WA_AUTO_DELAY = 7000, waTimer = null;
+  /* Remarketing: só sai da página depois que o GTM carregou e processou o carregamento da página
+     (evento gtm.load), com folga para as tags enviarem. Regra: espera pelo menos WA_AUTO_DELAY desde a entrega
+     E WA_GTM_BUFFER depois do gtm.load; se o GTM não carregar, sai mesmo assim em WA_MAX_WAIT. */
+  var WA_AUTO_DELAY = 7000, WA_GTM_BUFFER = 1500, WA_MAX_WAIT = 15000, waTimer = null;
+  function gtmLoaded() {
+    return (window.dataLayer || []).some(function (e) { return e && e.event === "gtm.load"; });
+  }
   function openWaAfterDelivery() {
     var msg = "Olá, acabei de obter meu guia High Ticket Agêntico e gostaria de acompanhamento personalizado para executar.";
     var url = "https://api.whatsapp.com/send/?phone=" + CONFIG.whatsapp + "&text=" + encodeURIComponent(msg);
-    clearTimeout(waTimer);
-    waTimer = setTimeout(function () {
+    var t0 = Date.now(), readyAt = 0;
+    clearInterval(waTimer);
+    waTimer = setInterval(function () {
+      var now = Date.now();
+      if (!readyAt && gtmLoaded()) readyAt = now;
+      var ok = readyAt && now - t0 >= WA_AUTO_DELAY && now - readyAt >= WA_GTM_BUFFER;
+      if (!ok && now - t0 < WA_MAX_WAIT) return;
+      clearInterval(waTimer);
+      var info = { gtm: readyAt ? "carregado" : "nao-carregado", espera_ms: now - t0 };
       var w = window.open(url, "_blank");
-      if (w) { try { w.opener = null; } catch (e) {} dl("gha_whatsapp_auto", { aberto: "sim" }); return; }
-      dl("gha_whatsapp_auto", { aberto: "mesma-guia" });
-      setTimeout(function () { location.href = url; }, 150);   // dá tempo do evento sair para o GTM
-    }, WA_AUTO_DELAY);
+      if (w) { try { w.opener = null; } catch (e) {} info.aberto = "sim"; dl("gha_whatsapp_auto", info); return; }
+      info.aberto = "mesma-guia"; dl("gha_whatsapp_auto", info);
+      setTimeout(function () { location.href = url; }, 300);   // dá tempo do evento sair para o GTM
+    }, 250);
   }
 
   /* ---------- planilha (Google Forms) e dataLayer ---------- */
@@ -425,7 +438,7 @@
     sendLead("cadastro");
     dl("gha_cadastro");
     if (qualKey() === "mql") dl("lead_qualificado");   // MQL: investe mais de R$20 mil/mês
-    history.replaceState(null, "", location.pathname + location.search + guideHash());
+    if (!IS_THANK_YOU) history.replaceState(null, "", location.pathname + location.search + guideHash());   // a thank-you page fica sem #
     go("pb");
     if (IS_THANK_YOU) thankYouBoot(); else openThankYou();
   }
@@ -521,8 +534,11 @@
   load();
   if (!document.body.classList.contains("gha-pdf")) {
     window.addEventListener("hashchange", route);
-    if (openOnLoad && !location.hash) history.replaceState(null, "", location.pathname + location.search + (state.lead ? guideHash() : CONFIG.hash));
-    route();
+    if (IS_THANK_YOU && !location.hash) open();   // thank-you page: abre a entrega sem # na URL
+    else {
+      if (openOnLoad && !location.hash) history.replaceState(null, "", location.pathname + location.search + (state.lead ? guideHash() : CONFIG.hash));
+      route();
+    }
     armAuto();
     thankYouBoot();
   }
