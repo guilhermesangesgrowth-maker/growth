@@ -5,9 +5,11 @@
  * Ao enviar: grava na mesma planilha dos guias (origem "home-whatsapp"),
  * avisa o GTM e abre o WhatsApp em nova guia (dentro do clique, então não é bloqueado).
  * Quem já respondeu neste navegador vai direto para o WhatsApp.
+ * Eventos (mesmo esquema dos guias): form_open, form_step, generate_lead, qualify_lead, whatsapp_open.
  * ===================================================================== */
 (function () {
   "use strict";
+  window.GS_WA_FORM = true;   // avisa o agentico.js que os cliques de WhatsApp desta página são medidos aqui
 
   var CONFIG = {
     leadEndpoint: "https://docs.google.com/forms/d/e/1FAIpQLSf7K-fnfHxo8OGYD715wdvWaF0r1p61pyV3kAbxDS8_Pd_n6w/formResponse",
@@ -135,9 +137,9 @@
     draft = prefill(); step = 0;
     render();
     back.hidden = false; box.hidden = false; document.body.classList.add("wf-open");
-    dl("home_whatsapp_form", { clique: origem });
+    dl("form_open", { modo: "whatsapp", local: origem }); dl("form_step", { pergunta: QS[0].k, passo: 1 });
   }
-  function next() { step++; render(); dl("home_whatsapp_pergunta", { pergunta: QS[step].k }); }
+  function next() { step++; render(); dl("form_step", { pergunta: QS[step].k, passo: step + 1 }); }
   function closeForm() {
     if (box.hidden) return;
     back.hidden = true; box.hidden = true; box.innerHTML = ""; document.body.classList.remove("wf-open");
@@ -163,7 +165,7 @@
     e.preventDefault();
     var origem = origemDe(a);
     if (lead) {   // já respondeu: direto para o WhatsApp
-      sendLead("whatsapp-" + origem); dl("home_whatsapp_direto", { clique: origem });
+      sendLead("whatsapp-" + origem); dl("whatsapp_open", { modo: "direto", local: origem });
       goWhatsApp(a.href); return;
     }
     openForm(a.href, origem);
@@ -204,8 +206,9 @@
     lead = { nome: draft.nome, whatsapp: draft.whatsapp, email: draft.email, porte: draft.porte, momento: momento.value };
     try { localStorage.setItem(CONFIG.storageKey, JSON.stringify(lead)); } catch (e2) {}
     sendLead("cadastro");
-    dl("home_whatsapp_cadastro", { clique: origemClique });
-    if (qual(lead) === "mql") dl("lead_qualificado", { clique: origemClique });
+    dl("generate_lead", { local: origemClique });
+    if (qual(lead) === "mql") dl("qualify_lead", { local: origemClique });
+    dl("whatsapp_open", { modo: "formulario", local: origemClique });
     goWhatsApp(pendingUrl);   // ainda dentro do envio do formulário: o navegador permite a nova guia
     closeForm();
   });

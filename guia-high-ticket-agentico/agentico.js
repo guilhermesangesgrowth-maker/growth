@@ -105,15 +105,13 @@
   function openThankYou() {
     var url = CONFIG.thankYou;   // URL limpa, sem #, para públicos de remarketing por URL
     var w = window.open(url, "_blank");
-    if (w) { try { w.opener = null; } catch (e) {} dl("gha_thank_you_aberta", { aberto: "nova-guia" }); return; }
-    dl("gha_thank_you_aberta", { aberto: "mesma-guia" });
-    setTimeout(function () { location.href = url; }, 150);
+    if (w) { try { w.opener = null; } catch (e) {} return; }
+    setTimeout(function () { location.href = url; }, 150);   // a chegada é medida pelo page_view da thank-you page
   }
   /* Na thank-you page: 7 s depois da entrega, abre o WhatsApp (uma vez por guia do navegador,
      para o botão Voltar não repetir o redirecionamento). */
   function thankYouBoot() {
     if (!IS_THANK_YOU || !state.lead) return;
-    dl("gha_thank_you");
     try { if (sessionStorage.getItem("gha-wa-auto")) return; sessionStorage.setItem("gha-wa-auto", "1"); } catch (e) {}
     openWaAfterDelivery();
   }
@@ -139,10 +137,10 @@
       var ok = readyAt && now - t0 >= WA_AUTO_DELAY && now - readyAt >= WA_GTM_BUFFER;
       if (!ok && now - t0 < WA_MAX_WAIT) return;
       clearInterval(waTimer);
-      var info = { gtm: readyAt ? "carregado" : "nao-carregado", espera_ms: now - t0 };
+      var info = { modo: "automatico", local: "thank-you-page", gtm_carregado: readyAt ? "sim" : "nao", espera_ms: now - t0 };
       var w = window.open(url, "_blank");
-      if (w) { try { w.opener = null; } catch (e) {} info.aberto = "sim"; dl("gha_whatsapp_auto", info); return; }
-      info.aberto = "mesma-guia"; dl("gha_whatsapp_auto", info);
+      if (w) { try { w.opener = null; } catch (e) {} info.aberto = "nova-guia"; dl("whatsapp_open", info); return; }
+      info.aberto = "mesma-guia"; dl("whatsapp_open", info);
       setTimeout(function () { location.href = url; }, 300);   // dá tempo do evento sair para o GTM
     }, 250);
   }
@@ -171,8 +169,11 @@
     return k ? CONFIG.hash + "-1" : CONFIG.hash;
   }
   window.dataLayer = window.dataLayer || [];
+  /* Eventos (mesmo esquema do Guia Growth 30D e da home): form_open, form_step, generate_lead,
+   * qualify_lead, whatsapp_open, mais gha_agente e gha_copiar (interação com o guia).
+   * Downloads: medição automática do GA4 (file_download). Thank-you page: page_view da URL. */
   function dl(event, extra) {
-    var o = { event: event, guia: CONFIG.origem, qualificacao: qualKey() || "sem-cadastro", segmento: segLabel(), momento: (state.lead && state.lead.momento) || "" };
+    var o = { event: event, origem: CONFIG.origem, qualificacao: qualKey() || "sem-cadastro", porte: (state.lead && state.lead.porte) || "", momento: (state.lead && state.lead.momento) || "" };
     for (var k in (extra || {})) o[k] = extra[k];
     window.dataLayer.push(o);
   }
@@ -361,7 +362,9 @@
     else { var h = root.querySelector(".gha-title, .gha-h1"); if (h) h.focus({ preventScroll: true }); }
     if (ui.screen === "intro") ui.timer = setTimeout(function () { if (ui.open && ui.screen === "intro") go("lead"); }, CONFIG.introMs);
   }
-  function go(name) { ui.screen = name; dl("gha_tela", { tela: name }); shell(); }
+  function go(name) { ui.screen = name; shell(); if (name === "lead") stepEvent(); }
+  function stepEvent() { dl("form_step", { pergunta: QS[ui.q].k, passo: ui.q + 1 }); }
+  function nextQ() { ui.q++; shell(); stepEvent(); }
 
   /* ---------- abrir, fechar, rotas ---------- */
   function isOurHash(h) { return h === CONFIG.hash || h.indexOf(CONFIG.hash + "-") === 0; }
@@ -372,7 +375,8 @@
     ui.screen = state.lead ? "pb" : "intro";
     root.hidden = false;
     document.body.classList.add("gha-open");
-    dl("gha_abrir");
+    if (!state.lead) dl("form_open", { modo: ui.openModo || "link", local: ui.openLocal || "" });
+    ui.openModo = ui.openLocal = "";
     shell();
   }
   function close() {
@@ -436,8 +440,8 @@
     state.segmento = d.segmento; save();
     try { localStorage.removeItem(CONFIG.dismissKey); } catch (e) {}
     sendLead("cadastro");
-    dl("gha_cadastro");
-    if (qualKey() === "mql") dl("lead_qualificado");   // MQL: investe mais de R$20 mil/mês
+    dl("generate_lead");
+    if (qualKey() === "mql") dl("qualify_lead");   // MQL: investe mais de R$20 mil/mês
     if (!IS_THANK_YOU) history.replaceState(null, "", location.pathname + location.search + guideHash());   // a thank-you page fica sem #
     go("pb");
     if (IS_THANK_YOU) thankYouBoot(); else openThankYou();
@@ -468,13 +472,19 @@
   /* ---------- eventos ---------- */
   document.addEventListener("click", function (e) {
     var t = e.target;
-    if (t.closest("[data-gha-open]")) { e.preventDefault(); dl("gha_cta", { local: t.closest("[data-gha-open]").getAttribute("data-gha-open") || "" }); startFlow(); return; }
-    if (t.closest(".wa-float")) { if (state.lead) sendLead("whatsapp-flutuante"); dl("whatsapp_flutuante", { com_popup: ui.open ? "sim" : "nao" }); return; }
+    if (t.closest("[data-gha-open]")) { e.preventDefault(); ui.openModo = "botao"; ui.openLocal = t.closest("[data-gha-open]").getAttribute("data-gha-open") || ""; startFlow(); return; }
+    /* WhatsApp: na home quem mede é o js/wa-form.js (pop-up antes do WhatsApp), exceto o botão de dentro deste pop-up */
+    var wa = t.closest('a[href*="api.whatsapp.com"], a[href*="wa.me/"]');
+    if (wa && (root.contains(wa) || !window.GS_WA_FORM)) {
+      var local = wa.id === "ghaWa" ? "popup" : wa.closest(".wa-float") ? "flutuante" : ((wa.closest("section[id]") || {}).id || "pagina");
+      if (state.lead) sendLead(local === "popup" ? "cta-whatsapp" : "whatsapp-" + local);
+      dl("whatsapp_open", { modo: "clique", local: local });
+      return;
+    }
     if (!ui.open || !root.contains(t)) return;
     if (t.closest("[data-gha-close]")) { closeAndClean(); return; }
     if (t.closest("[data-gha-reset]")) { resetAll(); return; }
-    if (t.closest("#ghaWa")) { sendLead("cta-whatsapp"); dl("gha_cta_whatsapp"); return; }
-    if (t.closest("[data-gha-dl]")) { sendLead("download-kit"); dl("gha_download_kit"); return; }
+    if (t.closest("[data-gha-dl]")) { sendLead("download-kit"); return; }   // download: medição automática do GA4 (file_download)
     var cp = t.closest("[data-gha-copy]");
     if (cp) { copy(ui.copies[+cp.getAttribute("data-gha-copy")], cp); dl("gha_copiar"); return; }
     var jp = t.closest("[data-gha-jump]");
@@ -484,7 +494,7 @@
     if (t.closest(".gha-screen--intro") || (ui.screen === "intro" && t.closest("#ghaTopDg"))) { go("lead"); return; }
     if (t.closest("[data-gha-qback]")) { if (ui.q > 0) { ui.q--; shell(); } else go("intro"); return; }
     var qo = t.closest("[data-gha-opt]");
-    if (qo) { ui.draft[QS[ui.q].k] = qo.getAttribute("data-gha-opt"); ui.q++; shell(); return; }
+    if (qo) { ui.draft[QS[ui.q].k] = qo.getAttribute("data-gha-opt"); nextQ(); return; }
   });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape" && ui.open) closeAndClean(); });
   root.addEventListener("input", function (e) {
@@ -502,7 +512,7 @@
     }
     var el = $("gha-in"), v = el.value.trim(), m = validate(q.k, v);
     if (m) { err(m); el.focus(); return; }
-    ui.draft[q.k] = v; ui.q++; shell();
+    ui.draft[q.k] = v; nextQ();
   });
   root.addEventListener("change", function (e) {
     var k = e.target.getAttribute && e.target.getAttribute("data-gha-check");
@@ -522,7 +532,7 @@
   function armAuto() {
     if (!autoOk()) return;
     var fired = false;
-    function fire() { if (fired) return; fired = true; window.removeEventListener("scroll", onScroll); clearTimeout(tm); if (autoOk()) { dl("gha_auto"); location.hash = CONFIG.hash; } }
+    function fire() { if (fired) return; fired = true; window.removeEventListener("scroll", onScroll); clearTimeout(tm); if (autoOk()) { ui.openModo = "automatico"; location.hash = CONFIG.hash; } }
     function onScroll() { var h = document.documentElement; if ((h.scrollTop + window.innerHeight) / h.scrollHeight >= CONFIG.auto.scrollRatio) fire(); }
     var tm = setTimeout(fire, CONFIG.auto.delayMs);
     window.addEventListener("scroll", onScroll, { passive: true });

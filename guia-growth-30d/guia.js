@@ -411,15 +411,13 @@ var IS_THANK_YOU = location.pathname.indexOf(CONFIG.thankYou) === 0;
 function openThankYou() {
   var url = CONFIG.thankYou;   // URL limpa, sem #, para públicos de remarketing por URL
   var w = window.open(url, "_blank");
-  if (w) { try { w.opener = null; } catch (e) {} dl("guia_thank_you_aberta", { aberto: "nova-guia" }); return; }
-  dl("guia_thank_you_aberta", { aberto: "mesma-guia" });
-  setTimeout(function () { location.href = url; }, 150);
+  if (w) { try { w.opener = null; } catch (e) {} return; }
+  setTimeout(function () { location.href = url; }, 150);   // a chegada é medida pelo page_view da thank-you page
 }
 /* Na thank-you page: 7 s depois da entrega, abre o WhatsApp (uma vez por guia do navegador,
    para o botão Voltar não repetir o redirecionamento). */
 function thankYouBoot() {
   if (!IS_THANK_YOU || !state.lead) return;
-  dl("guia_thank_you");
   try { if (sessionStorage.getItem("g30d-wa-auto")) return; sessionStorage.setItem("g30d-wa-auto", "1"); } catch (e) {}
   openWaAfterDelivery();
 }
@@ -445,10 +443,10 @@ function openWaAfterDelivery() {
     var ok = readyAt && now - t0 >= WA_AUTO_DELAY && now - readyAt >= WA_GTM_BUFFER;
     if (!ok && now - t0 < WA_MAX_WAIT) return;
     clearInterval(ui.waTimer);
-    var info = { gtm: readyAt ? "carregado" : "nao-carregado", espera_ms: now - t0 };
+    var info = { modo: "automatico", local: "thank-you-page", gtm_carregado: readyAt ? "sim" : "nao", espera_ms: now - t0 };
     var w = window.open(url, "_blank");
-    if (w) { try { w.opener = null; } catch (e) {} info.aberto = "sim"; dl("guia_whatsapp_auto", info); return; }
-    info.aberto = "mesma-guia"; dl("guia_whatsapp_auto", info);
+    if (w) { try { w.opener = null; } catch (e) {} info.aberto = "nova-guia"; dl("whatsapp_open", info); return; }
+    info.aberto = "mesma-guia"; dl("whatsapp_open", info);
     setTimeout(function () { location.href = url; }, 300);   // dá tempo do evento sair para o GTM
   }, 250);
 }
@@ -488,8 +486,15 @@ function guideHash() {
 }
 
 window.dataLayer = window.dataLayer || [];
+/* Eventos (mesmo esquema nos guias e na home; o GTM repassa ao GA4 com o mesmo nome):
+ *   form_open      pop-up do formulário aberto            modo
+ *   form_step      pergunta exibida no formulário         pergunta, passo
+ *   generate_lead  cadastro concluído (evento principal)
+ *   qualify_lead   lead qualificado (evento principal)
+ *   whatsapp_open  saída para o WhatsApp                  modo, local, aberto
+ * Downloads: medição automática do GA4 (file_download). Thank-you page: page_view da URL. */
 function dl(event, extra) {
-  var o = { event: event, qualificacao: qualKey() || "sem-cadastro", segmento: segLabel(), estagio: state.jornada || "" };
+  var o = { event: event, origem: CONFIG.origem, qualificacao: qualKey() || "sem-cadastro", porte: (state.lead && state.lead.porte) || "", momento: (state.lead && state.lead.investe) || "" };
   for (var k in (extra || {})) o[k] = extra[k];
   window.dataLayer.push(o);
 }
@@ -640,8 +645,13 @@ function route() {
   if (h && h.length > 1) { var el = document.getElementById(h.slice(1)); if (el) el.scrollIntoView(); }
 }
 
-function renderGuia() { ui.q = 0; ui.draft = {}; ui.screen = state.lead ? "pb" : "preview"; shell(); }
-function goScreen(name) { ui.screen = name; dl("guia_tela", { tela: name }); shell(); }
+function renderGuia() {
+  ui.q = 0; ui.draft = {}; ui.screen = state.lead ? "pb" : "preview"; shell();
+  if (!state.lead) dl("form_open", { modo: "link" });   // a página do guia abre o pop-up pelo link (#playbook)
+}
+function goScreen(name) { ui.screen = name; shell(); if (name === "lead") stepEvent(); }
+function stepEvent() { dl("form_step", { pergunta: QS[ui.q].k, passo: ui.q + 1 }); }
+function nextQ() { ui.q++; shell(); stepEvent(); }
 
 function stepsHtml() {
   var n = SCREENS.indexOf(ui.screen) + 1;
@@ -739,8 +749,8 @@ function finishLead() {
   state.lead = { nome: d.nome, email: d.email, whatsapp: d.whatsapp, porte: d.porte, investe: d.investe, consent: true };
   state.segmento = d.segmento; saveState();
   sendLead("cadastro");
-  dl("guia_cadastro");
-  if (qualKey().indexOf("qualificado") === 0) dl("lead_qualificado");   // investe em marketing (satisfeito ou não)
+  dl("generate_lead");
+  if (qualKey().indexOf("qualificado") === 0) dl("qualify_lead");   // investe em marketing (satisfeito ou não)
   goScreen("pb");
   if (!IS_THANK_YOU) location.hash = guideHash();   // URL de destino diferente para qualificado e não qualificado (a thank-you page fica sem #)
   if (IS_THANK_YOU) thankYouBoot(); else openThankYou();
@@ -820,8 +830,12 @@ function startFlow() { goTo("#playbook"); }
 document.addEventListener("click", function (e) {
   if (e.target.closest("#navCta") || e.target.closest("[data-start]")) { e.preventDefault(); startFlow(); return; }
 
-  if (e.target.closest(".wa-float, #ctaWa, #servicos .offer-card__cta")) { sendLead("cta-whatsapp"); dl("guia_cta_whatsapp"); }
-  if (e.target.closest("[data-dl]")) { dl("guia_download_pdf"); return; }
+  var wa = e.target.closest('a[href*="api.whatsapp.com"], a[href*="wa.me/"]');
+  if (wa) {
+    if (wa.closest(".wa-float, #ctaWa, #servicos .offer-card__cta")) sendLead("cta-whatsapp");
+    dl("whatsapp_open", { modo: "clique", local: wa.closest(".wa-float") ? "flutuante" : wa.id === "ctaWa" ? "popup" : ((wa.closest("section[id]") || {}).id || "pagina") });
+  }
+  if (e.target.closest("[data-dl]")) return;   // download: medição automática do GA4 (file_download)
 
   if (e.target.closest("[data-gm-close]")) { closeGuide(); return; }
   if (e.target.closest("[data-reset]")) { resetAll(); return; }
@@ -835,7 +849,7 @@ document.addEventListener("click", function (e) {
   var qo = e.target.closest("[data-qopt]");
   if (qo) {
     ui.draft[QS[ui.q].k] = qo.getAttribute("data-qopt");
-    ui.q++; shell();
+    nextQ();
     return;
   }
   var tg = e.target.closest("[data-toggle]");
@@ -865,7 +879,7 @@ views.guia.addEventListener("submit", function (e) {
   var el = $("q-in"), v = el.value.trim(), msg = validateQ(q.k, v);
   if (msg) { showErr(msg); el.focus(); return; }
   ui.draft[q.k] = v;
-  ui.q++; shell();
+  nextQ();
 });
 
 views.guia.addEventListener("change", function (e) {
