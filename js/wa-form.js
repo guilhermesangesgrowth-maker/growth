@@ -90,35 +90,54 @@
   box.setAttribute("role", "dialog"); box.setAttribute("aria-modal", "true"); box.setAttribute("aria-labelledby", "wf-title");
   document.body.appendChild(back); document.body.appendChild(box);
 
-  function radios(name, list, cur, cls) {
-    return '<div class="' + cls + '">' + list.map(function (t) {
-      return '<label class="wf-r"><input type="radio" name="' + name + '" value="' + esc(t) + '"' + (cur === t ? " checked" : "") + '><span>' + esc(t) + '</span></label>';
-    }).join("") + '</div>';
-  }
-  function render(d) {
+  /* uma pergunta por tela, com barra de progresso (mesmo formato do pop-up dos guias) */
+  var QS = [
+    { k: "nome", type: "text", q: "Qual é o seu nome?", ph: "Seu nome", ac: "name", im: "text" },
+    { k: "whatsapp", type: "tel", q: "Qual é o seu WhatsApp?", ph: "(00) 00000-0000", ac: "tel", im: "tel" },
+    { k: "email", type: "email", q: "Qual é o seu melhor e-mail?", ph: "voce@email.com", ac: "email", im: "email" },
+    { k: "porte", type: "opts", q: "Quantas pessoas trabalham com você hoje?" },
+    { k: "momento", type: "final", q: "Qual é o momento do seu negócio?" }
+  ];
+  var step = 0, draft = {};
+
+  function render() {
+    var q = QS[step], n = QS.length, body;
+    if (q.type === "opts") {
+      body = '<div class="wf-opts" role="radiogroup" aria-labelledby="wf-q">' + PORTES.map(function (p) {
+        return '<button type="button" role="radio" aria-checked="' + (draft.porte === p) + '" class="wf-opt' + (draft.porte === p ? " here" : "") + '" data-wf-opt="' + esc(p) + '">' + esc(p) + '</button>';
+      }).join("") + '</div><span class="wf-err" id="wf-err" role="alert"></span>';
+    } else if (q.type === "final") {
+      body = '<form id="wfForm" novalidate><div class="wf-radios" role="radiogroup" aria-labelledby="wf-q">' + MOMENTOS.map(function (t) {
+        return '<label class="wf-r"><input type="radio" name="wf-momento" value="' + esc(t) + '"' + (draft.momento === t ? " checked" : "") + '><span>' + esc(t) + '</span></label>';
+      }).join("") + '</div>' +
+        '<label class="wf-consent"><input id="wf-consent" type="checkbox"><span>Concordo em receber contatos sobre growth, conforme a LGPD.</span></label>' +
+        '<span class="wf-err" id="wf-err" role="alert"></span>' +
+        '<button type="submit" class="btn btn--primary wf-go">Ir para o WhatsApp</button></form>';
+    } else {
+      body = '<form id="wfForm" novalidate>' +
+        '<input class="wf-in" id="wf-in" type="' + q.type + '" inputmode="' + q.im + '" autocomplete="' + q.ac + '" placeholder="' + esc(q.ph) + '" value="' + esc(draft[q.k] || "") + '" aria-labelledby="wf-q">' +
+        '<span class="wf-err" id="wf-err" role="alert"></span>' +
+        '<button type="submit" class="btn btn--primary wf-go">Continuar</button></form>';
+    }
     box.innerHTML =
       '<button type="button" class="wf-x" data-wf-close aria-label="Fechar">×</button>' +
       '<p class="eyebrow">Atendimento pelo WhatsApp</p>' +
-      '<h2 class="wf-title" id="wf-title" tabindex="-1">Você será direcionado para atendimento agora mesmo.</h2>' +
-      '<p class="wf-lead">Antes disso, responda:</p>' +
-      '<form id="wfForm" novalidate>' +
-      '<label class="wf-f"><span>Qual é o seu nome?</span><input class="wf-in" id="wf-nome" name="nome" type="text" autocomplete="name" placeholder="Seu nome" value="' + esc(d.nome) + '"></label>' +
-      '<label class="wf-f"><span>Qual é o seu WhatsApp?</span><input class="wf-in" id="wf-whats" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="(00) 00000-0000" value="' + esc(d.whatsapp) + '"></label>' +
-      '<label class="wf-f"><span>Qual é o seu melhor e-mail?</span><input class="wf-in" id="wf-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="voce@email.com" value="' + esc(d.email) + '"></label>' +
-      '<fieldset class="wf-group"><legend class="wf-q">Quantas pessoas trabalham com você hoje?</legend>' + radios("wf-porte", PORTES, d.porte, "wf-opts") + '</fieldset>' +
-      '<fieldset class="wf-group"><legend class="wf-q">Qual é o momento do seu negócio?</legend>' + radios("wf-momento", MOMENTOS, d.momento, "wf-radios") + '</fieldset>' +
-      '<label class="wf-consent"><input id="wf-consent" type="checkbox"><span>Concordo em receber contatos sobre growth, conforme a LGPD.</span></label>' +
-      '<span class="wf-err" id="wf-err" role="alert"></span>' +
-      '<button type="submit" class="btn btn--primary wf-go">Ir para o WhatsApp</button>' +
-      '</form>';
+      '<p class="wf-head" id="wf-title">Você será direcionado para atendimento agora mesmo. Antes disso, responda:</p>' +
+      (step > 0 ? '<button type="button" class="wf-back" data-wf-back>← Voltar</button>' : '') +
+      '<div class="wf-prog" aria-hidden="true"><i style="width:' + Math.round((step + 1) / n * 100) + '%"></i></div>' +
+      '<p class="wf-count">Pergunta ' + (step + 1) + ' de ' + n + '</p>' +
+      '<h2 class="wf-title" id="wf-q" tabindex="-1">' + esc(q.q) + '</h2>' + body;
+    var inp = $("wf-in");
+    setTimeout(function () { (inp || $("wf-q")).focus({ preventScroll: true }); }, 30);
   }
   function openForm(url, origem) {
     pendingUrl = url; origemClique = origem; lastFocus = document.activeElement;
-    render(prefill());
+    draft = prefill(); step = 0;
+    render();
     back.hidden = false; box.hidden = false; document.body.classList.add("wf-open");
     dl("home_whatsapp_form", { clique: origem });
-    var first = $("wf-nome"); setTimeout(function () { (first && !first.value ? first : $("wf-title")).focus({ preventScroll: true }); }, 30);
   }
+  function next() { step++; render(); dl("home_whatsapp_pergunta", { pergunta: QS[step].k }); }
   function closeForm() {
     if (box.hidden) return;
     back.hidden = true; box.hidden = true; box.innerHTML = ""; document.body.classList.remove("wf-open");
@@ -150,26 +169,39 @@
     openForm(a.href, origem);
   }, true);
 
-  box.addEventListener("click", function (e) { if (e.target.closest("[data-wf-close]")) closeForm(); });
+  function validate(k, v) {
+    if (k === "nome") return v.length < 2 ? "Informe seu nome." : "";
+    if (k === "whatsapp") return phoneOk(v) ? "" : "Informe um WhatsApp com DDD (aceita +55).";
+    if (k === "email") return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? "" : "Informe um e-mail válido.";
+    return "";
+  }
+
+  box.addEventListener("click", function (e) {
+    if (e.target.closest("[data-wf-close]")) { closeForm(); return; }
+    if (e.target.closest("[data-wf-back]")) { if (step > 0) { step--; render(); } return; }
+    var o = e.target.closest("[data-wf-opt]");
+    if (o) { draft[QS[step].k] = o.getAttribute("data-wf-opt"); next(); }
+  });
   back.addEventListener("click", closeForm);
   document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !box.hidden) closeForm(); });
   box.addEventListener("input", function (e) {
-    if (e.target.id === "wf-whats") e.target.value = maskPhone(e.target.value);
+    if (e.target.id === "wf-in" && e.target.type === "tel") e.target.value = maskPhone(e.target.value);
     e.target.removeAttribute && e.target.removeAttribute("aria-invalid");
     var m = $("wf-err"); if (m) m.textContent = "";
   });
   box.addEventListener("submit", function (e) {
     if (e.target.id !== "wfForm") return;
     e.preventDefault();
-    var nome = $("wf-nome"), whats = $("wf-whats"), email = $("wf-email");
-    var porte = box.querySelector('input[name="wf-porte"]:checked'), momento = box.querySelector('input[name="wf-momento"]:checked');
-    if (nome.value.trim().length < 2) return err("Informe seu nome.", nome);
-    if (!phoneOk(whats.value)) return err("Informe um WhatsApp com DDD (aceita +55).", whats);
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim())) return err("Informe um e-mail válido.", email);
-    if (!porte) return err("Escolha quantas pessoas trabalham com você.");
-    if (!momento) return err("Escolha o momento do seu negócio.");
+    var q = QS[step];
+    if (q.type !== "final") {
+      var el = $("wf-in"), v = el.value.trim(), m = validate(q.k, v);
+      if (m) return err(m, el);
+      draft[q.k] = v; next(); return;
+    }
+    var momento = box.querySelector('input[name="wf-momento"]:checked');
+    if (!momento) return err("Escolha uma opção.");
     if (!$("wf-consent").checked) return err("Marque para continuar.");
-    lead = { nome: nome.value.trim(), whatsapp: whats.value.trim(), email: email.value.trim(), porte: porte.value, momento: momento.value };
+    lead = { nome: draft.nome, whatsapp: draft.whatsapp, email: draft.email, porte: draft.porte, momento: momento.value };
     try { localStorage.setItem(CONFIG.storageKey, JSON.stringify(lead)); } catch (e2) {}
     sendLead("cadastro");
     dl("home_whatsapp_cadastro", { clique: origemClique });
