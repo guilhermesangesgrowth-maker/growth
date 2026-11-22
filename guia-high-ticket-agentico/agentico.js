@@ -96,6 +96,14 @@
     return "https://api.whatsapp.com/send/?phone=" + CONFIG.whatsapp + "&text=" + encodeURIComponent(msg);
   }
 
+  /* Após a entrega: abre o WhatsApp em nova guia pedindo acompanhamento.
+     Roda dentro do submit do cadastro (gesto do usuário), então o navegador não bloqueia o pop-up. */
+  function openWaAfterDelivery() {
+    var msg = "Olá, acabei de obter meu guia High Ticket Agêntico e gostaria de acompanhamento personalizado para executar.";
+    window.open("https://api.whatsapp.com/send/?phone=" + CONFIG.whatsapp + "&text=" + encodeURIComponent(msg), "_blank", "noopener");
+    dl("gha_whatsapp_auto");
+  }
+
   /* ---------- planilha (Google Forms) e dataLayer ---------- */
   function sendLead(stage) {
     if (!CONFIG.leadEndpoint || !state.lead) return;
@@ -389,6 +397,7 @@
     if (qualKey() === "mql") dl("lead_qualificado");   // MQL: investe mais de R$20 mil/mês
     history.replaceState(null, "", location.pathname + location.search + guideHash());
     go("pb");
+    openWaAfterDelivery();
   }
 
   /* ---------- copiar ---------- */

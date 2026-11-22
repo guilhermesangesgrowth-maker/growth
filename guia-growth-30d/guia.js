@@ -403,6 +403,14 @@ function waUrl() {
   return "https://api.whatsapp.com/send/?phone=" + CONFIG.whatsapp + "&text=" + encodeURIComponent(msg);
 }
 
+/* Após a entrega: abre o WhatsApp em nova guia pedindo acompanhamento.
+   Roda dentro do submit do cadastro (gesto do usuário), então o navegador não bloqueia o pop-up. */
+function openWaAfterDelivery() {
+  var msg = "Olá, acabei de obter meu guia Growth 30D e gostaria de acompanhamento personalizado para executar.";
+  window.open("https://api.whatsapp.com/send/?phone=" + CONFIG.whatsapp + "&text=" + encodeURIComponent(msg), "_blank", "noopener");
+  dl("guia_whatsapp_auto");
+}
+
 /* Envia ao Google Sheets (Apps Script). Cada etapa atualiza a mesma linha da pessoa. */
 function sendLead(stage) {
   if (!CONFIG.leadEndpoint || !state.lead) return;
@@ -694,6 +702,7 @@ function finishLead() {
   if (qualKey().indexOf("qualificado") === 0) dl("lead_qualificado");   // investe em marketing (satisfeito ou não)
   goScreen("pb");
   location.hash = guideHash();   // URL de destino diferente para qualificado e não qualificado
+  openWaAfterDelivery();
 }
 
 /* ---------- tela 3: entrega do guia em roadmap de 4 semanas ---------- */
