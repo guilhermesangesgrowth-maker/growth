@@ -25,6 +25,7 @@
     hash: "#guia-agentico",
     base: "guia-high-ticket-agentico/",   // caminho da pasta do guia a partir da página que carrega o script
     pdf: "kit-guia-high-ticket-agentico.pdf",
+    thankYou: "/thank-you-page-high-ticket-agentico/",   // página de entrega (abre em nova guia após o cadastro; URL própria para remarketing)
     introMs: 8000,
     // abertura automática: depois de X ms OU de rolar Y da página (o que vier primeiro), uma vez por visita.
     // Não abre se a pessoa já se cadastrou ou fechou o pop-up nos últimos N dias.
@@ -50,11 +51,12 @@
     "Invisto em marketing/vendas e estou satisfeito com o resultado"
   ];
   var MQL = MOMENTOS[2];
+  var PORTES = ["Só eu", "Entre 2 e 20 pessoas", "Entre 21 e 100 pessoas", "Mais de 101 pessoas"];   // mesmas opções do Guia Growth 30D
   var QS = [
     { k: "nome", type: "text", q: "Qual é o seu nome?", ph: "Seu nome", ac: "name", im: "text" },
     { k: "whatsapp", type: "tel", q: "Qual é o seu WhatsApp?", ph: "(00) 00000-0000", ac: "tel", im: "tel" },
     { k: "email", type: "email", q: "Qual é o seu melhor e-mail?", ph: "voce@email.com", ac: "email", im: "email" },
-    { k: "segmento", type: "opts", q: "Qual é o seu segmento?" },
+    { k: "porte", type: "opts", q: "Quantas pessoas trabalham com você hoje?" },
     { k: "momento", type: "final", q: "Qual é o momento do seu negócio?" }
   ];
   var SCREENS = ["intro", "lead", "pb"];
@@ -78,7 +80,7 @@
       try {
         var g = JSON.parse(localStorage.getItem(k) || "{}");
         if (g.lead) { ui.draft.nome = ui.draft.nome || g.lead.nome || ""; ui.draft.whatsapp = ui.draft.whatsapp || g.lead.whatsapp || ""; ui.draft.email = ui.draft.email || g.lead.email || ""; }
-        if (g.segmento && !ui.draft.segmento) ui.draft.segmento = g.segmento;
+        if (g.lead && PORTES.indexOf(g.lead.porte) >= 0 && !ui.draft.porte) ui.draft.porte = g.lead.porte;
       } catch (e) {}
     });
   }
@@ -96,9 +98,29 @@
     return "https://api.whatsapp.com/send/?phone=" + CONFIG.whatsapp + "&text=" + encodeURIComponent(msg);
   }
 
-  /* Após a entrega: mantém o pop-up do guia na tela e, 7 s depois, abre o WhatsApp em nova guia.
-     Navegadores costumam bloquear nova guia aberta mais de ~5 s depois do clique; nesse caso a própria guia vai
-     para o WhatsApp (o botão Voltar traz o guia de volta, já na tela de entrega). */
+  /* Thank-you page: a tela de entrega também existe em CONFIG.thankYou.
+     No cadastro, essa página abre em nova guia (dentro do clique, então o navegador não bloqueia);
+     a guia original continua com o guia aberto. Se a nova guia for bloqueada, a própria guia vai para a thank-you page. */
+  var IS_THANK_YOU = location.pathname.indexOf(CONFIG.thankYou) === 0;
+  function openThankYou() {
+    var url = CONFIG.thankYou + guideHash();
+    var w = window.open(url, "_blank");
+    if (w) { try { w.opener = null; } catch (e) {} dl("gha_thank_you_aberta", { aberto: "nova-guia" }); return; }
+    dl("gha_thank_you_aberta", { aberto: "mesma-guia" });
+    setTimeout(function () { location.href = url; }, 150);
+  }
+  /* Na thank-you page: 7 s depois da entrega, abre o WhatsApp (uma vez por guia do navegador,
+     para o botão Voltar não repetir o redirecionamento). */
+  function thankYouBoot() {
+    if (!IS_THANK_YOU || !state.lead) return;
+    dl("gha_thank_you");
+    try { if (sessionStorage.getItem("gha-wa-auto")) return; sessionStorage.setItem("gha-wa-auto", "1"); } catch (e) {}
+    openWaAfterDelivery();
+  }
+
+  /* Mantém a entrega na tela e, 7 s depois, abre o WhatsApp em nova guia.
+     Sem clique recente o navegador costuma bloquear a nova guia; nesse caso a própria guia vai
+     para o WhatsApp (o botão Voltar traz a entrega de volta). */
   var WA_AUTO_DELAY = 7000, waTimer = null;
   function openWaAfterDelivery() {
     var msg = "Olá, acabei de obter meu guia High Ticket Agêntico e gostaria de acompanhamento personalizado para executar.";
@@ -118,7 +140,7 @@
     var f = CONFIG.formFields, b = new URLSearchParams();
     b.append(f.etapa, stage); b.append(f.origem, CONFIG.origem);
     b.append(f.nome, state.lead.nome); b.append(f.email, state.lead.email); b.append(f.whatsapp, state.lead.whatsapp);
-    b.append(f.segmento, segLabel()); b.append(f.porte, "");
+    b.append(f.segmento, segLabel()); b.append(f.porte, state.lead.porte || "");
     b.append(f.jornada, "");
     b.append(f.consentimento, state.lead.consent ? "sim" : "nao"); b.append(f.investe, state.lead.momento || "");
     b.append(f.estagio, qualKey() === "mql" ? "MQL" : "pré-qualificação");
@@ -192,8 +214,8 @@
       '<h2 class="gha-title" tabindex="-1">' + esc(q.q) + '</h2>';
     var body;
     if (q.type === "opts") {
-      body = '<div class="gha-opts" role="radiogroup">' + SEGS.map(function (s) {
-        return '<button type="button" role="radio" aria-checked="' + (d.segmento === s.id) + '" class="gha-opt' + (d.segmento === s.id ? " here" : "") + '" data-gha-opt="' + esc(s.id) + '">' + esc(s.label) + '</button>';
+      body = '<div class="gha-opts" role="radiogroup">' + PORTES.map(function (p) {
+        return '<button type="button" role="radio" aria-checked="' + (d.porte === p) + '" class="gha-opt' + (d.porte === p ? " here" : "") + '" data-gha-opt="' + esc(p) + '">' + esc(p) + '</button>';
       }).join("") + '</div><span class="gha-err" id="gha-err" role="alert"></span>';
     } else if (q.type === "final") {
       body = '<form id="ghaForm" novalidate><div class="gha-radios">' + MOMENTOS.map(function (t) {
@@ -397,7 +419,7 @@
   function err(msg) { var e = $("gha-err"); if (e) e.textContent = msg || ""; }
   function finishLead() {
     var d = ui.draft;
-    state.lead = { nome: d.nome, email: d.email, whatsapp: d.whatsapp, momento: d.momento, consent: true };
+    state.lead = { nome: d.nome, email: d.email, whatsapp: d.whatsapp, porte: d.porte, momento: d.momento, consent: true };
     state.segmento = d.segmento; save();
     try { localStorage.removeItem(CONFIG.dismissKey); } catch (e) {}
     sendLead("cadastro");
@@ -405,7 +427,7 @@
     if (qualKey() === "mql") dl("lead_qualificado");   // MQL: investe mais de R$20 mil/mês
     history.replaceState(null, "", location.pathname + location.search + guideHash());
     go("pb");
-    openWaAfterDelivery();
+    if (IS_THANK_YOU) thankYouBoot(); else openThankYou();
   }
 
   /* ---------- copiar ---------- */
@@ -502,5 +524,6 @@
     if (openOnLoad && !location.hash) history.replaceState(null, "", location.pathname + location.search + (state.lead ? guideHash() : CONFIG.hash));
     route();
     armAuto();
+    thankYouBoot();
   }
 })();

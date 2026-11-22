@@ -20,7 +20,7 @@ while ($listener.IsListening) {
   $req = $context.Request
   $res = $context.Response
   $path = $req.Url.LocalPath
-  if ($path -eq "/") { $path = "/index.html" }
+  if ($path.EndsWith("/")) { $path = $path + "index.html" }   # pasta -> index.html (igual ao GitHub Pages)
   $filePath = Join-Path $root ($path.TrimStart("/"))
 
   try {

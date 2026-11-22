@@ -280,7 +280,8 @@ var CONFIG = {
   formFields: { etapa: "entry.176202070", origem: "entry.1587842509", nome: "entry.598034783", email: "entry.362575635", whatsapp: "entry.745510118", pagina: "entry.722341163", segmento: "entry.1739758473", porte: "entry.1257151820", estagio: "entry.1229289482", jornada: "entry.1355015536", consentimento: "entry.748315144", investe: "entry.1475592940" },
   origem: "guia-growth-30d",
   storageKey: "g30d-v3",
-  scrollToAsk: 260         // quantos pixels de rolagem depois de abrir uma área até pedir o cadastro
+  thankYou: "/thank-you-page-growth-30d/",   // página de entrega (abre em nova guia após o cadastro; URL própria para remarketing)
+  scrollToAsk: 260        // quantos pixels de rolagem depois de abrir uma área até pedir o cadastro
 };
 
 /* Tipo de infográfico de cada área */
@@ -368,7 +369,7 @@ var SEGS = [
 function seg(id) { return SEGS.filter(function (s) { return s.id === id; })[0]; }
 function segLabel() { var s = state.segmento ? seg(state.segmento) : null; return s ? s.label : ""; }
 var INVEST = ["Não invisto em marketing", "Invisto mas não tenho o resultado que gostaria", "Invisto e estou satisfeito(a) com o resultado"];
-var PORTES = ["Só eu", "2 a 10 pessoas", "11 a 50 pessoas", "Mais de 50 pessoas"];
+var PORTES = ["Só eu", "Entre 2 e 20 pessoas", "Entre 21 e 100 pessoas", "Mais de 101 pessoas"];
 
 /* ---------- estado ---------- */
 var state = { lead: null, segmento: null, jornada: null, open: {}, checks: {} };
@@ -403,9 +404,29 @@ function waUrl() {
   return "https://api.whatsapp.com/send/?phone=" + CONFIG.whatsapp + "&text=" + encodeURIComponent(msg);
 }
 
-/* Após a entrega: mantém o pop-up do guia na tela e, 7 s depois, abre o WhatsApp em nova guia.
-   Navegadores costumam bloquear nova guia aberta mais de ~5 s depois do clique; nesse caso a própria guia vai
-   para o WhatsApp (o botão Voltar traz o guia de volta, já na tela de entrega). */
+/* Thank-you page: a tela de entrega também existe em CONFIG.thankYou.
+   No cadastro, essa página abre em nova guia (dentro do clique, então o navegador não bloqueia);
+   a guia original continua com o guia aberto. Se a nova guia for bloqueada, a própria guia vai para a thank-you page. */
+var IS_THANK_YOU = location.pathname.indexOf(CONFIG.thankYou) === 0;
+function openThankYou() {
+  var url = CONFIG.thankYou + guideHash();
+  var w = window.open(url, "_blank");
+  if (w) { try { w.opener = null; } catch (e) {} dl("guia_thank_you_aberta", { aberto: "nova-guia" }); return; }
+  dl("guia_thank_you_aberta", { aberto: "mesma-guia" });
+  setTimeout(function () { location.href = url; }, 150);
+}
+/* Na thank-you page: 7 s depois da entrega, abre o WhatsApp (uma vez por guia do navegador,
+   para o botão Voltar não repetir o redirecionamento). */
+function thankYouBoot() {
+  if (!IS_THANK_YOU || !state.lead) return;
+  dl("guia_thank_you");
+  try { if (sessionStorage.getItem("g30d-wa-auto")) return; sessionStorage.setItem("g30d-wa-auto", "1"); } catch (e) {}
+  openWaAfterDelivery();
+}
+
+/* Mantém a entrega na tela e, 7 s depois, abre o WhatsApp em nova guia.
+   Sem clique recente o navegador costuma bloquear a nova guia; nesse caso a própria guia vai
+   para o WhatsApp (o botão Voltar traz a entrega de volta). */
 var WA_AUTO_DELAY = 7000;
 function openWaAfterDelivery() {
   var msg = "Olá, acabei de obter meu guia Growth 30D e gostaria de acompanhamento personalizado para executar.";
@@ -562,8 +583,7 @@ var QS = [
   { k: "nome", type: "text", q: "Qual é o seu nome?", ph: "Seu nome", ac: "name", im: "text" },
   { k: "whatsapp", type: "tel", q: "Qual é o seu WhatsApp?", ph: "(00) 00000-0000", ac: "tel", im: "tel" },
   { k: "email", type: "email", q: "Qual é o seu melhor e-mail?", ph: "voce@email.com", ac: "email", im: "email" },
-  { k: "segmento", type: "opts", q: "Qual é o seu segmento?" },
-  { k: "porte", type: "opts", q: "Qual é o tamanho da sua empresa?" },
+  { k: "porte", type: "opts", q: "Quantas pessoas trabalham com você hoje?" },
   { k: "investe", type: "final", q: "Já investe em marketing (agência, audiovisual ou tráfego)?" }
 ];
 var SCREENS = ["preview", "lead", "pb"];
@@ -710,7 +730,7 @@ function finishLead() {
   if (qualKey().indexOf("qualificado") === 0) dl("lead_qualificado");   // investe em marketing (satisfeito ou não)
   goScreen("pb");
   location.hash = guideHash();   // URL de destino diferente para qualificado e não qualificado
-  openWaAfterDelivery();
+  if (IS_THANK_YOU) thankYouBoot(); else openThankYou();
 }
 
 /* ---------- tela 3: entrega do guia em roadmap de 4 semanas ---------- */
@@ -724,7 +744,7 @@ function deliveryHtml() {
   return '<div class="gm-screen gm-screen--pb"><p class="eyebrow">Guia Growth 30D' + (sg ? " · " + esc(sg.label) : "") + '</p>' +
     '<h2 class="gj-title" tabindex="-1">Seu roadmap de 4 semanas</h2>' +
     '<p class="gj-lead">' + esc(sub) + '</p>' +
-    '<a class="gm-dl" href="guia-growth-30d.pdf" download data-dl>Baixar Guia Growth 30D (PDF)</a>' +
+    '<a class="gm-dl" href="/guia-growth-30d/guia-growth-30d.pdf" download data-dl>Baixar Guia Growth 30D (PDF)</a>' +
     '<div class="wk-list">' + wk + '</div></div>';
 }
 
@@ -847,3 +867,4 @@ loadState();
 loadGtm();
 if (!location.hash) history.replaceState(null, "", location.pathname + location.search + "#playbook");   // a página já abre no pop-up do guia
 route();
+thankYouBoot();
