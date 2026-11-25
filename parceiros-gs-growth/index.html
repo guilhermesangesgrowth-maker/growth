@@ -221,7 +221,7 @@ body{ background:var(--off-white, #f5f3ef); color:var(--black, #0a0a0a) }
             <div><label class="lb" for="email">E-mail</label><input class="wf-in" id="email" name="email" type="email" autocomplete="email" required maxlength="160" placeholder="voce@empresa.com.br"><span class="wf-err" data-for="email"></span></div>
           </div>
           <div class="pform__row">
-            <div><label class="lb" for="whatsapp">WhatsApp</label><input class="wf-in" id="whatsapp" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" required maxlength="20" placeholder="(11) 99999-9999"><span class="wf-err" data-for="whatsapp"></span></div>
+            <div><label class="lb" for="whatsapp">WhatsApp</label><input class="wf-in" id="whatsapp" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" required maxlength="15" placeholder="(__) _____-____"><span class="wf-err" data-for="whatsapp"></span></div>
             <div><label class="lb" for="empresa">Empresa</label><input class="wf-in" id="empresa" name="empresa" autocomplete="organization" required maxlength="120" placeholder="Nome da empresa"><span class="wf-err" data-for="empresa"></span></div>
           </div>
           <div><label class="lb" for="cargo">Cargo</label><input class="wf-in" id="cargo" name="cargo" autocomplete="organization-title" required maxlength="80" placeholder="Ex.: sócio, diretor comercial"><span class="wf-err" data-for="cargo"></span></div>
@@ -459,6 +459,25 @@ body{ background:var(--off-white, #f5f3ef); color:var(--black, #0a0a0a) }
   var db = null, uid = null;
   var fields = ["nome","email","whatsapp","empresa","cargo","outra"];
   var outraWrap = $("outraWrap");
+
+  /* máscara do WhatsApp: (__) _____-____ */
+  function maskTel(v){
+    var n = String(v).replace(/\D/g, "");
+    if (n.length > 11 && n.slice(0, 2) === "55") n = n.slice(2);   // colado com +55
+    n = n.slice(0, 11);
+    if (!n) return "";
+    if (n.length <= 2) return "(" + n;
+    if (n.length <= 7) return "(" + n.slice(0,2) + ") " + n.slice(2);
+    return "(" + n.slice(0,2) + ") " + n.slice(2,7) + "-" + n.slice(7);
+  }
+  var tel = $("whatsapp");
+  tel.addEventListener("input", function(){
+    var before = tel.value, pos = tel.selectionStart, digitsBefore = before.slice(0, pos).replace(/\D/g, "").length;
+    tel.value = maskTel(before);
+    var i = 0, seen = 0;
+    while (i < tel.value.length && seen < digitsBefore){ if (/\d/.test(tel.value[i])) seen++; i++; }
+    try { tel.setSelectionRange(i, i); } catch(_) {}
+  });
   function ativVal(){ var r = form.querySelector('input[name="atividade"]:checked'); return r ? r.value : ""; }
   function syncOutra(){ outraWrap.hidden = ativVal() !== "Outros"; }
   form.querySelectorAll('input[name="atividade"]').forEach(function(r){ r.addEventListener("change", syncOutra); });
@@ -490,10 +509,10 @@ body{ background:var(--off-white, #f5f3ef); color:var(--black, #0a0a0a) }
   function err(name, msg){ var s = form.querySelector('.wf-err[data-for="'+name+'"]'); if (s) s.textContent = msg || ""; var el = $(name); if (el) el.setAttribute("aria-invalid", msg ? "true" : "false"); }
   function validate(){
     var bad = null;
-    [["nome","Informe seu nome."],["email","Informe um e-mail válido."],["whatsapp","Informe um WhatsApp com DDD."],["empresa","Informe o nome da empresa."],["cargo","Informe seu cargo."]].forEach(function(p){
+    [["nome","Informe seu nome."],["email","Informe um e-mail válido."],["whatsapp","Informe o WhatsApp com DDD: (__) _____-____."],["empresa","Informe o nome da empresa."],["cargo","Informe seu cargo."]].forEach(function(p){
       var el = $(p[0]), v = el.value.trim(), e = !v;
       if (p[0]==="email" && v && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) e = true;
-      if (p[0]==="whatsapp" && v && v.replace(/\D/g,"").length < 10) e = true;
+      if (p[0]==="whatsapp" && v && v.replace(/\D/g,"").length !== 11) e = true;
       err(p[0], e ? p[1] : ""); if (e && !bad) bad = el;
     });
     var a = ativVal(); err("atividade", a ? "" : "Selecione a atividade da empresa.");
