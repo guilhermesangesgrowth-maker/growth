@@ -505,6 +505,24 @@ body{ background:var(--off-white, #f5f3ef); color:var(--black, #0a0a0a) }
     return "Olá, Guilherme! Quero ser parceiro GS Growth.\n\nNome: " + d.nome + "\nE-mail: " + d.email + "\nWhatsApp: " + d.whatsapp +
       "\nEmpresa: " + d.empresa + "\nCargo: " + d.cargo + "\nAtividade: " + d.atividade + (d.atividade === "Outros" && d.outra ? " (" + d.outra + ")" : "");
   }
+  /* Grava o cadastro na planilha de leads pelo mesmo Google Form do site (origem parceiros-gs-growth).
+   * A aba "Parceiros" da planilha filtra essa origem. Campos reaproveitados: segmento = atividade, porte = cargo, estagio = empresa. */
+  var LEAD_FORM = "https://docs.google.com/forms/d/e/1FAIpQLSf7K-fnfHxo8OGYD715wdvWaF0r1p61pyV3kAbxDS8_Pd_n6w/formResponse";
+  function sendSheet(d){
+    var b = new URLSearchParams();
+    b.append("entry.176202070", "cadastro-parceiro");
+    b.append("entry.1587842509", "parceiros-gs-growth");
+    b.append("entry.598034783", d.nome);
+    b.append("entry.362575635", d.email);
+    b.append("entry.745510118", d.whatsapp);
+    b.append("entry.722341163", location.href.split("#")[0]);
+    b.append("entry.1739758473", d.atividade === "Outros" && d.outra ? "Outros: " + d.outra : d.atividade);
+    b.append("entry.1257151820", d.cargo);
+    b.append("entry.1229289482", d.empresa);
+    b.append("entry.748315144", "sim");
+    try { fetch(LEAD_FORM, { method: "POST", mode: "no-cors", body: b, keepalive: true }).catch(function(){}); } catch(_) {}
+  }
+
   function openWa(url){ var a = document.createElement("a"); a.href = url; a.target = "_blank"; a.rel = "noopener"; document.body.appendChild(a); a.click(); a.remove(); }
 
   form.addEventListener("submit", function(e){
@@ -516,6 +534,7 @@ body{ background:var(--off-white, #f5f3ef); color:var(--black, #0a0a0a) }
     d.atividade = ativVal(); if (d.atividade !== "Outros") d.outra = "";
     var waUrl = "https://api.whatsapp.com/send/?phone=" + WA + "&text=" + encodeURIComponent(waText(d));
     try { (window.dataLayer = window.dataLayer || []).push({ event: "parceiro_cadastro", atividade: d.atividade }); } catch(_) {}
+    sendSheet(d);
     if (db && uid){
       btn.disabled = true; btn.textContent = "Enviando...";
       d.lgpd = true; d.atualizadoEm = new Date().toISOString();
