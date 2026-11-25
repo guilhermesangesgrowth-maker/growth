@@ -38,6 +38,9 @@
   if (me && me.hasAttribute("data-base")) CONFIG.base = me.getAttribute("data-base");
   var openOnLoad = !!(me && me.hasAttribute("data-open-on-load"));
   if (openOnLoad) CONFIG.auto.enabled = false;
+  /*   data-page             modo página: o guia é a própria página (sem pop-up, fundo ou botão de fechar) */
+  var PAGE_MODE = !!(me && me.hasAttribute("data-page"));
+  if (PAGE_MODE) CONFIG.auto.enabled = false;
   var D = window.GHA_DATA;
   if (!D) return;
   var FRENTES = D.FRENTES, SEGS = D.SEGS;
@@ -181,7 +184,7 @@
   /* ---------- casca do pop-up ---------- */
   var root = document.createElement("div");
   root.id = "gha-root"; root.hidden = true;
-  document.body.appendChild(root);
+  (document.getElementById("gha-mount") || document.body).appendChild(root);
 
   function stepsHtml() {
     var n = SCREENS.indexOf(ui.screen) + 1;
@@ -340,20 +343,27 @@
       main.innerHTML = screenHtml();
       root.querySelector(".gha-steps-bar").innerHTML = stepsHtml();
       $("ghaTopDg").classList.toggle("is-compact", ui.screen === "lead");
-      $("ghaScroll").scrollTop = 0;
+      $("ghaScroll").scrollTop = 0; scrollPageTop();
       after(); return;
     }
     root.innerHTML =
-      '<div class="gha-backdrop" data-gha-close></div>' +
-      '<div class="gha" role="dialog" aria-modal="true" aria-label="Guia High Ticket Agêntico">' +
+      (PAGE_MODE ? "" : '<div class="gha-backdrop" data-gha-close></div>') +
+      (PAGE_MODE ? '<div class="gha" aria-label="Guia High Ticket Agêntico">' : '<div class="gha" role="dialog" aria-modal="true" aria-label="Guia High Ticket Agêntico">') +
       '<div class="gha-topbar"><div class="gha-steps-bar" aria-hidden="true">' + stepsHtml() + '</div>' +
       '<div class="gha-actions">' + (state.lead ? '<button type="button" class="gha-reset" data-gha-reset>Recomeçar</button>' : "") +
-      '<button type="button" class="gha-x" data-gha-close aria-label="Fechar o guia">×</button></div></div>' +
+      (PAGE_MODE ? "" : '<button type="button" class="gha-x" data-gha-close aria-label="Fechar o guia">×</button>') + '</div></div>' +
       '<div class="gha-scroll" id="ghaScroll">' + (pb ? screenHtml() :
         '<div class="gha-flow"><div class="gha-flow__dg' + (ui.screen === "lead" ? " is-compact" : "") + '" id="ghaTopDg">' + diagramHtml() + '</div><div class="gha-main" id="ghaMain">' + screenHtml() + '</div></div>') + '</div>' +
       (pb ? '<div class="gha-foot"><p>Quer o Gestor Executivo rodando no seu negócio com acompanhamento?</p><a class="btn btn--primary" id="ghaWa" href="' + esc(waUrl()) + '" target="_blank" rel="noopener">Agendar Sessão Diagnóstico</a></div>' : "") +
       '</div>';
+    scrollPageTop();
     after();
+  }
+  /* Modo página: ao trocar de tela, volta ao topo do guia (só se a pessoa já tiver rolado para baixo dele) */
+  function scrollPageTop() {
+    if (!PAGE_MODE) return;
+    var top = root.getBoundingClientRect().top + window.scrollY - 76;
+    if (window.scrollY > top) window.scrollTo({ top: Math.max(0, top) });
   }
 
   function after() {
@@ -380,6 +390,7 @@
     shell();
   }
   function close() {
+    if (PAGE_MODE) return;   // no modo página o guia nunca fecha
     if (!ui.open) return;
     ui.open = false; clearTimeout(ui.timer);
     root.hidden = true; root.innerHTML = "";
@@ -388,6 +399,7 @@
     if (ui.lastFocus && ui.lastFocus.focus) ui.lastFocus.focus({ preventScroll: true });
   }
   function closeAndClean() {
+    if (PAGE_MODE) return;
     if (isOurHash(location.hash)) history.pushState(null, "", location.pathname + location.search);
     close();
   }

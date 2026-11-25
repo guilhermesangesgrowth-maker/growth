@@ -101,6 +101,30 @@
               "@type": "Offer",
               "itemOffered": {
                 "@type": "Service",
+                "@id": "https://gsgrowthdigital.com.br/#consultoria-de-growth",
+                "name": "Consultoria de Growth",
+                "serviceType": "Consultoria de marketing e vendas",
+                "description": "Diagnóstico da oferta, do marketing e do processo comercial, com plano de ação priorizado, metas, indicadores e sessões estratégicas com o time do cliente.",
+                "provider": { "@id": "https://gsgrowthdigital.com.br/#organization" },
+                "areaServed": { "@type": "Country", "name": "Brasil" }
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "@id": "https://gsgrowthdigital.com.br/#assessoria-de-growth",
+                "name": "Assessoria de Growth",
+                "serviceType": "Assessoria de marketing e vendas",
+                "description": "Operação contínua de marketing e vendas junto com o time do cliente: tráfego pago, social media, CRM, rotina semanal de indicadores, testes de growth e acompanhamento do time comercial.",
+                "provider": { "@id": "https://gsgrowthdigital.com.br/#organization" },
+                "areaServed": { "@type": "Country", "name": "Brasil" }
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
                 "@id": "https://gsgrowthdigital.com.br/#programa-growth-30d",
                 "name": "Programa Growth 30D",
                 "serviceType": "Assessoria de marketing e vendas",
@@ -375,48 +399,92 @@
     </div>
   </section>
 
-  <!-- DOBRA 4 — SERVIÇOS (vamos crescer?) -->
-  <section class="deck deck--light" id="servicos">
+  <!-- DOBRA 4 — SERVIÇOS (vamos crescer?): carrossel de soluções com auto-roll de 3s -->
+  <section class="deck deck--light" id="servicos" aria-labelledby="servicosTitle">
     <div class="deck__header">
       <p class="eyebrow">vamos crescer?</p>
-      <h2 class="deck__title">Mais vendas em 30 dias, com acompanhamento semanal</h2>
+      <h2 class="deck__title" id="servicosTitle">Soluções para colocar a sua máquina de receita para rodar</h2>
+      <p class="deck__subtitle">Do plano estratégico à operação contínua: escolha o formato que combina com o momento do seu negócio.</p>
     </div>
 
-    <div class="offers offers--single">
-      <article class="offer-card offer-card--orange">
-        <span class="offer-card__tag">Garantia: mais vendas em até 30 dias ou você não paga</span>
-        <h3 class="offer-card__title">Programa Growth 30D</h3>
-        <p class="offer-card__desc">
-          Em quatro semanas, sua oferta, seu marketing e seu processo comercial são revisados, as melhorias entram em operação junto com o seu time e o resultado é medido em vendas.
-        </p>
-        <ol class="roadmap">
-          <li>
-            <span class="roadmap__w">Semana 1: Diagnóstico</span>
-            <ul>
-              <li>Raio-x da oferta, dos canais e do funil de vendas, com um plano de ação priorizado.</li>
-            </ul>
-          </li>
-          <li>
-            <span class="roadmap__w">Semana 2: Implementação</span>
-            <ul>
-              <li>Ajustes em páginas, social media, tráfego pago, CRM e abordagem comercial.</li>
-            </ul>
-          </li>
-          <li>
-            <span class="roadmap__w">Semana 3: Aceleração</span>
-            <ul>
-              <li>Testes das alavancas com mais potencial: ofertas de entrada, produtos digitais, CRO e grupo exclusivo.</li>
-            </ul>
-          </li>
-          <li>
-            <span class="roadmap__w">Semana 4: Resultado</span>
-            <ul>
-              <li>Vendas comparadas com o início do programa, relatório final e plano para os próximos passos.</li>
-            </ul>
-          </li>
-        </ol>
-        <a class="offer-card__cta" href="https://api.whatsapp.com/send/?phone=5519998878022&amp;text=Ol%C3%A1,%20vim%20do%20site%20da%20GS%20Growth%20e%20quero%20agendar%20uma%20Sess%C3%A3o%20Diagn%C3%B3stico!" target="_blank" rel="noopener">Agendar Sessão Diagnóstico</a>
-      </article>
+    <div class="sol" id="solCarousel" aria-roledescription="carrossel" aria-label="Soluções GS Growth">
+      <div class="sol__track" id="solTrack">
+
+        <article class="offer-card sol__card" id="sol-consultoria" aria-label="1 de 3: Consultoria de Growth">
+          <span class="offer-card__tag">Estratégia e plano de ação</span>
+          <h3 class="offer-card__title">Consultoria de Growth</h3>
+          <p class="offer-card__desc">
+            Para quem tem time para executar e precisa de direção. Analisamos o seu negócio e entregamos um plano claro do que fazer primeiro para vender mais com lucro.
+          </p>
+          <ul class="offer-card__list">
+            <li>Diagnóstico da oferta, do marketing e do processo comercial</li>
+            <li>Plano de ação priorizado, com metas e indicadores</li>
+            <li>Sessões estratégicas com você e o seu time</li>
+            <li>Revisão de posicionamento, funil e canais de aquisição</li>
+          </ul>
+          <a class="offer-card__cta" href="https://api.whatsapp.com/send/?phone=5519998878022&amp;text=Ol%C3%A1%2C%20vim%20do%20site%20da%20GS%20Growth%20e%20quero%20saber%20mais%20sobre%20a%20Consultoria%20de%20Growth!" target="_blank" rel="noopener">Quero a consultoria</a>
+        </article>
+
+        <article class="offer-card offer-card--orange sol__card" id="sol-growth-30d" aria-label="2 de 3: Programa Growth 30D">
+          <span class="offer-card__tag">Garantia: mais vendas em até 30 dias ou você não paga</span>
+          <h3 class="offer-card__title">Programa Growth 30D</h3>
+          <p class="offer-card__desc">
+            Em quatro semanas, sua oferta, seu marketing e seu processo comercial são revisados, as melhorias entram em operação junto com o seu time e o resultado é medido em vendas.
+          </p>
+          <ol class="roadmap">
+            <li>
+              <span class="roadmap__w">Semana 1: Diagnóstico</span>
+              <ul>
+                <li>Raio-x da oferta, dos canais e do funil de vendas, com um plano de ação priorizado.</li>
+              </ul>
+            </li>
+            <li>
+              <span class="roadmap__w">Semana 2: Implementação</span>
+              <ul>
+                <li>Ajustes em páginas, social media, tráfego pago, CRM e abordagem comercial.</li>
+              </ul>
+            </li>
+            <li>
+              <span class="roadmap__w">Semana 3: Aceleração</span>
+              <ul>
+                <li>Testes das alavancas com mais potencial: ofertas de entrada, produtos digitais, CRO e grupo exclusivo.</li>
+              </ul>
+            </li>
+            <li>
+              <span class="roadmap__w">Semana 4: Resultado</span>
+              <ul>
+                <li>Vendas comparadas com o início do programa, relatório final e plano para os próximos passos.</li>
+              </ul>
+            </li>
+          </ol>
+          <a class="offer-card__cta" href="https://api.whatsapp.com/send/?phone=5519998878022&amp;text=Ol%C3%A1,%20vim%20do%20site%20da%20GS%20Growth%20e%20quero%20agendar%20uma%20Sess%C3%A3o%20Diagn%C3%B3stico!" target="_blank" rel="noopener">Agendar Sessão Diagnóstico</a>
+        </article>
+
+        <article class="offer-card sol__card" id="sol-assessoria" aria-label="3 de 3: Assessoria de Growth">
+          <span class="offer-card__tag">Operação contínua</span>
+          <h3 class="offer-card__title">Assessoria de Growth</h3>
+          <p class="offer-card__desc">
+            Para quem quer crescer mês a mês com uma operação de marketing e vendas acompanhada de perto. Atuamos junto com o seu time, com rotina semanal de indicadores e otimizações.
+          </p>
+          <ul class="offer-card__list">
+            <li>Gestão de tráfego pago, social media e CRM</li>
+            <li>Rotina semanal de indicadores, metas e ajustes</li>
+            <li>Testes contínuos de growth: ofertas, páginas e canais</li>
+            <li>Acompanhamento do time comercial e do atendimento</li>
+          </ul>
+          <a class="offer-card__cta" href="https://api.whatsapp.com/send/?phone=5519998878022&amp;text=Ol%C3%A1%2C%20vim%20do%20site%20da%20GS%20Growth%20e%20quero%20saber%20mais%20sobre%20a%20Assessoria%20de%20Growth!" target="_blank" rel="noopener">Quero a assessoria</a>
+        </article>
+
+      </div>
+      <div class="sol__nav">
+        <button type="button" class="sol__arrow" id="solPrev" aria-label="Solução anterior">←</button>
+        <div class="sol__dots" id="solDots" role="tablist" aria-label="Escolha a solução">
+          <button type="button" role="tab" aria-label="Consultoria de Growth" aria-controls="sol-consultoria"></button>
+          <button type="button" role="tab" aria-label="Programa Growth 30D" aria-controls="sol-growth-30d"></button>
+          <button type="button" role="tab" aria-label="Assessoria de Growth" aria-controls="sol-assessoria"></button>
+        </div>
+        <button type="button" class="sol__arrow" id="solNext" aria-label="Próxima solução">→</button>
+      </div>
     </div>
   </section>
 

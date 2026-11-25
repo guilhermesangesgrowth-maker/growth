@@ -389,6 +389,8 @@ function pad(n) { return (n < 10 ? "0" : "") + n; }
 function area(id) { return AREAS.filter(function (a) { return a.id === id; })[0]; }
 
 var views = { captura: $("view-captura"), guia: $("view-guia") };
+/* Modo página (body.gm-page): o guia é a própria página, sem pop-up, fundo ou botão de fechar */
+var PAGE_MODE = document.body.classList.contains("gm-page");
 var shared = $("shared-bottom");
 var navCta = $("navCta");
 var navLinks = $("navLinksCaptura");
@@ -614,13 +616,14 @@ function openOverlay() {
   document.body.classList.add("gm-open");
 }
 function closeOverlay() {
+  if (PAGE_MODE) return;   // no modo página o guia nunca fecha
   current = "captura";
   views.guia.hidden = true;
   document.body.classList.remove("gm-open", "gm-s3");
   clearTimeout(ui.timer);
 }
 function goTo(hash) { if (location.hash === hash) route(); else location.hash = hash; }
-function closeGuide() { history.pushState(null, "", location.pathname + location.search); route(); }
+function closeGuide() { if (PAGE_MODE) return; history.pushState(null, "", location.pathname + location.search); route(); }
 
 /* Limpa cadastro e checklist deste navegador e volta ao preview */
 function resetAll() {
@@ -786,19 +789,27 @@ function shell() {
     main.innerHTML = screenHtml();
     views.guia.querySelector(".gm-steps").innerHTML = stepsHtml();
     $("gmScroll").scrollTop = 0;
+    scrollPageTop();
     afterShell();
     return;
   }
   views.guia.innerHTML =
-    '<div class="gm-backdrop" data-gm-close></div>' +
-    '<div class="gm" role="dialog" aria-modal="true" aria-label="Guia Growth 30D">' +
+    (PAGE_MODE ? "" : '<div class="gm-backdrop" data-gm-close></div>') +
+    (PAGE_MODE ? '<div class="gm" aria-label="Guia Growth 30D">' : '<div class="gm" role="dialog" aria-modal="true" aria-label="Guia Growth 30D">') +
     '<div class="gm-bar"><div class="gm-steps" aria-hidden="true">' + stepsHtml() + '</div>' +
     '<div class="gm-actions">' + (state.lead ? '<button type="button" class="gj-reset" data-reset>Recomeçar</button>' : "") +
-    '<button type="button" class="gm-x" data-gm-close aria-label="Fechar o guia">×</button></div></div>' +
+    (PAGE_MODE ? "" : '<button type="button" class="gm-x" data-gm-close aria-label="Fechar o guia">×</button>') + '</div></div>' +
     '<div class="gm-scroll" id="gmScroll">' + (pb ? screenHtml() : '<div class="gm-split">' + ipadHtml() + '<div class="gm-main" id="gmMain">' + screenHtml() + '</div></div>') + '</div>' +
     (pb ? '<div class="gm-foot"><a class="btn btn--primary" id="ctaWa" href="' + esc(waUrl()) + '" target="_blank" rel="noopener">Agendar Sessão Diagnóstico</a></div>' : "") +
     '</div>';
+  scrollPageTop();
   afterShell();
+}
+/* Modo página: ao trocar de tela, volta ao topo do guia (só se a pessoa já tiver rolado para baixo dele) */
+function scrollPageTop() {
+  if (!PAGE_MODE || !views.guia) return;
+  var top = views.guia.getBoundingClientRect().top + window.scrollY - 76;
+  if (window.scrollY > top) window.scrollTo({ top: Math.max(0, top) });
 }
 
 function afterShell() {

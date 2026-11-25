@@ -1584,3 +1584,23 @@ body.gha-s3 .wa-float { bottom: calc(92px + env(safe-area-inset-bottom)); }
 .mx__stage { aspect-ratio: 480 / 440; }
 @media (max-height: 760px) and (min-width: 900px) { .mx { max-width: 400px; } }
 @media (max-width: 420px) { .mx__steps { gap: 6px; } .mx__step { font-size: 10px; letter-spacing: 0.02em; padding: 5px 9px 5px 5px; gap: 6px; } .mx__step span { width: 18px; height: 18px; } }
+
+/* ============ SERVIÇOS: carrossel de soluções (auto-roll 3s) ============ */
+.sol { max-width: var(--container); margin: 0 auto; }
+.sol__track { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding: 4px 7% 8px; margin: 0 -20px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.sol__track::-webkit-scrollbar { display: none; }
+.sol__card { flex: 0 0 86%; scroll-snap-align: center; transition: transform .35s ease, opacity .35s ease; opacity: 0.55; transform: scale(0.97); }
+.sol__card.is-active { opacity: 1; transform: none; }
+.sol__nav { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 20px; }
+.sol__arrow { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--dark-line); background: #fff; color: var(--black); font-size: 18px; cursor: pointer; transition: border-color .18s, transform .18s; }
+.sol__arrow:hover { border-color: var(--orange-ink); transform: translateY(-1px); }
+.sol__dots { display: flex; gap: 8px; }
+.sol__dots button { width: 10px; height: 10px; padding: 0; border-radius: 999px; border: 0; background: rgba(10, 10, 10, 0.2); cursor: pointer; transition: width .25s, background .25s; }
+.sol__dots button[aria-selected="true"] { width: 28px; background: var(--orange); }
+@media (min-width: 760px) {
+  .sol__track { margin: 0; padding: 4px calc((100% - 600px) / 2) 8px; gap: 22px; }
+  .sol__card { flex-basis: 600px; }
+}
+@media (prefers-reduced-motion: reduce) { .sol__track { scroll-behavior: auto; } .sol__card { transition: none; } }
+.sol__track { align-items: flex-start; }
+.sol__card .offer-card__cta { margin-top: 6px; align-self: flex-start; }

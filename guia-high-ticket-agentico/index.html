@@ -6,8 +6,7 @@
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-W8ZF3VR9');</script>
   <!-- End Google Tag Manager -->
-  <!-- Página própria do Guia High Ticket Agêntico: o pop-up do guia abre ao carregar, com a home ao fundo.
-       O conteúdo de fundo é uma cópia da home (index.html da raiz): ao mudar a home, atualize esta página também. -->
+  <!-- Landing page própria do Guia High Ticket Agêntico: as telas do guia (agentico.js, modo data-page) formam o conteúdo da página. -->
   <title>Guia High Ticket Agêntico | GS Growth</title>
   <meta name="description" content="Guia gratuito para quem vende serviços de alto valor montar no Claude um Gestor Executivo: um agente plug-and-play que cuida de marketing, vendas e gestão." />
   <meta name="robots" content="noindex, follow" />
@@ -39,457 +38,29 @@
   <link rel="stylesheet" href="../css/styles.css" />
   <link rel="stylesheet" href="agentico.css" />
 </head>
-<body>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W8ZF3VR9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-<!-- NAV -->
+<body class="gha-page">
+
+<!-- HEADER -->
 <header class="nav" id="nav">
   <div class="nav__inner">
-    <a href="#sobre" class="author-chip nav__author" aria-label="Conheça Guilherme Sanges, especialista em growth">
-      <img class="author-chip__photo" src="../assets/guilherme-avatar.jpg" alt="Guilherme Sanges" width="44" height="44" decoding="async" fetchpriority="high" />
+    <a href="../" class="author-chip nav__author" aria-label="Ir para o site da GS Growth">
+      <img class="author-chip__photo" src="../assets/guilherme-avatar.jpg" alt="Guilherme Sanges" width="44" height="44" decoding="async" />
       <span class="author-chip__text">
         <strong>Guilherme Sanges</strong>
         <small>Especialista em Growth</small>
       </span>
     </a>
-    <nav class="nav__links">
-      <a href="#cases">Cases</a>
-      <a href="#para-quem">Para quem é</a>
-      <a href="#servicos">Serviços</a>
-      <a href="#metodo">Método</a>
-      <a href="#sobre">Sobre</a>
-      <a href="#redes">Redes</a>
-    </nav>
-    <a href="#servicos" class="btn btn--ghost nav__cta">Ver serviços</a>
-    <nav class="nav__mobile" id="navMobile" aria-label="Menu principal">
-      <a href="#cases">Cases</a>
-      <a href="#para-quem">Para quem é</a>
-      <a href="#servicos">Soluções</a>
-      <a href="#metodo">Método</a>
-    </nav>
-    <button type="button" class="nav__toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navMobile">
-      <span></span><span></span><span></span>
-    </button>
+    <a href="../" class="btn btn--ghost nav__cta gpage__site">Conheça a GS Growth</a>
   </div>
 </header>
 
-<main id="top">
-
-  <!-- HERO -->
-  <section class="hero" id="hero">
-    <div class="hero__bg" aria-hidden="true">
-      <img class="hero__photo" src="../assets/guilherme-foto.jpg" alt="" width="720" height="720" decoding="async" fetchpriority="high" />
-      <div class="hero__grid"></div>
-      <div class="hero__glow"></div>
-    </div>
-    <div class="hero__content">
-      <button type="button" class="gha-cta-strip" data-gha-open="hero"><em>Novo</em>Guia High Ticket Agêntico: seu Gestor Executivo no Claude →</button>
-      <p class="eyebrow">método máquina de vendas</p>
-      <h1 class="hero__title hero__title--long">
-        Assessoria de <span class="text-orange">marketing e vendas</span>
-        para crescimento de negócios
-      </h1>
-      <p class="hero__subtitle">
-        Posts e leads não pagam a sua conta. Implementamos o sistema validado para aumentar
-        as vendas do seu negócio em até 30 dias.
-      </p>
-      <div class="hero__actions">
-        <a href="https://api.whatsapp.com/send/?phone=5519998878022&amp;text=Ol%C3%A1%2C%20vim%20do%20Guia%20High%20Ticket%20Ag%C3%AAntico%20e%20quero%20agendar%20uma%20Sess%C3%A3o%20Diagn%C3%B3stico!" class="btn btn--primary" target="_blank" rel="noopener">Agendar Sessão Diagnóstico</a>
-        <a href="#cases" class="btn btn--text">Ver cases <span aria-hidden="true">↓</span></a>
-      </div>
-      <div class="hero__stats" id="heroStats">
-        <div class="stat">
-          <span class="stat__value">+R$1Bi</span>
-          <span class="stat__label">de receita gerada</span>
-        </div>
-        <div class="stat">
-          <span class="stat__value">+12</span>
-          <span class="stat__label">segmentos validados</span>
-        </div>
-      </div>
-    </div>
-    <button class="scroll-cue" id="scrollCue" aria-label="Rolar para a próxima seção">
-      <span></span>
-    </button>
-  </section>
-
-  <!-- DOBRA 2 — CASES -->
-  <section class="deck deck--light" id="cases">
-    <div class="deck__header">
-      <p class="eyebrow">Método Validado</p>
-      <h2 class="deck__title">Casos de sucesso com aumento de receita e lucro</h2>
-      <p class="deck__subtitle">
-        Clientes que tiveram seus negócios transformados com técnicas de growth.
-      </p>
-    </div>
-
-    <div class="cases-grid">
-      <article class="case-card case-card--real">
-        <div class="case-carousel" role="region" aria-roledescription="carrossel" aria-label="Fotos do case Consultoria de Growth para Startups">
-          <img class="case-carousel__slide is-active" src="../assets/case-startups-1.jpg" alt="Foto do case: equipe reunida em escritório" width="900" height="900" loading="lazy" decoding="async" />
-          <img class="case-carousel__slide" src="../assets/case-startups-2.jpg" alt="Foto do case: encontro presencial em escritório" width="900" height="900" loading="lazy" decoding="async" />
-          <img class="case-carousel__slide case-carousel__slide--contain" src="../assets/case-startups-3.jpg" alt="Foto do case: videoconferência de evento de growth" width="900" height="506" loading="lazy" decoding="async" />
-          <img class="case-carousel__slide case-carousel__slide--contain" src="../assets/case-startups-4.jpg" alt="Foto do case: videoconferência com participantes" width="900" height="339" loading="lazy" decoding="async" />
-          <div class="case-carousel__dots">
-            <button type="button" class="is-active" aria-label="Foto 1"></button>
-            <button type="button" aria-label="Foto 2"></button>
-            <button type="button" aria-label="Foto 3"></button>
-            <button type="button" aria-label="Foto 4"></button>
-          </div>
-        </div>
-        <span class="case-card__tag">Case 1</span>
-        <h3 class="case-card__title">Consultoria de Growth Para Startups</h3>
-        <p class="case-card__stat"><strong>+R$500k</strong> gerados para empresas em fase de tração inicial.</p>
-        <p class="case-card__text">Foco em implementação de metodologia de testes e cultura de performance.</p>
-      </article>
-
-      <article class="case-card case-card--real">
-        <div class="case-carousel" role="region" aria-roledescription="carrossel" aria-label="Fotos do case Growth B2B para Fintech">
-          <img class="case-carousel__slide is-active" src="../assets/case-fintech-1.jpg" alt="Foto do case: participação em evento de pagamentos" width="900" height="900" loading="lazy" decoding="async" />
-          <img class="case-carousel__slide" src="../assets/case-fintech-2.jpg" alt="Foto do case: equipe reunida em evento" width="900" height="866" loading="lazy" decoding="async" />
-          <div class="case-carousel__dots">
-            <button type="button" class="is-active" aria-label="Foto 1"></button>
-            <button type="button" aria-label="Foto 2"></button>
-          </div>
-        </div>
-        <span class="case-card__tag">Case 2</span>
-        <h3 class="case-card__title">Growth B2B para Fintech</h3>
-        <p class="case-card__stat"><strong>+12% MRR</strong> na vertical de Recorrência com growth focado em canais.</p>
-        <p class="case-card__stat"><strong>+50% SQL</strong> e implementação de Chatbot de Pré-Qualificação.</p>
-      </article>
-      <article class="case-card case-card--real">
-        <div class="case-carousel" role="region" aria-roledescription="carrossel" aria-label="Fotos do case Growth B2C para Rede Fitness">
-          <img class="case-carousel__slide is-active" src="../assets/case-fitness-1.jpg" alt="Foto do case: retrato em ambiente corporativo" width="750" height="1000" loading="lazy" decoding="async" />
-          <img class="case-carousel__slide" src="../assets/case-fitness-2.jpg" alt="Foto do case: equipe reunida em academia" width="750" height="1000" loading="lazy" decoding="async" />
-          <img class="case-carousel__slide" src="../assets/case-fitness-3.jpg" alt="Foto do case: equipe reunida em escritório" width="1000" height="1000" loading="lazy" decoding="async" />
-          <img class="case-carousel__slide" src="../assets/case-fitness-4.jpg" alt="Foto do case: apresentação de resultados em reunião" width="750" height="1000" loading="lazy" decoding="async" />
-          <img class="case-carousel__slide" src="../assets/case-fitness-5.jpg" alt="Foto do case: participação em evento" width="1000" height="1000" loading="lazy" decoding="async" />
-          <div class="case-carousel__dots">
-            <button type="button" class="is-active" aria-label="Foto 1"></button>
-            <button type="button" aria-label="Foto 2"></button>
-            <button type="button" aria-label="Foto 3"></button>
-            <button type="button" aria-label="Foto 4"></button>
-            <button type="button" aria-label="Foto 5"></button>
-          </div>
-        </div>
-        <span class="case-card__tag">Case 3</span>
-        <h3 class="case-card__title">Growth B2C Para Rede Fitness</h3>
-        <p class="case-card__stat"><strong>+14% MRR</strong> com otimização de canais e martech.</p>
-        <p class="case-card__stat"><strong>+18%</strong> de indicações com otimização do programa de MGM.</p>
-      </article>
-
-      <article class="case-card case-card--real">
-        <div class="case-carousel" role="region" aria-roledescription="carrossel" aria-label="Fotos do case Growth Para Grupo de Ensino Médico">
-          <img class="case-carousel__slide is-active" src="../assets/case-medico-1.jpg" alt="Foto do case: equipe reunida em sala de aula" width="900" height="675" loading="lazy" decoding="async" />
-          <img class="case-carousel__slide" src="../assets/case-medico-2.jpg" alt="Foto do case: letreiro luminoso da instituição" width="900" height="900" loading="lazy" decoding="async" />
-          <img class="case-carousel__slide" src="../assets/case-medico-3.jpg" alt="Foto do case: kit de boas-vindas da instituição" width="900" height="900" loading="lazy" decoding="async" />
-          <div class="case-carousel__dots">
-            <button type="button" class="is-active" aria-label="Foto 1"></button>
-            <button type="button" aria-label="Foto 2"></button>
-            <button type="button" aria-label="Foto 3"></button>
-          </div>
-        </div>
-        <span class="case-card__tag">Case 4</span>
-        <h3 class="case-card__title">Growth Para Grupo de Ensino Médico</h3>
-        <p class="case-card__stat"><strong>+30% Receita YoY</strong> com otimização de canais e analytics.</p>
-        <p class="case-card__stat"><strong>+12% de vendas MoM</strong> com otimizações martech (SEO/GEO).</p>
-      </article>
-    </div>
-  </section>
-
-  <!-- DOBRA 3 — PARA QUEM É + SEM x COM -->
-  <section class="deck deck--tone" id="para-quem" aria-labelledby="paraQuemTitle">
-    <div class="deck__header deck__header--wide">
-      <p class="eyebrow">para quem é</p>
-      <h2 class="deck__title" id="paraQuemTitle">Para negócios de alto ticket que querem escalar vendas</h2>
-      <p class="deck__subtitle">
-        Você construiu um negócio, mas sente que as vendas estão travadas? Implementamos uma máquina de receita sustentável e previsível.
-      </p>
-    </div>
-
-    <div class="seg-marquee" aria-label="Segmentos atendidos">
-      <ul class="seg-marquee__track">
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 9v11h16V9z"/><path d="M9 20v-6h6v6"/></svg>Arquitetos</li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg>Engenheiros</li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4h4v6h6v4h-6v6h-4v-6H4v-4h6z"/></svg>Médicos</li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4c-2.5 0-4 2-4 4.5 0 2 1 3 1.5 5 .5 2.500 1 6.500 3 6.500 1.500 0 1.500-4 3.500-4s2 4 3.500 4c2 0 2.500-4 3-6.500.5-2 1.500-3 1.500-5C20 6 18.500 4 16 4c-1.500 0-2.500 1-4 1S8.500 4 7 4z"/></svg>Dentistas</li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M7 21h10M5 7h14"/><path d="m5 7-3 7a3.500 3.500 0 0 0 6 0zM19 7l-3 7a3.500 3.500 0 0 0 6 0z"/></svg>Advogados</li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V4M4 20h16"/><path d="m8 15 4-4 3 3 5-6"/></svg>Consultores</li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg>Executivos</li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V9l7-5 7 5v12"/><path d="M9 21v-5h6v5M9 11h.01M15 11h.01"/></svg>Empresários</li>
-      </ul>
-      <ul class="seg-marquee__track" aria-hidden="true">
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 9v11h16V9z"/><path d="M9 20v-6h6v6"/></svg>Arquitetos</li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg>Engenheiros</li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4h4v6h6v4h-6v6h-4v-6H4v-4h6z"/></svg>Médicos</li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4c-2.5 0-4 2-4 4.5 0 2 1 3 1.5 5 .5 2.500 1 6.500 3 6.500 1.500 0 1.500-4 3.500-4s2 4 3.500 4c2 0 2.500-4 3-6.500.5-2 1.500-3 1.500-5C20 6 18.500 4 16 4c-1.500 0-2.500 1-4 1S8.500 4 7 4z"/></svg>Dentistas</li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M7 21h10M5 7h14"/><path d="m5 7-3 7a3.500 3.500 0 0 0 6 0zM19 7l-3 7a3.500 3.500 0 0 0 6 0z"/></svg>Advogados</li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V4M4 20h16"/><path d="m8 15 4-4 3 3 5-6"/></svg>Consultores</li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg>Executivos</li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V9l7-5 7 5v12"/><path d="M9 21v-5h6v5M9 11h.01M15 11h.01"/></svg>Empresários</li>
-      </ul>
-    </div>
-
-    <div class="pq">
-      <div class="vs-wrap">
-        <table class="vs">
-          <caption class="vs__cap">Sem Growth 30D x Com Growth 30D</caption>
-          <thead><tr><th scope="col" class="vs__sem">Sem Growth 30D</th><th scope="col" class="vs__com">Com Growth 30D</th></tr></thead>
-          <tbody>
-            <tr class="vs__theme"><th scope="rowgroup" colspan="2"><span class="vs__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></span>Estratégia de marketing</th></tr>
-            <tr><td>Posts e anúncios soltos, sem posicionamento claro e sem saber qual canal traz cliente</td><td>Posicionamento, oferta e canais definidos para atrair os clientes certos</td></tr>
-            <tr class="vs__theme"><th scope="rowgroup" colspan="2"><span class="vs__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18l-7 8v6l-4 2v-8z"/></svg></span>Sistema de vendas</th></tr>
-            <tr><td>Vendas no improviso, dependentes de indicação e do tempo do dono</td><td>Processo comercial, CRM e rotina de follow-up que convertem com previsibilidade</td></tr>
-            <tr class="vs__theme"><th scope="rowgroup" colspan="2"><span class="vs__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V4M4 20h16"/><path d="m8 15 4-4 3 3 5-6"/></svg></span>Ações de growth</th></tr>
-            <tr><td>Nenhum teste ou otimização, e o crescimento acontece por acaso</td><td>Testes semanais em funis, ofertas de entrada e conversão para escalar o que funciona</td></tr>
-            <tr class="vs__theme"><th scope="rowgroup" colspan="2"><span class="vs__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M14.5 9.5c-.4-.9-1.4-1.5-2.5-1.5-1.4 0-2.5.8-2.5 2s1.1 1.7 2.5 2 2.5.8 2.5 2-1.1 2-2.5 2c-1.1 0-2.1-.6-2.5-1.5M12 6.5V8M12 16v1.5"/></svg></span>Gestão financeira</th></tr>
-            <tr><td>Investimento sem controle de margem, caixa e retorno</td><td>Metas, margem e retorno de cada real investido acompanhados toda semana</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <!-- DOBRA 4 — SERVIÇOS (vamos crescer?) -->
-  <section class="deck deck--light" id="servicos">
-    <div class="deck__header">
-      <p class="eyebrow">vamos crescer?</p>
-      <h2 class="deck__title">Mais vendas em 30 dias, com acompanhamento semanal</h2>
-    </div>
-
-    <div class="offers offers--single">
-      <article class="offer-card offer-card--orange">
-        <span class="offer-card__tag">Garantia: mais vendas em até 30 dias ou você não paga</span>
-        <h3 class="offer-card__title">Programa Growth 30D</h3>
-        <p class="offer-card__desc">
-          Em quatro semanas, sua oferta, seu marketing e seu processo comercial são revisados, as melhorias entram em operação junto com o seu time e o resultado é medido em vendas.
-        </p>
-        <ol class="roadmap">
-          <li>
-            <span class="roadmap__w">Semana 1: Diagnóstico</span>
-            <ul>
-              <li>Raio-x da oferta, dos canais e do funil de vendas, com um plano de ação priorizado.</li>
-            </ul>
-          </li>
-          <li>
-            <span class="roadmap__w">Semana 2: Implementação</span>
-            <ul>
-              <li>Ajustes em páginas, social media, tráfego pago, CRM e abordagem comercial.</li>
-            </ul>
-          </li>
-          <li>
-            <span class="roadmap__w">Semana 3: Aceleração</span>
-            <ul>
-              <li>Testes das alavancas com mais potencial: ofertas de entrada, produtos digitais, CRO e grupo exclusivo.</li>
-            </ul>
-          </li>
-          <li>
-            <span class="roadmap__w">Semana 4: Resultado</span>
-            <ul>
-              <li>Vendas comparadas com o início do programa, relatório final e plano para os próximos passos.</li>
-            </ul>
-          </li>
-        </ol>
-        <a class="offer-card__cta" href="https://api.whatsapp.com/send/?phone=5519998878022&amp;text=Ol%C3%A1%2C%20vim%20do%20Guia%20High%20Ticket%20Ag%C3%AAntico%20e%20quero%20agendar%20uma%20Sess%C3%A3o%20Diagn%C3%B3stico!" target="_blank" rel="noopener">Agendar Sessão Diagnóstico</a>
-      </article>
-    </div>
-  </section>
-
-  <!-- DOBRA 5 — MÉTODO MÁQUINA DE VENDAS (animação em loop: balde furado → ikigai) -->
-  <section class="deck deck--tone" id="metodo" aria-labelledby="metodoTitle">
-    <div class="deck__header deck__header--wide">
-      <p class="eyebrow eyebrow--dark">método máquina de vendas</p>
-      <h2 class="deck__title" id="metodoTitle">Do balde furado à máquina de receita</h2>
-      <p class="deck__subtitle">
-        Primeiro encontramos onde a sua receita vaza. Depois conectamos as quatro áreas que transformam cada venda em lucro previsível.
-      </p>
-    </div>
-
-    <figure class="mx" id="mxAnim" aria-label="Animação em duas etapas: um balde furado que perde lucro, energia e oportunidades e, em seguida, o diagrama Máquina de Receita com as quatro áreas conectadas">
-      <ol class="mx__steps" aria-hidden="true">
-        <li class="mx__step mx__step--a"><span>1</span>Negócio com furos</li>
-        <li class="mx__step mx__step--b"><span>2</span>Máquina de receita</li>
-      </ol>
-      <div class="mx__stage">
-        <div class="mx__scene mx__scene--a">
-          <svg class="balde" viewBox="0 0 480 372" role="img" aria-label="Um balde sendo enchido por mais clientes, com quatro furos: agenda lotada, investimento em marketing, equipe desengajada e investimento em estrutura. A água que escapa forma uma poça no chão com lucro, energia e oportunidades.">
-          <defs>
-          <clipPath id="baldeClip"><polygon points="140,100 340,100 310,280 170,280"/></clipPath>
-          <marker id="baldeArrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#FF6B00"/></marker>
-          </defs>
-          <text class="balde__top" x="240" y="22" text-anchor="middle">mais clientes</text>
-          <line class="balde__in" x1="212" y1="34" x2="212" y2="126" marker-end="url(#baldeArrow)"/>
-          <line class="balde__in" x1="240" y1="34" x2="240" y2="126" marker-end="url(#baldeArrow)"/>
-          <line class="balde__in" x1="268" y1="34" x2="268" y2="126" marker-end="url(#baldeArrow)"/>
-          <g clip-path="url(#baldeClip)">
-          <path class="balde__water" d="M120 146 Q 150 136 180 146 T 240 146 T 300 146 T 360 146 L 360 290 L 120 290 Z"/>
-          </g>
-          <polygon class="balde__body" points="140,100 340,100 310,280 170,280"/>
-          <ellipse class="balde__rim" cx="240" cy="100" rx="100" ry="8"/>
-          <ellipse class="balde__hole" cx="150" cy="160" rx="5" ry="6"/>
-          <ellipse class="balde__hole" cx="161" cy="230" rx="5" ry="6"/>
-          <ellipse class="balde__hole" cx="330" cy="160" rx="5" ry="6"/>
-          <ellipse class="balde__hole" cx="319" cy="230" rx="5" ry="6"/>
-          <path class="balde__leak" d="M148 162 C 128 176, 122 240, 128 298"/>
-          <path class="balde__leak" d="M159 232 C 147 248, 145 272, 150 298"/>
-          <path class="balde__leak" d="M332 162 C 352 176, 358 240, 352 298"/>
-          <path class="balde__leak" d="M321 232 C 333 248, 335 272, 330 298"/>
-          <text class="balde__lbl" x="116" y="150" text-anchor="end">agenda lotada</text>
-          <text class="balde__lbl" x="104" y="222" text-anchor="end">investimento<tspan x="104" dy="16">em marketing</tspan></text>
-          <text class="balde__lbl" x="364" y="146" text-anchor="start">equipe<tspan x="364" dy="16">desengajada</tspan></text>
-          <text class="balde__lbl" x="376" y="222" text-anchor="start">investimento<tspan x="376" dy="16">em estrutura</tspan></text>
-          <line class="balde__floor" x1="40" y1="302" x2="440" y2="302"/>
-          <ellipse class="balde__puddle" cx="240" cy="310" rx="150" ry="12"/>
-          <text class="balde__pud" x="240" y="346" text-anchor="middle">Você perde...<tspan class="balde__pud2" x="240" dy="18">lucro, energia, oportunidades</tspan></text>
-          </svg>
-        </div>
-        <div class="mx__scene mx__scene--b">
-          <svg class="ik__svg" viewBox="0 0 480 480" role="img" aria-labelledby="ikTitle ikDesc">
-          <title id="ikTitle">Diagrama Máquina de Receita</title>
-          <desc id="ikDesc">Quatro círculos sobrepostos: Posicionamento e mercado, Negócio e monetização, Vendas e Canais de aquisição. Os encontros formam Oferta, Margem, Conversão e Demanda. No centro, a Máquina de Receita.</desc>
-          <g class="ik__rings">
-          <circle class="ik__ring" cx="240" cy="158" r="132"/>
-          <circle class="ik__ring" cx="322" cy="240" r="132"/>
-          <circle class="ik__ring" cx="240" cy="322" r="132"/>
-          <circle class="ik__ring" cx="158" cy="240" r="132"/>
-          </g>
-          <!-- áreas (círculos) -->
-          <text class="ik__n" x="240" y="56">01</text>
-          <text class="ik__area" x="240" y="76">Posicionamento</text>
-          <text class="ik__area" x="240" y="94">e mercado</text>
-          
-          <text class="ik__n" x="412" y="222">02</text>
-          <text class="ik__area" x="412" y="242">Negócio e</text>
-          <text class="ik__area" x="412" y="260">monetização</text>
-          
-          <text class="ik__n" x="240" y="388">03</text>
-          <text class="ik__area" x="240" y="408">Vendas</text>
-          
-          <text class="ik__n" x="68" y="222">04</text>
-          <text class="ik__area" x="68" y="242">Canais de</text>
-          <text class="ik__area" x="68" y="260">aquisição</text>
-          
-          <!-- encontros entre áreas vizinhas -->
-          <text class="ik__meet" x="318" y="162">Oferta</text>
-          <text class="ik__meet" x="318" y="326">Margem</text>
-          <text class="ik__meet" x="162" y="326">Conversão</text>
-          <text class="ik__meet" x="162" y="162">Demanda</text>
-          
-          <!-- centro -->
-          <circle class="ik__core" cx="240" cy="240" r="52"/>
-          <text class="ik__corelabel" x="240" y="236">Máquina</text>
-          <text class="ik__corelabel" x="240" y="252">de receita</text>
-          </svg>
-        </div>
-      </div>
-    </figure>
-  </section>
-
-  <!-- DOBRA 6 — SOBRE MIM -->
-  <section class="deck deck--light" id="sobre">
-    <div class="about">
-      <div class="about__media">
-        <p class="eyebrow eyebrow--dark">sobre mim</p>
-        <h2 class="deck__title about__name">Guilherme Sanges</h2>
-      </div>
-      <div class="about__content">
-        <p class="about__lead">
-          Guilherme é Especialista em Growth e já gerou mais de R$1Bi com ações de marketing
-          e vendas para empresas. Aficionado por negócios que geram vantagem competitiva na
-          era da IA e tecnologia, é estudioso e produtor de conteúdo sobre o tema.
-        </p>
-        <p class="about__thesis">
-          Sua tese é simples: <strong>fundamentos sólidos + intensidade tecnológica + cultura de resultado.</strong>
-        </p>
-
-        <div class="about__results">
-          <span class="about__results-label">Resultados</span>
-          <div class="results-grid">
-            <div class="stat">
-              <span class="stat__value">+R$1Bi</span>
-              <span class="stat__label">de receita gerada</span>
-            </div>
-            <div class="stat">
-              <span class="stat__value">+12</span>
-              <span class="stat__label">segmentos validados</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- DOBRA 7 — REDES -->
-  <section class="deck deck--tone" id="redes">
-    <div class="deck__header">
-      <p class="eyebrow">Redes</p>
-      <h2 class="deck__title">Acompanhe e construa comigo</h2>
-      <p class="deck__subtitle">
-        Conteúdo sobre growth toda semana e um canal direto para conversar sobre a sua
-        máquina de receita.
-      </p>
-    </div>
-
-    <div class="redes-grid">
-      <a class="social-card" href="https://instagram.com/guilherme.sanges.growth" target="_blank" rel="noopener">
-        <span class="social-card__icon">IG</span>
-        <span class="social-card__meta">
-          <strong>Instagram</strong>
-          <small>@guilherme.sanges.growth</small>
-        </span>
-        <span class="social-card__cta">Seguir →</span>
-      </a>
-      <a class="social-card" href="https://www.linkedin.com/in/guilhermesanges/" target="_blank" rel="noopener">
-        <span class="social-card__icon">in</span>
-        <span class="social-card__meta">
-          <strong>LinkedIn</strong>
-          <small>Guilherme Sanges</small>
-        </span>
-        <span class="social-card__cta">Conectar →</span>
-      </a>
-      <a class="social-card social-card--primary" href="https://api.whatsapp.com/send/?phone=5519998878022&amp;text=Ol%C3%A1%2C%20vim%20do%20Guia%20High%20Ticket%20Ag%C3%AAntico%20e%20quero%20agendar%20uma%20Sess%C3%A3o%20Diagn%C3%B3stico!" target="_blank" rel="noopener">
-        <span class="social-card__icon">WA</span>
-        <span class="social-card__meta">
-          <strong>WhatsApp</strong>
-          <small>Converse comigo sobre crescimento</small>
-        </span>
-        <span class="social-card__cta">Agendar Sessão Diagnóstico →</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- DOBRA 8 — FAQ (SEO/AEO: mesmas perguntas do FAQPage no JSON-LD) -->
-  <section class="deck deck--light" id="faq" aria-labelledby="faqTitle">
-    <div class="deck__header">
-      <p class="eyebrow">dúvidas frequentes</p>
-      <h2 class="deck__title" id="faqTitle">Assessoria de marketing e vendas: perguntas frequentes</h2>
-    </div>
-    <div class="faq">
-      <details class="faq__item">
-        <summary>O que é a GS Growth?</summary>
-        <p>A GS Growth é a assessoria de marketing e vendas de Guilherme Sanges, especialista em growth. Ela integra growth marketing, marketing digital, social media, tráfego pago, inside sales, CRM e atendimento comercial em uma única máquina de receita para aumentar as vendas do negócio.</p>
-      </details>
-      <details class="faq__item">
-        <summary>A GS Growth é uma agência de marketing ou uma consultoria?</summary>
-        <p>A GS Growth atua como assessoria e reúne as duas frentes. Faz o diagnóstico de uma consultoria de marketing e de uma consultoria de vendas e opera os funis junto com o time comercial, com acompanhamento semanal.</p>
-      </details>
-      <details class="faq__item">
-        <summary>Como funciona o Programa Growth 30D?</summary>
-        <p>São quatro semanas com acompanhamento semanal. Semana 1, diagnóstico: raio-x da oferta, dos canais e do funil de vendas, com um plano de ação priorizado. Semana 2, implementação: ajustes em páginas, social media, tráfego pago, CRM e abordagem comercial. Semana 3, aceleração: testes de ofertas de entrada, produtos digitais, CRO e grupo exclusivo. Semana 4, resultado: vendas comparadas com o início do programa, relatório final e plano para os próximos passos. A garantia é mais vendas em até 30 dias ou você não paga.</p>
-      </details>
-      <details class="faq__item">
-        <summary>Para quais empresas a assessoria de marketing e vendas é indicada?</summary>
-        <p>Para negócios de qualquer porte que querem crescer em vendas. O método já foi validado em mais de 12 segmentos, incluindo startups, fintechs, redes fitness e grupos de ensino.</p>
-      </details>
-      <details class="faq__item">
-        <summary>Como começar com a GS Growth?</summary>
-        <p>Agende uma Sessão Diagnóstico pelo WhatsApp. Nela, Guilherme Sanges avalia a sua operação de marketing, vendas e atendimento comercial e indica os próximos passos.</p>
-      </details>
-    </div>
-  </section>
-
+<!-- GUIA (página própria: as telas do guia aparecem aqui, em sequência) -->
+<main class="gpage" id="top">
+  <div class="gpage__intro">
+    <p class="eyebrow eyebrow--dark">Guia gratuito · High Ticket Agêntico</p>
+    <p class="gpage__crumb"><a href="../">GS Growth</a> / Material gratuito</p>
+  </div>
+  <div id="gha-mount"></div>
 </main>
 
 <!-- FOOTER -->
@@ -497,28 +68,11 @@
   <div class="footer__inner">
     <div class="footer__links">
       <div class="footer__col">
-        <strong>Navegue</strong>
-        <a href="#cases">Cases</a>
-        <a href="#para-quem">Para quem é</a>
-        <a href="#servicos">Serviços</a>
-        <a href="#metodo">Método</a>
-        <a href="#sobre">Sobre</a>
-        <a href="#redes">Redes</a>
-        <a href="#faq">Dúvidas</a>
-      </div>
-      <div class="footer__col footer__col--tags">
-        <strong>Especialidades</strong>
-        <ul class="footer__tags">
-          <li>Assessoria e consultoria de marketing e vendas</li>
-          <li>Growth marketing</li>
-          <li>Marketing digital e social media</li>
-          <li>Tráfego pago</li>
-          <li>Inside sales e pré-vendas</li>
-          <li>Gestão e atendimento comercial</li>
-          <li>CRM e automação</li>
-          <li>IA para marketing e vendas</li>
-          <li>SEO, GEO e AEO</li>
-        </ul>
+        <strong>GS Growth</strong>
+        <a href="../">Site</a>
+        <a href="../#cases">Cases</a>
+        <a href="../#servicos">Soluções</a>
+        <a href="../#sobre">Sobre</a>
       </div>
       <div class="footer__col">
         <strong>Redes</strong>
@@ -529,53 +83,18 @@
     </div>
   </div>
   <div class="footer__bottom">
-    <p>© <span id="year"></span> GS Growth · Guilherme Sanges · Assessoria de marketing e vendas.</p>
+    <p>© <span id="year"></span> GS Growth · Guilherme Sanges · Assessoria de marketing e vendas. Ao enviar seus dados você concorda em receber comunicações sobre growth e novidades. Seus dados não são compartilhados com terceiros.</p>
   </div>
 </footer>
 
-<!-- BOTÃO FLUTUANTE WHATSAPP -->
 <a class="wa-float" href="https://api.whatsapp.com/send/?phone=5519998878022&amp;text=Ol%C3%A1%2C%20vim%20do%20Guia%20High%20Ticket%20Ag%C3%AAntico%20e%20quero%20agendar%20uma%20Sess%C3%A3o%20Diagn%C3%B3stico!" target="_blank" rel="noopener" aria-label="Agendar Sessão Diagnóstico pelo WhatsApp">
   <svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16.04 3C8.84 3 3 8.8 3 15.95c0 2.28.6 4.5 1.74 6.46L3 29l6.78-1.72a13.1 13.1 0 0 0 6.26 1.6h.01C23.2 28.88 29 23.08 29 15.93 29 12.5 27.66 9.27 25.22 6.84A12.97 12.97 0 0 0 16.04 3zm0 23.7h-.01a10.9 10.9 0 0 1-5.55-1.52l-.4-.24-4.02 1.02 1.07-3.92-.26-.4a10.7 10.7 0 0 1-1.65-5.7c0-5.93 4.84-10.76 10.8-10.76 2.88 0 5.58 1.12 7.62 3.15a10.6 10.6 0 0 1 3.16 7.62c0 5.94-4.85 10.75-10.76 10.75zm5.9-8.06c-.32-.16-1.9-.94-2.2-1.05-.3-.1-.51-.16-.73.16-.21.32-.83 1.05-1.02 1.26-.19.22-.37.24-.7.08-.32-.16-1.36-.5-2.59-1.6-.96-.85-1.6-1.9-1.79-2.22-.19-.32-.02-.5.14-.66.14-.14.32-.37.48-.56.16-.19.21-.32.32-.54.1-.21.05-.4-.03-.56-.08-.16-.73-1.76-1-2.4-.26-.63-.53-.54-.73-.55h-.62c-.21 0-.56.08-.85.4-.3.32-1.12 1.1-1.12 2.68s1.15 3.1 1.31 3.32c.16.21 2.26 3.45 5.47 4.84.76.33 1.36.52 1.82.67.77.24 1.46.2 2.01.12.61-.09 1.9-.78 2.17-1.53.27-.75.27-1.4.19-1.53-.08-.13-.3-.21-.62-.37z"/></svg>
 </a>
 
-<script src="../js/main.js" defer></script>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W8ZF3VR9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
 <script src="agentico-data.js" defer></script>
-<script src="agentico.js" data-base="" data-open-on-load defer></script>
-
-<script>
-(function () {
-  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  document.querySelectorAll(".case-carousel").forEach(function (root) {
-    var slides = root.querySelectorAll(".case-carousel__slide");
-    var dots = root.querySelectorAll(".case-carousel__dots button");
-    var index = 0;
-    var timer = null;
-
-    function show(n) {
-      index = (n + slides.length) % slides.length;
-      slides.forEach(function (s, k) { s.classList.toggle("is-active", k === index); });
-      dots.forEach(function (d, k) {
-        d.classList.toggle("is-active", k === index);
-        d.setAttribute("aria-current", k === index ? "true" : "false");
-      });
-    }
-    function start() {
-      if (reduce || timer) return;
-      timer = setInterval(function () { show(index + 1); }, 3000);
-    }
-    function stop() { clearInterval(timer); timer = null; }
-
-    dots.forEach(function (d, k) {
-      d.addEventListener("click", function () { show(k); stop(); start(); });
-    });
-    root.addEventListener("mouseenter", stop);
-    root.addEventListener("mouseleave", start);
-    root.addEventListener("focusin", stop);
-    root.addEventListener("focusout", start);
-    start();
-  });
-})();
-</script>
-
+<script src="agentico.js" data-base="" data-open-on-load data-page defer></script>
 </body>
 </html>
