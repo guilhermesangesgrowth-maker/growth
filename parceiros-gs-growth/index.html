@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-W8ZF3VR9');</script>
+  <!-- End Google Tag Manager -->
+<meta name="theme-color" content="#F5F3EF">
+<link rel="canonical" href="https://gsgrowthdigital.com.br/parceiros-gs-growth/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="author" content="Guilherme Sanges">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GS Growth">
+<meta property="og:title" content="Programa de Parceiros GS Growth">
+<meta property="og:description" content="Empresas com serviços complementares colaborando em projetos de growth. Até R$15 mil de comissão por indicação.">
+<meta property="og:url" content="https://gsgrowthdigital.com.br/parceiros-gs-growth/">
+<meta property="og:image" content="https://gsgrowthdigital.com.br/assets/og-gs-growth.jpg">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<title>Programa de Parceiros | GS Growth</title>
+<meta name="description" content="Programa de Parceiros GS Growth: empresas com serviços complementares colaborando em projetos de growth, com até R$15 mil de comissão por indicação.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: mesmo sistema do gsgrowthdigital.com.br (css/fonts.css + css/styles.css publicados ao lado). Aqui só os blocos novos da página de parceiros, nos tokens do site. Visual claro de propósito, igual ao site. */
+:root{ color-scheme:light }
+body{ background:var(--off-white, #f5f3ef); color:var(--black, #0a0a0a) }
+
+.wrap-c{ max-width:var(--container); margin:0 auto }
+
+/* hero: chips de comissão */
+.hero__badge{ display:inline-flex; align-items:center; gap:10px; margin-bottom:22px; padding:8px 14px 8px 8px; border-radius:999px; background:#fff; border:1px solid var(--dark-line); font-size:14px; font-weight:600 }
+.hero__badge b{ font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; background:var(--orange); color:var(--black); padding:5px 10px; border-radius:999px }
+
+/* como funciona: mesma estrutura da .machine do site */
+.steps{ display:grid; border:1px solid var(--dark-line); border-radius:var(--radius); overflow:hidden; background:#fff; max-width:var(--container); margin:0 auto 40px }
+.step{ padding:26px 24px; border-bottom:1px solid var(--dark-line); display:flex; flex-direction:column; gap:10px }
+.step:last-child{ border-bottom:0 }
+.step__n{ font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; color:var(--orange-ink) }
+.step h3{ font-size:20px }
+.step p{ font-size:14px; line-height:1.6; color:var(--gray-on-light) }
+.step--hl{ background:var(--orange) }
+.step--hl .step__n, .step--hl p{ color:var(--black) }
+@media (min-width:900px){ .steps{ grid-template-columns:repeat(4,1fr) } .step{ border-bottom:0; border-right:1px solid var(--dark-line) } .step:last-child{ border-right:0 } }
+
+.perfis-label{ font-family:var(--font-mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--gray-on-light); margin-bottom:12px }
+.perfis{ display:flex; flex-wrap:wrap; gap:8px; max-width:var(--container); margin:0 auto }
+.perfis span{ font-size:14px; font-weight:600; padding:9px 16px; border-radius:999px; border:1px solid var(--dark-line); background:var(--off-white) }
+.perfis span.is-main{ border-color:var(--orange); background:var(--orange-dim) }
+.perfis-box{ max-width:var(--container); margin:0 auto }
+
+.benefits{ display:grid; gap:14px; max-width:var(--container); margin:0 auto }
+.benefit{ background:#fff; border:1px solid var(--dark-line); border-radius:var(--radius); padding:24px; display:flex; flex-direction:column; gap:10px }
+.benefit__k{ font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--orange-ink) }
+.benefit h3{ font-size:20px }
+.benefit p{ font-size:14px; line-height:1.6; color:var(--gray-on-light) }
+.benefit--money{ background:var(--black); color:var(--off-white); border-color:var(--black) }
+.benefit--money .benefit__k{ color:var(--orange) }
+.benefit--money h3{ font-size:34px; color:var(--orange) }
+.benefit--money p{ color:var(--off-white-dim) }
+@media (min-width:700px){ .benefits{ grid-template-columns:repeat(2,1fr) } }
+@media (min-width:1024px){ .benefits{ grid-template-columns:repeat(3,1fr) } }
+
+/* formulário: componentes .wf-* do pop-up do site, em card fixo na página */
+.cad{ display:grid; gap:36px; max-width:var(--container); margin:0 auto; align-items:start }
+.cad__side .deck__title{ margin-top:0 }
+.cad__list{ list-style:none; margin:22px 0 0; padding:0; display:flex; flex-direction:column; gap:12px; font-size:15px }
+.cad__list li{ display:flex; gap:10px; align-items:flex-start }
+.cad__list li::before{ content:"→"; color:var(--orange-ink); font-family:var(--font-mono) }
+.pform{ background:var(--off-white); border:1px solid var(--dark-line); border-radius:20px; padding:26px 22px; box-shadow:0 20px 60px rgba(10,10,10,.08); display:flex; flex-direction:column; gap:16px }
+.pform__row{ display:grid; gap:16px }
+.pform label.lb{ display:block; font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--gray-on-light); margin-bottom:6px }
+.pform .wf-in{ font-size:16px; padding:13px 15px }
+.pform .wf-radios{ grid-template-columns:repeat(2,1fr); margin:0 }
+.pform .wf-err{ margin:4px 0 0; min-height:0 }
+.pform .wf-go{ padding:16px 26px; font-size:16px }
+.pform__note{ font-size:12px; color:var(--gray-on-light); line-height:1.5 }
+.ok{ text-align:left }
+.ok .wf-title{ margin-bottom:8px }
+.ok p{ font-size:15px; line-height:1.6; color:var(--gray-on-light) }
+.ok__actions{ display:flex; flex-wrap:wrap; gap:14px; align-items:center; margin-top:8px }
+@media (min-width:640px){ .pform{ padding:32px } .pform__row{ grid-template-columns:1fr 1fr } .pform .wf-radios{ grid-template-columns:repeat(4,1fr) } }
+@media (min-width:900px){ .cad{ grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); gap:56px } .cad__side{ position:sticky; top:96px } }
+
+/* cta final */
+.final{ background:var(--black); color:var(--off-white); padding:56px 20px; position:relative; overflow:hidden }
+.final::before{ content:""; position:absolute; right:-120px; top:-160px; width:520px; height:520px; background:radial-gradient(circle, rgba(255,107,0,.28) 0%, rgba(255,107,0,0) 65%); pointer-events:none }
+.final__in{ position:relative; max-width:var(--container); margin:0 auto; display:flex; flex-wrap:wrap; gap:24px; align-items:center; justify-content:space-between }
+.final h2{ font-size:30px; max-width:16ch }
+.final h2 span{ color:var(--orange) }
+@media (min-width:1024px){ .final{ padding:72px 40px } .final h2{ font-size:42px } }
+
+.footer__brand strong{ font-family:var(--font-display); font-size:20px }
+.copy-btn{ font:inherit; font-family:var(--font-mono); font-size:11px; background:transparent; border:1px solid var(--black-line); color:var(--off-white-dim); border-radius:6px; padding:3px 8px; margin-left:8px }
+:focus-visible{ outline:2px solid var(--orange); outline-offset:2px }
+@media (prefers-reduced-motion:reduce){ html{ scroll-behavior:auto } }
+</style>
+<link rel="stylesheet" href="../css/fonts.css">
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../css/wa-form.css">
+
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W8ZF3VR9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><!-- NAV -->
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="#sobre" class="author-chip nav__author" aria-label="Conheça Guilherme Sanges, especialista em growth">
+      <img class="author-chip__photo" src="../assets/guilherme-avatar.jpg" alt="Guilherme Sanges" width="44" height="44">
+      <span class="author-chip__text"><strong>Guilherme Sanges</strong><small>Especialista em Growth</small></span>
+    </a>
+    <nav class="nav__links" aria-label="Seções">
+      <a href="#programa">O programa</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#cases">Cases</a>
+      <a href="#redes">Redes</a>
+      <a href="#faq">Dúvidas</a>
+    </nav>
+    <a href="#cadastro" class="btn btn--ghost nav__cta">Quero ser parceiro</a>
+    <nav class="nav__mobile" id="navMobile" aria-label="Menu principal">
+      <a href="#programa">Programa</a>
+      <a href="#cadastro">Cadastro</a>
+      <a href="#cases">Cases</a>
+      <a href="#redes">Redes</a>
+    </nav>
+    <button type="button" class="nav__toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navMobile"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- DOBRA 1 · O PROGRAMA (hero) -->
+  <section class="hero" id="hero">
+    <div class="hero__bg" aria-hidden="true">
+      <img class="hero__photo" src="../assets/guilherme-foto.jpg" alt="" width="720" height="720">
+      <div class="hero__grid"></div>
+      <div class="hero__glow"></div>
+    </div>
+    <div class="hero__content">
+      <p class="eyebrow">programa de parceiros</p>
+      <h1 class="hero__title hero__title--long">Vamos crescer juntos. <span class="text-orange">Até R$15 mil</span> de comissão por indicação</h1>
+      <p class="hero__subtitle">Busco empresas com serviços complementares para colaborar em projetos de growth. Sua empresa entrega o que faz de melhor, a GS Growth entra com o método Máquina de Receita, e quem indica é bonificado.</p>
+      <div class="hero__actions">
+        <a href="#cadastro" class="btn btn--primary">Quero ser parceiro</a>
+        <a href="#programa" class="btn btn--text">Como funciona <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="hero__stats">
+        <div class="stat"><span class="stat__value">R$15 mil</span><span class="stat__label">de comissão máxima por indicação</span></div>
+        <div class="stat"><span class="stat__value">+12</span><span class="stat__label">segmentos validados pelo método</span></div>
+      </div>
+    </div>
+    <button class="scroll-cue" id="scrollCue" aria-label="Rolar para a próxima seção"><span></span></button>
+  </section>
+
+  <!-- O PROGRAMA · como funciona -->
+  <section class="deck deck--light" id="programa">
+    <div class="deck__header deck__header--wide">
+      <p class="eyebrow">o programa</p>
+      <h2 class="deck__title">Para empresas com serviços que completam um projeto de growth</h2>
+      <p class="deck__subtitle">Um projeto de crescimento envolve estratégia, marketing, conteúdo, tecnologia e vendas. Quando cada parte fica com quem domina o assunto, o cliente cresce mais rápido.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step"><span class="step__n">01 · cadastro</span><h3>Cadastre sua empresa</h3><p>Preencha o formulário. O Guilherme entra em contato para entender os seus serviços.</p></div>
+      <div class="step"><span class="step__n">02 · colaboração</span><h3>Projetos em conjunto</h3><p>Montamos projetos de growth em que sua empresa assume a frente que domina.</p></div>
+      <div class="step"><span class="step__n">03 · indicação</span><h3>Indique clientes</h3><p>Apresente uma empresa com um breve contexto. Diagnóstico e proposta ficam com a GS Growth.</p></div>
+      <div class="step step--hl"><span class="step__n">04 · comissão</span><h3>Até R$15 mil</h3><p>Contrato fechado, você recebe a bonificação pela indicação.</p></div>
+    </div>
+
+    <div class="perfis-box">
+      <p class="perfis-label">Quem pode ser parceiro</p>
+      <div class="perfis" role="list">
+        <span role="listitem" class="is-main">Marketing</span>
+        <span role="listitem" class="is-main">Audiovisual</span>
+        <span role="listitem" class="is-main">Consultoria</span>
+        <span role="listitem">Tecnologia e desenvolvimento</span>
+        <span role="listitem">Design e branding</span>
+        <span role="listitem">Assessoria comercial</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="deck deck--tone" id="beneficios" aria-labelledby="benTitle">
+    <div class="deck__header">
+      <p class="eyebrow">vantagens</p>
+      <h2 class="deck__title" id="benTitle">O que sua empresa ganha</h2>
+    </div>
+    <div class="benefits">
+      <div class="benefit benefit--money"><span class="benefit__k">Comissão</span><h3>Até R$15 mil</h3><p>Por indicação que vira cliente. As condições são apresentadas no alinhamento inicial.</p></div>
+      <div class="benefit"><span class="benefit__k">Projetos</span><h3>Novas frentes de receita</h3><p>Sua empresa entra em projetos de growth conduzidos pela GS Growth, na frente que domina.</p></div>
+      <div class="benefit"><span class="benefit__k">Reputação</span><h3>Entrega que sustenta a indicação</h3><p>Método com cases em mais de 12 segmentos e garantia de resultado no Growth 30D.</p></div>
+      <div class="benefit"><span class="benefit__k">Transparência</span><h3>Acompanhamento</h3><p>Você sabe em que etapa está cada empresa indicada, do primeiro contato ao fechamento.</p></div>
+      <div class="benefit"><span class="benefit__k">Contato</span><h3>Direto com o Guilherme</h3><p>Sem intermediários. Você fala com quem conduz o diagnóstico e a entrega.</p></div>
+      <div class="benefit"><span class="benefit__k">Liberdade</span><h3>No seu ritmo</h3><p>Sem meta mínima e sem exclusividade. Indique quando fizer sentido.</p></div>
+    </div>
+  </section>
+
+  <!-- CTA · FORMULÁRIO -->
+  <section class="deck deck--light" id="cadastro">
+    <div class="cad">
+      <div class="cad__side">
+        <p class="eyebrow">cadastro de parceiro</p>
+        <h2 class="deck__title">Cadastre sua empresa em 1 minuto</h2>
+        <p class="deck__subtitle">O Guilherme entra em contato pelo WhatsApp para entender os serviços da sua empresa e alinhar as condições do programa.</p>
+        <ul class="cad__list">
+          <li>Resposta em até 2 dias úteis</li>
+          <li>Alinhamento rápido, sem custo</li>
+          <li>Seus dados ficam só com a GS Growth</li>
+        </ul>
+      </div>
+
+      <div>
+        <form class="pform" id="form" novalidate>
+          <div class="pform__row">
+            <div><label class="lb" for="nome">Nome</label><input class="wf-in" id="nome" name="nome" autocomplete="name" required maxlength="120" placeholder="Seu nome completo"><span class="wf-err" data-for="nome"></span></div>
+            <div><label class="lb" for="email">E-mail</label><input class="wf-in" id="email" name="email" type="email" autocomplete="email" required maxlength="160" placeholder="voce@empresa.com.br"><span class="wf-err" data-for="email"></span></div>
+          </div>
+          <div class="pform__row">
+            <div><label class="lb" for="whatsapp">WhatsApp</label><input class="wf-in" id="whatsapp" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" required maxlength="20" placeholder="(11) 99999-9999"><span class="wf-err" data-for="whatsapp"></span></div>
+            <div><label class="lb" for="empresa">Empresa</label><input class="wf-in" id="empresa" name="empresa" autocomplete="organization" required maxlength="120" placeholder="Nome da empresa"><span class="wf-err" data-for="empresa"></span></div>
+          </div>
+          <div><label class="lb" for="cargo">Cargo</label><input class="wf-in" id="cargo" name="cargo" autocomplete="organization-title" required maxlength="80" placeholder="Ex.: sócio, diretor comercial"><span class="wf-err" data-for="cargo"></span></div>
+          <div role="radiogroup" aria-labelledby="ativLb">
+            <span class="lb" id="ativLb" style="display:block;font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--gray-on-light);margin-bottom:6px">Atividade</span>
+            <div class="wf-radios">
+              <label class="wf-r"><input type="radio" name="atividade" id="at-mkt" value="Marketing">Marketing</label>
+              <label class="wf-r"><input type="radio" name="atividade" id="at-av" value="Audiovisual">Audiovisual</label>
+              <label class="wf-r"><input type="radio" name="atividade" id="at-cons" value="Consultoria">Consultoria</label>
+              <label class="wf-r"><input type="radio" name="atividade" id="at-out" value="Outros">Outros</label>
+            </div>
+            <span class="wf-err" data-for="atividade"></span>
+          </div>
+          <div id="outraWrap" hidden><label class="lb" for="outra">Qual atividade?</label><input class="wf-in" id="outra" name="outra" maxlength="120" placeholder="Descreva a atividade da empresa"></div>
+          <label class="wf-consent" for="lgpd"><input id="lgpd" name="lgpd" type="checkbox" required><span>Autorizo a GS Growth a usar estes dados para contato sobre o Programa de Parceiros, conforme a LGPD. Posso pedir a exclusão a qualquer momento.</span></label>
+          <span class="wf-err" id="status" role="alert"></span>
+          <button class="btn btn--primary wf-go" id="enviar" type="submit">Quero ser parceiro</button>
+          <p class="pform__note" id="modeHint">Ao enviar, seu cadastro segue para o Guilherme.</p>
+        </form>
+
+        <div class="pform ok" id="ok" hidden>
+          <p class="eyebrow">cadastro recebido</p>
+          <h3 class="wf-title">Obrigado pelo cadastro.</h3>
+          <p id="okMsg">O Guilherme vai chamar você no WhatsApp em até 2 dias úteis.</p>
+          <div class="ok__actions">
+            <a class="btn btn--primary" href="#redes">Ver redes sociais</a>
+            <button class="btn btn--text" id="editar" type="button" style="background:none">Editar meus dados</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOBRA 2 · SOBRE -->
+  <section class="deck deck--tone" id="sobre">
+    <div class="about">
+      <div class="about__media">
+        <p class="eyebrow eyebrow--dark">sobre o guilherme e a gs growth</p>
+        <h2 class="deck__title about__name">Guilherme Sanges</h2>
+      </div>
+      <div class="about__content">
+        <p class="about__lead">Guilherme é Especialista em Growth e já gerou mais de R$1Bi com ações de marketing e vendas para empresas. Aficionado por negócios que geram vantagem competitiva na era da IA e tecnologia, é estudioso e produtor de conteúdo sobre o tema.</p>
+        <p class="about__lead">A GS Growth é a assessoria de marketing e vendas que integra growth marketing, social media, tráfego pago, inside sales, CRM e atendimento comercial em uma única máquina de receita.</p>
+        <p class="about__thesis">Sua tese é simples: <strong>fundamentos sólidos + intensidade tecnológica + cultura de resultado.</strong></p>
+        <div class="about__results">
+          <span class="about__results-label">Resultados</span>
+          <div class="results-grid">
+            <div class="stat"><span class="stat__value">+R$1Bi</span><span class="stat__label">de receita gerada</span></div>
+            <div class="stat"><span class="stat__value">+12</span><span class="stat__label">segmentos validados</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOBRA 3 · CASES -->
+  <section class="deck deck--light" id="cases">
+    <div class="deck__header">
+      <p class="eyebrow">Método Validado</p>
+      <h2 class="deck__title">Casos de sucesso com aumento de receita e lucro</h2>
+      <p class="deck__subtitle">Resultados que você pode mostrar para quem indicar.</p>
+    </div>
+    <div class="cases-grid">
+      <article class="case-card case-card--real">
+        <div class="case-carousel" role="region" aria-roledescription="carrossel" aria-label="Fotos do case Consultoria de Growth para Startups">
+          <img class="case-carousel__slide is-active" src="../assets/case-startups-1.jpg" alt="Foto do case: equipe reunida em escritório" width="900" height="900" loading="lazy">
+          <img class="case-carousel__slide" src="../assets/case-startups-2.jpg" alt="Foto do case: encontro presencial em escritório" width="900" height="900" loading="lazy">
+          <img class="case-carousel__slide case-carousel__slide--contain" src="../assets/case-startups-3.jpg" alt="Foto do case: videoconferência de evento de growth" width="900" height="506" loading="lazy">
+          <img class="case-carousel__slide case-carousel__slide--contain" src="../assets/case-startups-4.jpg" alt="Foto do case: videoconferência com participantes" width="900" height="339" loading="lazy">
+          <div class="case-carousel__dots"><button type="button" class="is-active" aria-label="Foto 1"></button><button type="button" aria-label="Foto 2"></button><button type="button" aria-label="Foto 3"></button><button type="button" aria-label="Foto 4"></button></div>
+        </div>
+        <span class="case-card__tag">Case 1</span>
+        <h3 class="case-card__title">Consultoria de Growth Para Startups</h3>
+        <p class="case-card__stat"><strong>+R$500k</strong> gerados para empresas em fase de tração inicial.</p>
+        <p class="case-card__text">Foco em implementação de metodologia de testes e cultura de performance.</p>
+      </article>
+      <article class="case-card case-card--real">
+        <div class="case-carousel" role="region" aria-roledescription="carrossel" aria-label="Fotos do case Growth B2B para Fintech">
+          <img class="case-carousel__slide is-active" src="../assets/case-fintech-1.jpg" alt="Foto do case: participação em evento de pagamentos" width="900" height="900" loading="lazy">
+          <img class="case-carousel__slide" src="../assets/case-fintech-2.jpg" alt="Foto do case: equipe reunida em evento" width="900" height="866" loading="lazy">
+          <div class="case-carousel__dots"><button type="button" class="is-active" aria-label="Foto 1"></button><button type="button" aria-label="Foto 2"></button></div>
+        </div>
+        <span class="case-card__tag">Case 2</span>
+        <h3 class="case-card__title">Growth B2B para Fintech</h3>
+        <p class="case-card__stat"><strong>+12% MRR</strong> na vertical de Recorrência com growth focado em canais.</p>
+        <p class="case-card__stat"><strong>+50% SQL</strong> e implementação de Chatbot de Pré-Qualificação.</p>
+      </article>
+      <article class="case-card case-card--real">
+        <div class="case-carousel" role="region" aria-roledescription="carrossel" aria-label="Fotos do case Growth B2C para Rede Fitness">
+          <img class="case-carousel__slide is-active" src="../assets/case-fitness-1.jpg" alt="Foto do case: retrato em ambiente corporativo" width="750" height="1000" loading="lazy">
+          <img class="case-carousel__slide" src="../assets/case-fitness-2.jpg" alt="Foto do case: equipe reunida em academia" width="750" height="1000" loading="lazy">
+          <img class="case-carousel__slide" src="../assets/case-fitness-3.jpg" alt="Foto do case: equipe reunida em escritório" width="1000" height="1000" loading="lazy">
+          <img class="case-carousel__slide" src="../assets/case-fitness-4.jpg" alt="Foto do case: apresentação de resultados em reunião" width="750" height="1000" loading="lazy">
+          <img class="case-carousel__slide" src="../assets/case-fitness-5.jpg" alt="Foto do case: participação em evento" width="1000" height="1000" loading="lazy">
+          <div class="case-carousel__dots"><button type="button" class="is-active" aria-label="Foto 1"></button><button type="button" aria-label="Foto 2"></button><button type="button" aria-label="Foto 3"></button><button type="button" aria-label="Foto 4"></button><button type="button" aria-label="Foto 5"></button></div>
+        </div>
+        <span class="case-card__tag">Case 3</span>
+        <h3 class="case-card__title">Growth B2C Para Rede Fitness</h3>
+        <p class="case-card__stat"><strong>+14% MRR</strong> com otimização de canais e martech.</p>
+        <p class="case-card__stat"><strong>+18%</strong> de indicações com otimização do programa de MGM.</p>
+      </article>
+      <article class="case-card case-card--real">
+        <div class="case-carousel" role="region" aria-roledescription="carrossel" aria-label="Fotos do case Growth Para Grupo de Ensino Médico">
+          <img class="case-carousel__slide is-active" src="../assets/case-medico-1.jpg" alt="Foto do case: equipe reunida em sala de aula" width="900" height="675" loading="lazy">
+          <img class="case-carousel__slide" src="../assets/case-medico-2.jpg" alt="Foto do case: letreiro luminoso da instituição" width="900" height="900" loading="lazy">
+          <img class="case-carousel__slide" src="../assets/case-medico-3.jpg" alt="Foto do case: kit de boas-vindas da instituição" width="900" height="900" loading="lazy">
+          <div class="case-carousel__dots"><button type="button" class="is-active" aria-label="Foto 1"></button><button type="button" aria-label="Foto 2"></button><button type="button" aria-label="Foto 3"></button></div>
+        </div>
+        <span class="case-card__tag">Case 4</span>
+        <h3 class="case-card__title">Growth Para Grupo de Ensino Médico</h3>
+        <p class="case-card__stat"><strong>+30% Receita YoY</strong> com otimização de canais e analytics.</p>
+        <p class="case-card__stat"><strong>+12% de vendas MoM</strong> com otimizações martech (SEO/GEO).</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- DOBRA 4 · REDES -->
+  <section class="deck deck--tone" id="redes">
+    <div class="deck__header">
+      <p class="eyebrow">Redes</p>
+      <h2 class="deck__title">Acompanhe e construa comigo</h2>
+      <p class="deck__subtitle">Conteúdo sobre growth toda semana e um canal direto para conversar sobre parcerias.</p>
+    </div>
+    <div class="redes-grid">
+      <a class="social-card" href="https://instagram.com/guilherme.sanges.growth" target="_blank" rel="noopener">
+        <span class="social-card__icon">IG</span>
+        <span class="social-card__meta"><strong>Instagram</strong><small>@guilherme.sanges.growth</small></span>
+        <span class="social-card__cta">Seguir →</span>
+      </a>
+      <a class="social-card" href="https://www.linkedin.com/in/guilhermesanges/" target="_blank" rel="noopener">
+        <span class="social-card__icon">in</span>
+        <span class="social-card__meta"><strong>LinkedIn</strong><small>Guilherme Sanges</small></span>
+        <span class="social-card__cta">Conectar →</span>
+      </a>
+      <a class="social-card social-card--primary" href="https://api.whatsapp.com/send/?phone=5519998878022&amp;text=Ol%C3%A1%2C%20vim%20da%20p%C3%A1gina%20do%20Programa%20de%20Parceiros%20GS%20Growth!" target="_blank" rel="noopener">
+        <span class="social-card__icon">WA</span>
+        <span class="social-card__meta"><strong>WhatsApp</strong><small>Converse comigo sobre parcerias</small></span>
+        <span class="social-card__cta">Conversar →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="deck deck--light" id="faq" aria-labelledby="faqTitle">
+    <div class="deck__header">
+      <p class="eyebrow">dúvidas frequentes</p>
+      <h2 class="deck__title" id="faqTitle">Programa de Parceiros: perguntas frequentes</h2>
+    </div>
+    <div class="faq">
+      <details class="faq__item"><summary>Que tipo de empresa pode ser parceira?</summary><p>Empresas com serviços complementares a um projeto de growth, como agências de marketing, produtoras audiovisuais e consultorias. Se a sua atividade é outra e conversa com crescimento de receita, cadastre-se e explique no formulário.</p></details>
+      <details class="faq__item"><summary>Preciso vender o serviço da GS Growth?</summary><p>Você só apresenta o cliente ou passa o contato com um contexto breve. O diagnóstico, a proposta e o fechamento ficam com a GS Growth.</p></details>
+      <details class="faq__item"><summary>Quanto e quando recebo de comissão?</summary><p>A bonificação chega a até R$15 mil por indicação e é paga quando o contrato do cliente indicado é fechado. Valor, prazo e forma de pagamento são combinados no alinhamento inicial.</p></details>
+      <details class="faq__item"><summary>Existe meta mínima ou exclusividade?</summary><p>Não. Você indica quando fizer sentido e pode manter outras parcerias.</p></details>
+      <details class="faq__item"><summary>Como acompanho minhas indicações?</summary><p>Cada indicação é registrada e você recebe atualizações a cada mudança de etapa, do primeiro contato ao fechamento.</p></details>
+    </div>
+  </section>
+
+  <section class="final" aria-label="Chamada final">
+    <div class="final__in">
+      <h2>Sua próxima indicação pode render <span>até R$15 mil.</span></h2>
+      <a class="btn btn--primary" href="#cadastro">Quero ser parceiro</a>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__brand">
+      <strong>GS Growth</strong>
+      <p>Assessoria de marketing e vendas. Programa de Parceiros para empresas com serviços complementares em projetos de growth.</p>
+    </div>
+    <div class="footer__links">
+      <div class="footer__col">
+        <strong>Navegue</strong>
+        <a href="#programa">O programa</a>
+        <a href="#cadastro">Cadastro</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#cases">Cases</a>
+        <a href="#faq">Dúvidas</a>
+      </div>
+      <div class="footer__col">
+        <strong>Redes</strong>
+        <a href="https://instagram.com/guilherme.sanges.growth" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.linkedin.com/in/guilhermesanges/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://api.whatsapp.com/send/?phone=5519998878022" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://gsgrowthdigital.com.br/" target="_blank" rel="noopener">gsgrowthdigital.com.br</a>
+      </div>
+      <div class="footer__col">
+        <strong>Contato</strong>
+        <span><span id="fone">+55 19 99887-8022</span><button type="button" class="copy-btn" id="copiar">copiar</button></span>
+        <span style="color:var(--off-white-dim)">Atendimento em dias úteis</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <p>© <span id="year">2026</span> GS Growth · Guilherme Sanges · Programa de Parceiros. Dados tratados conforme a LGPD (Lei 13.709/2018), apenas para contato sobre o programa.</p>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://api.whatsapp.com/send/?phone=5519998878022&amp;text=Ol%C3%A1%2C%20vim%20da%20p%C3%A1gina%20do%20Programa%20de%20Parceiros%20GS%20Growth!" target="_blank" rel="noopener" aria-label="Falar com o Guilherme pelo WhatsApp">
+  <svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16.04 3C8.84 3 3 8.8 3 15.95c0 2.28.6 4.5 1.74 6.46L3 29l6.78-1.72a13.1 13.1 0 0 0 6.26 1.6h.01C23.2 28.88 29 23.08 29 15.930 29 12.5 27.66 9.27 25.22 6.84A12.97 12.970 0 0 0 16.04 3zm0 23.7h-.01a10.9 10.9 0 0 1-5.55-1.52l-.4-.24-4.02 1.02 1.07-3.92-.26-.4a10.7 10.7 0 0 1-1.65-5.7c0-5.93 4.84-10.76 10.8-10.76 2.88 0 5.58 1.12 7.62 3.15a10.6 10.6 0 0 1 3.16 7.62c0 5.94-4.85 10.75-10.76 10.75zm5.9-8.06c-.32-.16-1.9-.94-2.2-1.05-.3-.1-.51-.16-.73.16-.21.32-.83 1.05-1.02 1.26-.19.22-.37.24-.7.08-.32-.16-1.36-.5-2.590-1.6-.96-.85-1.6-1.9-1.79-2.22-.19-.32-.02-.5.14-.66.14-.14.32-.37.48-.56.16-.19.21-.32.32-.54.1-.21.05-.4-.03-.56-.08-.16-.73-1.76-1-2.4-.26-.63-.53-.54-.73-.55h-.62c-.21 0-.56.08-.85.4-.3.32-1.12 1.1-1.12 2.68s1.15 3.1 1.31 3.32c.16.21 2.26 3.45 5.47 4.84.76.33 1.36.52 1.82.67.77.24 1.46.2 2.01.12.61-.09 1.9-.78 2.17-1.53.27-.75.27-1.4.19-1.530-.08-.13-.3-.21-.62-.37z"/></svg>
+</a>
+
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  $("year").textContent = new Date().getFullYear();
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* nav: borda ao rolar + menu mobile (mesmo comportamento do site) */
+  var nav = $("nav"), toggle = $("navToggle"), menu = $("navMobile");
+  addEventListener("scroll", function(){ nav.style.borderBottomColor = scrollY > 20 ? "rgba(255,107,0,0.35)" : ""; }, {passive:true});
+  function setOpen(o){ nav.classList.toggle("nav--open", o); toggle.setAttribute("aria-expanded", String(o)); toggle.setAttribute("aria-label", o ? "Fechar menu" : "Abrir menu"); }
+  toggle.addEventListener("click", function(){ setOpen(!nav.classList.contains("nav--open")); });
+  menu.querySelectorAll("a").forEach(function(a){ a.addEventListener("click", function(){ setOpen(false); }); });
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape") setOpen(false); });
+  $("scrollCue").addEventListener("click", function(){ $("programa").scrollIntoView({behavior: reduce ? "auto" : "smooth"}); });
+
+  /* carrossel de fotos dos cases (mesmo do site) */
+  document.querySelectorAll(".case-carousel").forEach(function(root){
+    var slides = root.querySelectorAll(".case-carousel__slide"), dots = root.querySelectorAll(".case-carousel__dots button"), i = 0, t = null;
+    function show(n){ i = (n + slides.length) % slides.length; slides.forEach(function(s,k){ s.classList.toggle("is-active", k===i); }); dots.forEach(function(d,k){ d.classList.toggle("is-active", k===i); d.setAttribute("aria-current", k===i ? "true" : "false"); }); }
+    function start(){ if (reduce || t) return; t = setInterval(function(){ show(i+1); }, 3000); }
+    function stop(){ clearInterval(t); t = null; }
+    dots.forEach(function(d,k){ d.addEventListener("click", function(){ show(k); stop(); start(); }); });
+    root.addEventListener("mouseenter", stop); root.addEventListener("mouseleave", start);
+    root.addEventListener("focusin", stop); root.addEventListener("focusout", start);
+    start();
+  });
+
+  /* formulário */
+  var WA = "5519998878022";
+  var form = $("form"), ok = $("ok"), status = $("status"), btn = $("enviar"), hint = $("modeHint"), okMsg = $("okMsg");
+  var db = null, uid = null;
+  var fields = ["nome","email","whatsapp","empresa","cargo","outra"];
+  var outraWrap = $("outraWrap");
+  function ativVal(){ var r = form.querySelector('input[name="atividade"]:checked'); return r ? r.value : ""; }
+  function syncOutra(){ outraWrap.hidden = ativVal() !== "Outros"; }
+  form.querySelectorAll('input[name="atividade"]').forEach(function(r){ r.addEventListener("change", syncOutra); });
+
+  function setFallbackHint(){ db = null; hint.textContent = "Ao enviar, abrimos o WhatsApp com seus dados prontos para mandar ao Guilherme."; }
+  if (window.claude && window.claude.use) {
+    Promise.all([claude.use("db"), claude.use("user")]).then(function(r){
+      if (!r[0] || !r[1]) { setFallbackHint(); return; }
+      db = r[0];
+      return r[1].id().then(function(id){
+        uid = id;
+        hint.textContent = "Ao enviar, seu cadastro é registrado e o Guilherme recebe seus dados.";
+        return db.doc("parceiros/" + uid).get().then(function(snap){
+          var d = snap && (typeof snap.data === "function" ? snap.data() : snap.data);
+          if (d && d.nome) { fill(d); showOk("Você já tem cadastro no programa. Se quiser, atualize seus dados."); }
+        }).catch(function(){});
+      });
+    }).catch(setFallbackHint);
+  } else setFallbackHint();
+
+  function fill(d){
+    fields.forEach(function(k){ var el = $(k); if (el && d[k] != null) el.value = d[k]; });
+    form.querySelectorAll('input[name="atividade"]').forEach(function(r){ r.checked = r.value === d.atividade; });
+    syncOutra();
+  }
+  function showOk(msg){ if (msg) okMsg.textContent = msg; form.hidden = true; ok.hidden = false; }
+  $("editar").addEventListener("click", function(){ ok.hidden = true; form.hidden = false; $("nome").focus(); });
+
+  function err(name, msg){ var s = form.querySelector('.wf-err[data-for="'+name+'"]'); if (s) s.textContent = msg || ""; var el = $(name); if (el) el.setAttribute("aria-invalid", msg ? "true" : "false"); }
+  function validate(){
+    var bad = null;
+    [["nome","Informe seu nome."],["email","Informe um e-mail válido."],["whatsapp","Informe um WhatsApp com DDD."],["empresa","Informe o nome da empresa."],["cargo","Informe seu cargo."]].forEach(function(p){
+      var el = $(p[0]), v = el.value.trim(), e = !v;
+      if (p[0]==="email" && v && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) e = true;
+      if (p[0]==="whatsapp" && v && v.replace(/\D/g,"").length < 10) e = true;
+      err(p[0], e ? p[1] : ""); if (e && !bad) bad = el;
+    });
+    var a = ativVal(); err("atividade", a ? "" : "Selecione a atividade da empresa.");
+    if (!a && !bad) bad = $("at-mkt");
+    if (!$("lgpd").checked){ status.textContent = "Marque a autorização de uso dos dados para enviar."; if (!bad) bad = $("lgpd"); }
+    return bad;
+  }
+  function waText(d){
+    return "Olá, Guilherme! Quero ser parceiro GS Growth.\n\nNome: " + d.nome + "\nE-mail: " + d.email + "\nWhatsApp: " + d.whatsapp +
+      "\nEmpresa: " + d.empresa + "\nCargo: " + d.cargo + "\nAtividade: " + d.atividade + (d.atividade === "Outros" && d.outra ? " (" + d.outra + ")" : "");
+  }
+  function openWa(url){ var a = document.createElement("a"); a.href = url; a.target = "_blank"; a.rel = "noopener"; document.body.appendChild(a); a.click(); a.remove(); }
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    status.textContent = "";
+    var bad = validate();
+    if (bad){ if (!status.textContent) status.textContent = "Revise os campos destacados."; bad.focus(); return; }
+    var d = {}; fields.forEach(function(k){ d[k] = $(k).value.trim(); });
+    d.atividade = ativVal(); if (d.atividade !== "Outros") d.outra = "";
+    var waUrl = "https://api.whatsapp.com/send/?phone=" + WA + "&text=" + encodeURIComponent(waText(d));
+    try { (window.dataLayer = window.dataLayer || []).push({ event: "parceiro_cadastro", atividade: d.atividade }); } catch(_) {}
+    if (db && uid){
+      btn.disabled = true; btn.textContent = "Enviando...";
+      d.lgpd = true; d.atualizadoEm = new Date().toISOString();
+      db.doc("parceiros/" + uid).set(d).then(function(){
+        showOk("Obrigado, " + d.nome.split(" ")[0] + ". O Guilherme vai chamar você no WhatsApp em até 2 dias úteis.");
+      }).catch(function(){
+        status.textContent = "Não conseguimos registrar agora. Abrimos o WhatsApp com seus dados para você enviar direto.";
+        openWa(waUrl);
+      }).finally(function(){ btn.disabled = false; btn.textContent = "Quero ser parceiro"; });
+    } else {
+      openWa(waUrl);
+      showOk("Seus dados foram preparados no WhatsApp. Confira a conversa aberta e toque em enviar para concluir o cadastro.");
+    }
+  });
+
+  $("copiar").addEventListener("click", function(){
+    var b = this, n = $("fone");
+    function sel(){ var r = document.createRange(); r.selectNodeContents(n); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+    try { navigator.clipboard.writeText(n.textContent).then(function(){ b.textContent = "copiado"; }, sel); } catch(_) { sel(); }
+  });
+})();
+</script>
+
+</body>
+</html>
